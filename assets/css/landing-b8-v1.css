@@ -135,3 +135,32 @@ body.lp .section-features .feature-section::before {
 body.lp .section-motif-bar .motif-voxel-stack svg { width: 36px; height: 30px; shape-rendering: crispEdges; }
 body.lp .section-motif-bar .motif-voxel-stack .voxel-pixel,
 body.lp .section-motif-bar .motif-voxel-stack .voxel-cube { will-change: auto; }
+
+/* ---------- Hero headline: heavy tight type, "money" stamped on a tilted accent plate ---------- */
+body.lp .hero-v3-title {
+  font-weight: 720 !important;
+  letter-spacing: -0.045em !important;
+  max-width: 820px !important;
+}
+body.lp .hero-v3-title .serif-accent {
+  display: inline-block !important;
+  font-family: inherit !important;
+  font-style: normal !important;
+  font-weight: 760 !important;
+  line-height: 1 !important;
+  color: var(--bg) !important;
+  background: var(--accent);
+  padding: 0.02em 0.14em 0.09em;
+  margin: 0 0.03em;
+  border-radius: 0.2em;
+  box-shadow: 0.07em 0.08em 0 0 color-mix(in srgb, var(--accent) 40%, #000);
+  transform: rotate(-2deg);
+  animation: money-stamp 520ms cubic-bezier(0.23, 1, 0.32, 1) 450ms both;
+}
+@keyframes money-stamp {
+  from { transform: rotate(-6deg) scale(1.18); opacity: 0; }
+  to { transform: rotate(-2deg) scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.lp .hero-v3-title .serif-accent { animation: none; }
+}
