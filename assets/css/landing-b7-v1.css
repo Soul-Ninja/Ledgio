@@ -1,3 +1,6 @@
+html, body { margin: 0; padding: 0; } /* keep in sync with critical-hero-css: removing that block must not change layout (CLS) */
+.skip-link { position: absolute; left: 8px; top: -64px; z-index: 100002; padding: 10px 14px; background: var(--surface); color: var(--text); border-radius: var(--radius-sm); }
+.skip-link:focus-visible { top: 8px; outline: 2px solid var(--accent); outline-offset: 2px; }
 /* hallmark: b7 polish, compact steps timeline, capped reports screenshot, restored vault text blur, connected live rail */
 /* critique: steps cards took excessive vertical space; reports screenshot was uncapped; vault text was unblurred; sections felt disconnected */
 
