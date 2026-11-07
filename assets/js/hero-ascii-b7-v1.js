@@ -82,7 +82,7 @@
   var flickerCharIndices = [];
 
   // Opacity map for brightness levels 1..4
-  var BASE_OPACITIES = [0, 0.25, 0.45, 0.75, 1.00];
+  var BASE_OPACITIES = [0, 0.4, 0.62, 0.88, 1.00];
 
   // Emil Kowalski / Apple ease-out cubic-bezier(.23, 1, .32, 1) evaluator
   function solveCubicBezier(p1x, p1y, p2x, p2y) {
@@ -177,7 +177,8 @@
 
     if (containerW <= 0 || containerH <= 0) return;
 
-    dpr = Math.min(window.devicePixelRatio || 1, 1);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    glyphs = Object.create(null); // glyph tiles are rasterized at this dpr
     canvas.width = Math.round(containerW * dpr);
     canvas.height = Math.round(containerH * dpr);
     canvas.style.width = containerW + 'px';
@@ -242,19 +243,21 @@
 
   // Rasterize each glyph once; repeated fillText dominated the throttled CPU profile.
   var glyphs = Object.create(null);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function() { glyphs = Object.create(null); });
   function paintGlyph(char, x, y, alpha) {
     var glyph = glyphs[char];
     if (!glyph) {
       glyph = document.createElement('canvas');
-      glyph.width = glyph.height = 20;
+      glyph.width = glyph.height = Math.round(20 * dpr);
       var tile = glyph.getContext('2d');
-      tile.font = '11px "Geist Mono", ui-monospace, monospace';
+      tile.scale(dpr, dpr);
+      tile.font = '500 12px "Geist Mono", ui-monospace, monospace';
       tile.textAlign = 'center'; tile.textBaseline = 'middle';
       tile.fillStyle = '#4df3e0'; tile.fillText(char, 10, 10);
       glyphs[char] = glyph;
     }
     ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
-    ctx.drawImage(glyph, x - 10, y - 10);
+    ctx.drawImage(glyph, Math.round(x - 10), Math.round(y - 10), 20, 20);
     ctx.globalAlpha = 1;
   }
 

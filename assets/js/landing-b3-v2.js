@@ -1085,7 +1085,8 @@
     var onResize = function() { reSyncCursor(); };
     window.addEventListener('resize', onResize);
     var onTransitionEnd = function(e) {
-      if (e.propertyName === 'transform') {
+      // transitionend bubbles: only the frame's own transform counts, not every card animating inside it
+      if (e.target === frame && e.propertyName === 'transform') {
         reSyncCursor();
       }
     };
