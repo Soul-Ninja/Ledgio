@@ -201,7 +201,71 @@ body.lp .hero-v3-title .serif-accent[data-t="b"]::after { animation-name: strip-
   body.lp .hero-v3-title .serif-accent::after { animation: none; }
 }
 
-/* Vault scene: the decrypt target sits at the right edge, so zoom less and pan further left to keep the cursor in frame */
-body.lp .product-frame.cam-zoom-vault {
-  transform: scale(1.12) translate3d(-60px, -30px, 0) !important;
+/* Camera: zoom gently and pan left by exactly what the zoom adds on the right, so no value in the demo is ever cropped */
+body.lp .product-frame.cam-zoom-budgets { transform: scale(1.1) translate3d(-55px, -20px, 0) !important; }
+body.lp .product-frame.cam-zoom-goals { transform: scale(1.1) translate3d(-55px, -22px, 0) !important; }
+body.lp .product-frame.cam-zoom-vault { transform: scale(1.1) translate3d(-55px, -28px, 0) !important; }
+body.lp .product-frame.cam-zoom-dashboard { transform: scale(1.1) translate3d(-55px, -14px, 0) !important; }
+
+/* ---------- Hero demo: working flows (quick add, goal deposit, vault decrypt, live totals) ---------- */
+body.lp .replica-main { position: relative; }
+body.lp .replica-add-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 28px; padding: 0 12px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--accent); font-size: 0.78rem; font-weight: 700; white-space: nowrap;
+  transition: scale 120ms ease-out, background-color 160ms ease-out;
 }
+body.lp .replica-add-btn.is-pressed, body.lp .goal-add-btn.is-pressed, body.lp .hes-save.is-pressed { scale: 0.94; }
+body.lp .replica-add-btn.is-pressed { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+
+body.lp .hero-entry-sheet {
+  position: absolute; z-index: 40; top: 62px; right: 20px; width: 272px;
+  padding: 14px 16px 16px;
+  background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border-subtle));
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 44px color-mix(in srgb, #000 55%, transparent);
+  opacity: 0; transform: translateY(-8px) scale(0.98); transform-origin: top right; pointer-events: none;
+  transition: opacity 200ms ease-out, transform 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+body.lp .hero-entry-sheet.is-open { opacity: 1; transform: none; }
+body.lp .hes-head { font: 500 11px/1 var(--font-mono); color: var(--text-dim); margin-bottom: 10px; }
+body.lp .hes-amount { display: flex; align-items: baseline; gap: 4px; min-height: 40px; font-size: 32px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+body.lp .hes-cur { color: var(--text-dim); font-weight: 500; }
+body.lp .hes-caret { width: 2px; height: 26px; align-self: center; background: var(--accent); animation: hes-blink 900ms steps(1) infinite; }
+@keyframes hes-blink { 50% { opacity: 0; } }
+body.lp .hes-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 12px; }
+body.lp .hes-chip { padding: 5px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border-subtle); color: var(--text-dim); font-size: 11.5px; transition: background-color 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out; }
+body.lp .hes-chip.is-selected { background: color-mix(in srgb, var(--accent) 16%, transparent); border-color: color-mix(in srgb, var(--accent) 55%, transparent); color: var(--accent); font-weight: 600; }
+body.lp .hes-note { padding: 8px 10px; margin-bottom: 12px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--text) 5%, transparent); color: var(--text); font-size: 12.5px; }
+body.lp .hes-save { text-align: center; padding: 10px 0; border-radius: var(--radius-sm); background: var(--accent); color: var(--bg); font-weight: 700; font-size: 13px; transition: scale 120ms ease-out; }
+
+body.lp .hero-toast {
+  position: absolute; z-index: 45; left: 50%; bottom: 74px; display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: var(--radius-pill);
+  background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  color: var(--text); font-size: 12.5px; font-weight: 600; white-space: nowrap;
+  box-shadow: 0 12px 30px color-mix(in srgb, #000 50%, transparent);
+  opacity: 0; transform: translate(-50%, 10px); pointer-events: none;
+  transition: opacity 200ms ease-out, transform 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+body.lp .hero-toast i { color: var(--accent); }
+body.lp .hero-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+body.lp .goal-add-btn {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 4px 11px;
+  border-radius: var(--radius-pill); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-size: 0.74rem; font-weight: 700;
+  transition: scale 120ms ease-out;
+}
+body.lp .row-flash { animation: row-flash 1400ms ease-out; }
+@keyframes row-flash { 0% { background: color-mix(in srgb, var(--accent) 24%, transparent); } 100% { background: transparent; } }
+body.lp #hero-view-vault .vault-blur-box.is-decrypting .vault-lock-icon { color: var(--accent); animation: hes-blink 380ms steps(1) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  body.lp .hes-caret, body.lp #hero-view-vault .vault-blur-box.is-decrypting .vault-lock-icon { animation: none; }
+  body.lp .row-flash { animation: none; }
+}
+
+body.lp .hes-val { color: var(--text); }
