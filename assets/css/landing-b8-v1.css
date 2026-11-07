@@ -48,11 +48,14 @@
 .rep-ch-name { position: relative; }
 .rep-ch.is-active { color: var(--text); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
 .rep-ch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.rep-hint { margin: 12px 24px 4px; text-align: center; font-size: 12px; color: var(--text-dim); }
+.rep-hint { margin: 12px 24px 4px; display: flex; align-items: center; justify-content: center; gap: 16px; font-size: 12px; color: var(--text-dim); }
+.rep-play { min-height: 44px; padding: 0 14px; border: 0; background: transparent; color: var(--text-dim); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.rep-play:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .rep-demo.is-static .rep-timeline, .rep-demo.is-static .rep-hint { display: none; }
 
 @media (hover: hover) and (pointer: fine) {
   .rep-ch:hover { color: var(--text); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+  .rep-play:hover { color: var(--text); }
 }
 @media (max-width: 700px) {
   .rep-cards { grid-template-columns: 1fr; gap: 20px; }
@@ -74,7 +77,7 @@
 .hero-chapter-name { position: relative; }
 .hero-chapter.is-done .hero-chapter-fill { transform: scaleX(1); }
 .hero-chapter.is-active { color: var(--text); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
-.hero-chapter.is-playing .hero-chapter-fill { animation: hero-chapter-fill 6000ms linear forwards; }
+.hero-chapter.is-playing .hero-chapter-fill { animation: hero-chapter-fill var(--chapter-ms, 9600ms) linear forwards; }
 .hero-chapters.is-paused .hero-chapter-fill { animation-play-state: paused; }
 .hero-chapter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @keyframes hero-chapter-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
@@ -84,4 +87,19 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-chapter.is-playing .hero-chapter-fill { animation: none; transform: scaleX(1); }
   .rep-leg, .rep-ch, .hero-chapter { transition: none; }
+}
+
+/* ---------- Hero cursor: keep its position while clicking, glide more slowly ---------- */
+html.js body.lp .hero-sim-cursor,
+body.lp .hero-sim-cursor {
+  transition: transform 1100ms cubic-bezier(0.45, 0, 0.2, 1), opacity 300ms ease-out, scale 120ms ease-out !important;
+}
+html.js body.lp .hero-sim-cursor.clicking,
+body.lp .hero-sim-cursor.clicking {
+  transform: var(--cursor-pos, translate3d(110px, 120px, 0)) !important;
+  scale: 0.88;
+  transition: transform 1100ms cubic-bezier(0.45, 0, 0.2, 1), scale 90ms ease-out !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js body.lp .hero-sim-cursor, body.lp .hero-sim-cursor { transition: none !important; }
 }

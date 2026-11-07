@@ -663,8 +663,11 @@
       }
     }
 
+    // Tour pace: every scripted delay is stretched so each act reads calmly.
+    var TOUR_SLOW = 1.6;
+
     function addSubTimer(fn, delay) {
-      var t = safeDesktopTimeout(fn, delay);
+      var t = safeDesktopTimeout(fn, Math.round(delay * TOUR_SLOW));
       subTimers.push(t);
       return t;
     }
@@ -675,6 +678,8 @@
 
       var vRect = viewport.getBoundingClientRect();
       var tRect = targetEl.getBoundingClientRect();
+      // A target inside a hidden pane measures 0x0; moving there would throw the cursor to the corner.
+      if (!tRect.width && !tRect.height) return;
 
       // Needle tip is at (5.5px, 3.2px) relative to cursor top-left
       var targetCenterX = tRect.left + tRect.width / 2;
@@ -683,8 +688,12 @@
       var tx = (targetCenterX - vRect.left) - 5.5;
       var ty = (targetCenterY - vRect.top) - 3.2;
 
+      var pos = 'translate3d(' + Math.round(tx) + 'px, ' + Math.round(ty) + 'px, 0)';
       cursor.style.opacity = '1';
-      cursor.style.transform = 'translate3d(' + Math.round(tx) + 'px, ' + Math.round(ty) + 'px, 0)';
+      cursor.style.transform = pos;
+      cursor.style.setProperty('--cursor-pos', pos);
+
+      settleCursor(targetEl);
 
       if (andClick) {
         cursor.classList.add('clicking');
@@ -700,6 +709,21 @@
           ripple.classList.add('animate');
         }
       }
+    }
+
+    // The pane is still animating in when the cursor first aims; aim again once it has settled.
+    function settleCursor(targetEl) {
+      addSubTimer(function() { if (currentTargetEl === targetEl) placeCursorOnly(targetEl); }, 520);
+    }
+
+    function placeCursorOnly(targetEl) {
+      if (!targetEl || !cursor || !viewport) return;
+      var vRect = viewport.getBoundingClientRect();
+      var tRect = targetEl.getBoundingClientRect();
+      if (!tRect.width && !tRect.height) return;
+      var pos = 'translate3d(' + Math.round(tRect.left + tRect.width / 2 - vRect.left - 5.5) + 'px, ' + Math.round(tRect.top + tRect.height / 2 - vRect.top - 3.2) + 'px, 0)';
+      cursor.style.transform = pos;
+      cursor.style.setProperty('--cursor-pos', pos);
     }
 
     function reSyncCursor() {
@@ -988,7 +1012,7 @@
           return;
         }
         stepTour();
-      }, ACT_DURATION);
+      }, Math.round(ACT_DURATION * TOUR_SLOW));
     }
 
     // Manual user override on click
