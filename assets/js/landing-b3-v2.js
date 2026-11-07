@@ -975,10 +975,15 @@
       actTimer = safeDesktopTimeout(function() {
         currentActIdx++;
         if (currentActIdx === acts.length) {
-          tourComplete = true;
-          isManualPause = true;
           currentActIdx = 0;
           if (cursor) cursor.style.opacity = '0';
+          if (!isReducedMotion) {
+            // loop like a video: short beat on the finished overview, then restart
+            actTimer = safeDesktopTimeout(stepTour, 1600);
+            return;
+          }
+          tourComplete = true;
+          isManualPause = true;
           updateHud(hudLabel ? hudLabel.textContent : '', false);
           return;
         }
