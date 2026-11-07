@@ -214,7 +214,61 @@
     syncPause();
   }
 
-  function boot() { initReports(); initChapters(); }
+  // The headline's "money" cycles through the things people lose track of: Know where your chai went.
+  function initHeroSwap() {
+    var slot = document.querySelector('.hero-v3-title .serif-accent');
+    if (!slot || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var WORDS = ['money', 'salary', 'chai', 'rent', 'petrol', 'EMI'];
+    slot.removeAttribute('data-text');
+    slot.textContent = '';
+    var sr = document.createElement('span');
+    sr.className = 'visually-hidden-accessible';
+    sr.textContent = 'money';
+    var stack = document.createElement('span');
+    stack.className = 'swap-words';
+    stack.setAttribute('aria-hidden', 'true');
+    var els = WORDS.map(function (w, i) {
+      var e = document.createElement('span');
+      e.className = 'swap-w' + (i === 0 ? ' is-on' : '');
+      e.setAttribute('data-w', w); // painted by CSS so the h1's text stays exactly "Know where your money went."
+      stack.appendChild(e);
+      return e;
+    });
+    slot.appendChild(sr);
+    slot.appendChild(stack);
+    slot.classList.add('is-swap');
+
+    var i = 0, timer = 0, visible = true;
+    function fit() { slot.style.width = els[i].offsetWidth + 'px'; }
+    function go(n) {
+      var prev = els[i];
+      i = n % WORDS.length;
+      prev.classList.remove('is-on');
+      prev.classList.add('is-out');
+      setTimeout(function () { prev.classList.remove('is-out'); }, 500);
+      els[i].classList.add('is-on');
+      fit();
+      slot.setAttribute('data-t', i % 2 ? 'b' : 'a'); // alternating keyframe name restarts the rule animation
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (!visible || document.hidden) return;
+      timer = setTimeout(function () { go(i + 1); schedule(); }, i === 0 ? 3200 : 2000);
+    }
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    window.addEventListener('resize', fit);
+    document.addEventListener('visibilitychange', schedule);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; schedule(); }, { threshold: 0.2 }).observe(slot);
+    }
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      slot.addEventListener('pointerenter', function () { go(i + 1); schedule(); });
+    }
+    schedule();
+  }
+
+  function boot() { initReports(); initChapters(); initHeroSwap(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();

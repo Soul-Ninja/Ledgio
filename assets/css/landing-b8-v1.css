@@ -89,17 +89,15 @@
   .rep-leg, .rep-ch, .hero-chapter { transition: none; }
 }
 
-/* ---------- Hero cursor: keep its position while clicking, glide more slowly ---------- */
+/* ---------- Hero cursor: position is driven from JS via the `translate` property ---------- */
 html.js body.lp .hero-sim-cursor,
-body.lp .hero-sim-cursor {
-  transition: transform 520ms cubic-bezier(0.65, 0, 0.35, 1), opacity 300ms ease-out, scale 120ms ease-out !important;
-}
-html.js body.lp .hero-sim-cursor.clicking,
+body.lp .hero-sim-cursor,
 body.lp .hero-sim-cursor.clicking {
-  transform: var(--cursor-pos, translate3d(110px, 120px, 0)) !important;
-  scale: 0.88;
-  transition: transform 520ms cubic-bezier(0.65, 0, 0.35, 1), scale 90ms ease-out !important;
+  transform: none !important;
+  transition: opacity 300ms ease-out, scale 120ms ease-out !important;
+  will-change: translate, scale;
 }
+body.lp .hero-sim-cursor.clicking { scale: 0.88; }
 
 /* ---------- Log in: rests in the hover glow ---------- */
 body.lp .nav-actions-right .nav-login-btn {
@@ -136,31 +134,64 @@ body.lp .section-motif-bar .motif-voxel-stack svg { width: 36px; height: 30px; s
 body.lp .section-motif-bar .motif-voxel-stack .voxel-pixel,
 body.lp .section-motif-bar .motif-voxel-stack .voxel-cube { will-change: auto; }
 
-/* ---------- Hero headline: heavy tight type, "money" stamped on a tilted accent plate ---------- */
+/* ---------- Hero headline: heavy tight type; the accent word rolls through what people lose track of ---------- */
 body.lp .hero-v3-title {
   font-weight: 720 !important;
   letter-spacing: -0.045em !important;
   max-width: 820px !important;
 }
 body.lp .hero-v3-title .serif-accent {
+  position: relative;
   display: inline-block !important;
   font-family: inherit !important;
   font-style: normal !important;
   font-weight: 760 !important;
-  line-height: 1 !important;
-  color: var(--bg) !important;
-  background: var(--accent);
-  padding: 0.02em 0.14em 0.09em;
-  margin: 0 0.03em;
-  border-radius: 0.2em;
-  box-shadow: 0.07em 0.08em 0 0 color-mix(in srgb, var(--accent) 40%, #000);
-  transform: rotate(-2deg);
-  animation: money-stamp 520ms cubic-bezier(0.23, 1, 0.32, 1) 450ms both;
+  color: var(--accent) !important;
+  padding-bottom: 0.1em;
 }
-@keyframes money-stamp {
-  from { transform: rotate(-6deg) scale(1.18); opacity: 0; }
-  to { transform: rotate(-2deg) scale(1); opacity: 1; }
+/* the slot: words stack in one cell, the slot width follows the current word */
+body.lp .hero-v3-title .serif-accent.is-swap {
+  vertical-align: top;
+  height: 1.1em;
+  transition: width 420ms cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: default;
+}
+body.lp .hero-v3-title .swap-words { display: block; }
+body.lp .hero-v3-title .swap-w::before { content: attr(data-w); }
+body.lp .hero-v3-title .swap-w {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.5em);
+  transition: transform 420ms cubic-bezier(0.23, 1, 0.32, 1), opacity 260ms ease-out;
+}
+body.lp .hero-v3-title .swap-w.is-on { opacity: 1; transform: none; }
+body.lp .hero-v3-title .swap-w.is-out { opacity: 0; transform: translateY(-0.5em); transition-duration: 260ms; }
+/* accounting total: a thin rule over a thick rule, redrawn under each new word */
+body.lp .hero-v3-title .serif-accent::after {
+  content: "";
+  position: absolute;
+  left: 0.02em;
+  right: 0.04em;
+  bottom: 0.02em;
+  height: 0.085em;
+  border-top: 0.022em solid var(--accent);
+  border-bottom: 0.022em solid var(--accent);
+  transform-origin: left center;
+  animation: money-total 700ms cubic-bezier(0.23, 1, 0.32, 1) 600ms both;
+}
+body.lp .hero-v3-title .serif-accent[data-t]::after { animation-delay: 120ms; }
+body.lp .hero-v3-title .serif-accent[data-t="b"]::after { animation-name: money-total-b; }
+@keyframes money-total {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes money-total-b {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  body.lp .hero-v3-title .serif-accent { animation: none; }
+  body.lp .hero-v3-title .serif-accent::after { animation: none; }
 }

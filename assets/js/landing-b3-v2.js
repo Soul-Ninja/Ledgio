@@ -654,6 +654,7 @@
     ];
 
     function clearAllTimers() {
+      stopGlide();
       if (actTimer) {
         clearDesktopTimeout(actTimer);
         actTimer = null;
@@ -665,7 +666,6 @@
 
     // Tour pace: 1 = the original scripted timing.
     var TOUR_SLOW = 1;
-    var cursorX = 0, cursorY = 0;
 
     function addSubTimer(fn, delay) {
       var t = safeDesktopTimeout(fn, Math.round(delay * TOUR_SLOW));
@@ -694,35 +694,63 @@
       return { x: r.left + r.width / 2 - vr.left, y: r.top + r.height / 2 - vr.top };
     }
 
+    // The cursor is driven frame by frame instead of by a CSS transition. Each frame it re-reads
+    // where the target is, so it lands exactly on it and never has to re-aim, and nothing in the
+    // stylesheet can restart or override its movement.
+    var GLIDE_MS = 480, TRACK_MS = 700;
+    var glide = null;
+    var curX = 0, curY = 0;
+
+    function renderCursor(x, y) {
+      curX = x; curY = y;
+      cursor.style.translate = x.toFixed(2) + 'px ' + y.toFixed(2) + 'px';
+    }
+
+    function stopGlide() {
+      if (glide && glide.raf) cancelAnimationFrame(glide.raf);
+      glide = null;
+    }
+
+    function aimXY(el) {
+      var pt = el.getClientRects().length ? aimPoint(el) : null;
+      return pt ? { x: pt.x - 5.5, y: pt.y - 3.2, cx: pt.x, cy: pt.y } : null;
+    }
+
+    function glideTo(el) {
+      if (glide && glide.el === el) return;
+      stopGlide();
+      var g = glide = { el: el, sx: curX, sy: curY, t0: performance.now(), raf: 0 };
+      (function step() {
+        if (glide !== g) return;
+        var t = performance.now() - g.t0;
+        var a = aimXY(el);
+        if (a) {
+          var p = Math.min(1, t / GLIDE_MS);
+          var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; // ease-in-out cubic
+          renderCursor(g.sx + (a.x - g.sx) * e, g.sy + (a.y - g.sy) * e);
+        }
+        if (t < GLIDE_MS + TRACK_MS) g.raf = requestAnimationFrame(step);
+        else glide = null;
+      })();
+    }
+
     function pointCursorAt(targetEl, andClick) {
       if (!targetEl || !cursor || !viewport) return;
       currentTargetEl = targetEl;
 
       // A target inside a hidden pane has no box; moving there would throw the cursor to the corner.
-      if (!targetEl.getClientRects().length) return;
-      var pt = aimPoint(targetEl);
-      if (!pt) return;
-
-      // Needle tip is at (5.5px, 3.2px) relative to cursor top-left
-      var tx = Math.round(pt.x - 5.5);
-      var ty = Math.round(pt.y - 3.2);
-      var pos = 'translate3d(' + tx + 'px, ' + ty + 'px, 0)';
-      var moved = Math.abs(tx - cursorX) >= 2 || Math.abs(ty - cursorY) >= 2;
+      var a = aimXY(targetEl);
+      if (!a) return;
 
       if (cursor.style.opacity !== '1') {
-        // Reappearing after a hide: jump to the start spot instead of sliding in from the old one.
-        cursor.style.setProperty('transition', 'none', 'important');
-        cursor.style.transform = pos;
+        // Reappearing after a hide: start at the spot instead of sliding in from the old one.
+        stopGlide();
+        renderCursor(a.x, a.y);
         void cursor.offsetWidth;
-        cursor.style.removeProperty('transition');
-      } else if (moved) {
-        cursor.style.transform = pos;
+        cursor.style.opacity = '1';
+      } else if (!glide || glide.el !== targetEl) {
+        if (Math.abs(a.x - curX) > 1.5 || Math.abs(a.y - curY) > 1.5) glideTo(targetEl);
       }
-      if (moved || cursor.style.opacity !== '1') {
-        cursor.style.setProperty('--cursor-pos', pos);
-        cursorX = tx; cursorY = ty;
-      }
-      cursor.style.opacity = '1';
 
       if (andClick) {
         cursor.classList.add('clicking');
@@ -731,8 +759,8 @@
         }, 110);
 
         if (ripple) {
-          ripple.style.left = Math.round(pt.x) + 'px';
-          ripple.style.top = Math.round(pt.y) + 'px';
+          ripple.style.left = Math.round(a.cx) + 'px';
+          ripple.style.top = Math.round(a.cy) + 'px';
           ripple.classList.remove('animate');
           void ripple.offsetWidth; // force reflow
           ripple.classList.add('animate');
@@ -742,7 +770,8 @@
 
     function reSyncCursor() {
       if (currentTargetEl && cursor && cursor.style.opacity === '1') {
-        pointCursorAt(currentTargetEl, false);
+        var a = aimXY(currentTargetEl);
+        if (a) { stopGlide(); renderCursor(a.x, a.y); }
       }
     }
 
