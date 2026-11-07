@@ -769,17 +769,32 @@
     }
 
     function reSyncCursor() {
-      if (currentTargetEl && cursor && cursor.style.opacity === '1') {
+      if (!glide && currentTargetEl && cursor && cursor.style.opacity === '1') {
         var a = aimXY(currentTargetEl);
-        if (a) { stopGlide(); renderCursor(a.x, a.y); }
+        if (a) renderCursor(a.x, a.y);
       }
     }
 
-    function setCamera() {
-      // The guided view changes carry the demo; camera zoom repeatedly repainted the whole window.
-      if (frame.classList.contains('cam-wide')) return;
+    // The zoom moves the frame, so the cursor is pinned to its target for the length of the move.
+    var stickRaf = 0;
+    function stickCursor(ms) {
+      cancelAnimationFrame(stickRaf);
+      var t0 = performance.now();
+      (function step() {
+        if (!glide && currentTargetEl && cursor.style.opacity === '1') {
+          var a = aimXY(currentTargetEl);
+          if (a) renderCursor(a.x, a.y);
+        }
+        if (performance.now() - t0 < ms) stickRaf = requestAnimationFrame(step);
+      })();
+    }
+
+    function setCamera(name) {
+      var cls = name || 'cam-wide';
+      if (frame.classList.contains(cls)) return;
       cameraClasses.forEach(function(c) { frame.classList.remove(c); });
-      frame.classList.add('cam-wide');
+      frame.classList.add(cls);
+      stickCursor(900);
     }
 
     function switchViewPane(viewKey) {

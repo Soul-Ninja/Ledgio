@@ -169,29 +169,39 @@ body.lp .hero-v3-title .swap-w {
 }
 body.lp .hero-v3-title .swap-w.is-on { opacity: 1; transform: none; }
 body.lp .hero-v3-title .swap-w.is-out { opacity: 0; transform: translateY(-0.5em); transition-duration: 260ms; }
-/* accounting total: a thin rule over a thick rule, redrawn under each new word */
+/* cut-paper strip: a halftone-printed, torn-edged tape pasted behind the lower half of the word, re-pasted on each new word */
+body.lp .hero-v3-title .serif-accent.is-swap { isolation: isolate; }
 body.lp .hero-v3-title .serif-accent::after {
   content: "";
   position: absolute;
-  left: 0.02em;
-  right: 0.04em;
-  bottom: 0.02em;
-  height: 0.085em;
-  border-top: 0.022em solid var(--accent);
-  border-bottom: 0.022em solid var(--accent);
+  z-index: -1;
+  left: -0.07em;
+  right: -0.07em;
+  bottom: 0.1em;
+  height: 0.4em;
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--accent) 60%, transparent) 0.9px, transparent 1.4px) 0 0 / 4px 4px,
+    color-mix(in srgb, var(--accent) 14%, transparent);
+  clip-path: polygon(2% 0, 100% 6%, 98% 28%, 100% 50%, 97.5% 74%, 100% 100%, 0 94%, 2.5% 72%, 0 48%, 2.5% 26%);
+  transform: rotate(-1.4deg);
   transform-origin: left center;
-  animation: money-total 700ms cubic-bezier(0.23, 1, 0.32, 1) 600ms both;
+  animation: strip-paste 560ms cubic-bezier(0.23, 1, 0.32, 1) 600ms both;
 }
 body.lp .hero-v3-title .serif-accent[data-t]::after { animation-delay: 120ms; }
-body.lp .hero-v3-title .serif-accent[data-t="b"]::after { animation-name: money-total-b; }
-@keyframes money-total {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+body.lp .hero-v3-title .serif-accent[data-t="b"]::after { animation-name: strip-paste-b; }
+@keyframes strip-paste {
+  from { transform: rotate(-1.4deg) translateX(-0.25em) scaleX(0.2); opacity: 0; }
+  to { transform: rotate(-1.4deg); opacity: 1; }
 }
-@keyframes money-total-b {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+@keyframes strip-paste-b {
+  from { transform: rotate(-1.4deg) translateX(-0.25em) scaleX(0.2); opacity: 0; }
+  to { transform: rotate(-1.4deg); opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
   body.lp .hero-v3-title .serif-accent::after { animation: none; }
+}
+
+/* Vault scene: the decrypt target sits at the right edge, so zoom less and pan further left to keep the cursor in frame */
+body.lp .product-frame.cam-zoom-vault {
+  transform: scale(1.12) translate3d(-60px, -30px, 0) !important;
 }
