@@ -663,8 +663,9 @@
       }
     }
 
-    // Tour pace: every scripted delay is stretched so each act reads calmly.
-    var TOUR_SLOW = 1.6;
+    // Tour pace: 1 = the original scripted timing.
+    var TOUR_SLOW = 1;
+    var cursorX = 0, cursorY = 0;
 
     function addSubTimer(fn, delay) {
       var t = safeDesktopTimeout(fn, Math.round(delay * TOUR_SLOW));
@@ -689,9 +690,21 @@
       var ty = (targetCenterY - vRect.top) - 3.2;
 
       var pos = 'translate3d(' + Math.round(tx) + 'px, ' + Math.round(ty) + 'px, 0)';
+      if (cursor.style.opacity !== '1') {
+        // Reappearing after a hide: jump to the start spot instead of sliding in from the old one.
+        cursor.style.setProperty('transition', 'none', 'important');
+        cursor.style.transform = pos;
+        void cursor.offsetWidth;
+        cursor.style.removeProperty('transition');
+      } else if (!(andClick && Math.abs(Math.round(tx) - cursorX) < 4 && Math.abs(Math.round(ty) - cursorY) < 4)) {
+        // A click on the spot the cursor already aims at must not retarget it (that restarts the glide).
+        cursor.style.transform = pos;
+      } else {
+        pos = cursor.style.getPropertyValue('--cursor-pos') || pos;
+      }
       cursor.style.opacity = '1';
-      cursor.style.transform = pos;
       cursor.style.setProperty('--cursor-pos', pos);
+      if (!andClick || Math.abs(Math.round(tx) - cursorX) >= 4 || Math.abs(Math.round(ty) - cursorY) >= 4) { cursorX = Math.round(tx); cursorY = Math.round(ty); }
 
       settleCursor(targetEl);
 
@@ -713,7 +726,8 @@
 
     // The pane is still animating in when the cursor first aims; aim again once it has settled.
     function settleCursor(targetEl) {
-      addSubTimer(function() { if (currentTargetEl === targetEl) placeCursorOnly(targetEl); }, 520);
+      // After the glide has finished (650ms), never during it: a mid-glide re-aim restarts the easing and looks like a stutter.
+      addSubTimer(function() { if (currentTargetEl === targetEl) placeCursorOnly(targetEl); }, 720);
     }
 
     function placeCursorOnly(targetEl) {
@@ -721,7 +735,11 @@
       var vRect = viewport.getBoundingClientRect();
       var tRect = targetEl.getBoundingClientRect();
       if (!tRect.width && !tRect.height) return;
-      var pos = 'translate3d(' + Math.round(tRect.left + tRect.width / 2 - vRect.left - 5.5) + 'px, ' + Math.round(tRect.top + tRect.height / 2 - vRect.top - 3.2) + 'px, 0)';
+      var x = Math.round(tRect.left + tRect.width / 2 - vRect.left - 5.5);
+      var y = Math.round(tRect.top + tRect.height / 2 - vRect.top - 3.2);
+      if (Math.abs(x - cursorX) < 4 && Math.abs(y - cursorY) < 4) return;
+      var pos = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
+      cursorX = x; cursorY = y;
       cursor.style.transform = pos;
       cursor.style.setProperty('--cursor-pos', pos);
     }

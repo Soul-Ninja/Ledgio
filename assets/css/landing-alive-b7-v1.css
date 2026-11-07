@@ -44,26 +44,26 @@
   top: 100px;
   bottom: 80px;
   left: 0;
-  width: 1px;
+  width: 2px;
   background: var(--border-subtle);
 }
 .live-rail-fill {
   position: absolute;
   top: 100px;
   left: 0;
-  width: 1px;
+  width: 2px;
   height: 0;
   background: var(--accent);
-  box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 65%, transparent);
   transform-origin: top;
   will-change: height;
 }
 .live-rail-packet {
   position: absolute;
   top: 96px;
-  left: -3px;
-  width: 7px;
-  height: 7px;
+  left: -5px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 90%, transparent), 0 0 4px var(--text);

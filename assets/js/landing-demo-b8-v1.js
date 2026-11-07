@@ -135,7 +135,7 @@
       return;
     }
 
-    var DURATION = 20000, HOLD = 2600;
+    var DURATION = 13000, HOLD = 2200;
     var t = 0, lastTs = 0, raf = 0, playing = true, visible = false;
     var playBtn = root.querySelector('.rep-play');
 
