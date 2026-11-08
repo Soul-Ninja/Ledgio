@@ -1674,7 +1674,16 @@ html.is-standalone [data-pwa-install] {
 
 }
 
-.input-modern {Npx;
+.input-modern {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px 14px 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 0.95rem;
   min-height: 48px;
   transition: all var(--transition-fast);
 
