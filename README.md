@@ -36,12 +36,6 @@ Free forever. No ads. No paywalls. Open source.
 
 <br>
 
-<video src="assets/video/ledgio-demo.mp4" width="640" controls muted playsinline poster="assets/img/landing/screen_dashboard_dark.webp"></video>
-<br>
-<sub>30-second demo · <a href="assets/video/ledgio-demo.mp4">open the video</a></sub>
-
-<br><br>
-
 <img src="assets/img/landing/screen_dashboard_dark.webp" alt="Ledgio dashboard in dark mode" width="260">
 &nbsp;&nbsp;
 <img src="assets/img/landing/screen_reports.webp" alt="Ledgio reports with spending donut chart" width="260">

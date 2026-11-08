@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README Capture Harness</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #09090b; }
+    iframe { border: none; display: block; }
+  </style>
+</head>
+<body>
+  <iframe id="f" src="about:blank"></iframe>
+  <script>
+    // Seeds a demo account relative to today, loads dashboard.html and opens one view.
+    // Params: tab (dashboard|expenses|budget|goals|loans|reports), theme, modal (loan|category), stat=percent, width, height
+    const q = new URLSearchParams(location.search);
+    const tab = q.get('tab') || 'dashboard';
+    const theme = q.get('theme') || 'dark';
+    const modal = q.get('modal') || '';
+    const percent = q.get('stat') === 'percent';
+    const scroll = parseInt(q.get('scroll'), 10) || 0;
+    const W = parseInt(q.get('width'), 10) || 390;
+    const H = parseInt(q.get('height'), 10) || 844;
+    const f = document.getElementById('f');
+    f.style.width = W + 'px'; f.style.height = H + 'px';
+    document.documentElement.style.width = W + 'px'; document.body.style.width = W + 'px';
+
+    const uid = '00000000-0000-0000-0000-000000000001';
+    const now = new Date();
+    const iso = (monthsBack, day) => {
+      const d = new Date(now.getFullYear(), now.getMonth() - monthsBack, 1);
+      const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+      d.setDate(Math.min(day, last));
+      if (monthsBack === 0 && d > now) d.setTime(now.getTime());
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    };
+    let n = 0;
+    const id = () => { n++; const h = n.toString(16).padStart(12, '0'); return '10000000-0000-4000-8000-' + h; };
+    const ex = (name, amount, category, monthsBack, day) => ({ id: id(), name, amount, category, date: iso(monthsBack, day) });
+
+    const expenses = [
+      ex('Weekly Groceries', 2100, 'food', 0, 3), ex('Chai Tapri', 20, 'food', 0, 4), ex('Swiggy Dinner', 240, 'food', 0, 5),
+      ex('Electricity Bill', 1850, 'bills', 0, 2), ex('Fiber Broadband', 999, 'bills', 0, 3),
+      ex('Metro Rail Pass', 450, 'transport', 0, 1), ex('Fuel', 850, 'transport', 0, 4),
+      ex('Netflix Subscription', 649, 'entertainment', 0, 2), ex('Movie Night', 380, 'entertainment', 0, 5),
+      ex('Pharmacy', 540, 'health', 0, 3), ex('Coffee', 180, 'food', 0, now.getDate()),
+      ex('Groceries', 8200, 'food', 1, 8), ex('Rent Share', 6500, 'housing', 1, 5), ex('Bills', 3100, 'bills', 1, 12), ex('Fuel', 2100, 'transport', 1, 15),
+      ex('Groceries', 7600, 'food', 2, 9), ex('Rent Share', 6500, 'housing', 2, 5), ex('Bills', 2800, 'bills', 2, 12), ex('Shopping', 3400, 'shopping', 2, 20),
+      ex('Groceries', 8800, 'food', 3, 8), ex('Rent Share', 6500, 'housing', 3, 5), ex('Bills', 3300, 'bills', 3, 14), ex('Trip', 5200, 'entertainment', 3, 22),
+      ex('Groceries', 7900, 'food', 4, 10), ex('Rent Share', 6500, 'housing', 4, 5), ex('Bills', 2900, 'bills', 4, 13),
+      ex('Groceries', 7200, 'food', 5, 9), ex('Rent Share', 6500, 'housing', 5, 5), ex('Bills', 3000, 'bills', 5, 12)
+    ];
+    const incomeEntries = [
+      { id: id(), amount: 25000, entry_date: iso(5, 1), type: 'opening', note: 'Opening balance' },
+      ...[5, 4, 3, 2, 1, 0].map(m => ({ id: id(), amount: 50000, entry_date: iso(m, 1), type: 'add', note: 'Monthly Salary' })),
+      { id: id(), amount: 2000, entry_date: iso(0, 2), type: 'add', note: 'Freelance Design' }
+    ];
+    const g1 = id(), g2 = id(), l1 = id(), l2 = id(), l3 = id();
+    const ledger = {
+      expenses,
+      income_entries: incomeEntries,
+      income: 52000,
+      budgets: { food: 5000, bills: 4000, transport: 1500, entertainment: 1500, health: 1000 },
+      settings: { currency: 'INR', darkMode: theme === 'dark' },
+      goals: [
+        { id: g1, name: 'Emergency Fund', target_amount: 100000, color: '#10b981', icon: 'fa-shield-halved', deadline: iso(-6, 28) },
+        { id: g2, name: 'New Laptop (M3 Pro)', target_amount: 160000, color: '#8b5cf6', icon: 'fa-laptop', deadline: iso(-3, 15) }
+      ],
+      goal_deposits: [
+        { id: id(), goal_id: g1, amount: 50000, deposit_date: iso(0, 2), note: 'Monthly saving' },
+        { id: id(), goal_id: g2, amount: 120000, deposit_date: iso(1, 10), note: 'Bonus' }
+      ],
+      loans: [
+        { id: l1, person_name: 'Rahul Sharma', direction: 'lent', kind: 'cash', principal: 12500, date: iso(0, 1), note: 'Trip advance' },
+        { id: l2, person_name: 'Priya Verma', direction: 'borrowed', kind: 'cash', principal: 3000, date: iso(0, 2), note: 'Dinner split' },
+        { id: l3, person_name: 'Amit Kapoor', direction: 'lent', kind: 'cash', principal: 4500, date: iso(1, 18), note: 'Concert tickets' }
+      ],
+      loan_settlements: [
+        { id: id(), loan_id: l1, amount: 2500, settle_date: iso(0, 3), note: 'First instalment' }
+      ]
+    };
+
+    localStorage.setItem('ledgio_theme', theme);
+    localStorage.setItem('sb_auth', 'true');
+    localStorage.setItem('sb_user_id', uid);
+    localStorage.setItem('sb_username', 'Priya S.');
+    localStorage.setItem('smartBudgetData', JSON.stringify(ledger));
+    localStorage.setItem('smartBudgetData_' + uid, JSON.stringify(ledger));
+    localStorage.setItem('ledgio_income_entries_' + uid, JSON.stringify(incomeEntries));
+    localStorage.setItem('ledgio_stat_views_' + uid, JSON.stringify(percent ? { income: 'percent', expenses: 'percent' } : { income: 'number', expenses: 'number' }));
+
+    let started = false;
+    f.onload = async () => {
+      if (!started) return;
+      started = false;
+      const win = f.contentWindow, doc = f.contentDocument;
+      await new Promise(r => setTimeout(r, 700));
+      doc.documentElement.setAttribute('data-theme', theme);
+      doc.body.classList.toggle('theme-dark', theme === 'dark');
+      doc.body.classList.toggle('theme-light', theme !== 'dark');
+      // the page booted offline (no network session in a capture); present it as a verified, synced session
+      win.__ledgio_forceOffline = false;
+      win.__ledgio_authVerificationState = 'verified';
+      if (win.__ledgio_setCurrentUserForTesting) win.__ledgio_setCurrentUserForTesting({ id: uid, email: 'priya@example.com' });
+      if (win.updateSyncStatusUI) win.updateSyncStatusUI();
+      if (win.refreshUI) win.refreshUI();
+      await new Promise(r => setTimeout(r, 300));
+      if (win.navigateTo) win.navigateTo(tab);
+      await new Promise(r => setTimeout(r, 900));
+      if (scroll) { (doc.scrollingElement || doc.documentElement).scrollTop = scroll; doc.querySelectorAll('.main-content, .page-section.active').forEach(e => { e.scrollTop = scroll; }); }
+      if (modal === 'loan' && win.openLoanModal) win.openLoanModal();
+      if (modal === 'category' && win.openCustomCategoryModal) win.openCustomCategoryModal();
+      await new Promise(r => setTimeout(r, 700));
+      document.body.setAttribute('data-ready', 'true');
+    };
+    // Load dashboard.html through document.write so a flag can be set before any script runs;
+    // without it the page tries to refresh a Supabase session that does not exist and redirects to login.
+    fetch('/dashboard.html?t=' + Date.now()).then(r => r.text()).then(html => {
+      html = html.replace('<head>', '<head><base href="' + location.origin + '/"><script>window.__ledgio_forceOffline = true;<\/script>');
+      started = true;
+      const d = f.contentDocument;
+      d.open(); d.write(html); d.close();
+      try { f.contentWindow.history.replaceState(null, '', '/dashboard.html#' + tab); } catch (e) {}
+    });
+  </script>
+</body>
+</html>
