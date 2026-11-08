@@ -12648,7 +12648,7 @@
           const pillEl = dDoc.getElementById('hero-release-text');
           const pillText = pillEl ? pillEl.textContent : '';
           const cfgVer = dWin.LEDGIO_VERSION;
-          g73_6_passed = Boolean(cfgVer === '1.12.2' && pillText.includes('v1.12.2'));
+          g73_6_passed = Boolean(cfgVer === '1.12.3' && pillText.includes('v1.12.3'));
           log('Gate 73.6: Version v1.11.5 consistent in config and hero pill',
             g73_6_passed, 'config: ' + cfgVer + ', pill: ' + pillText);
 
@@ -12943,6 +12943,62 @@
         } finally {
           gate76DeskIframe.remove();
           gate76MobIframe.remove();
+        }
+
+        // =========================================================================
+        // GATE 77: Landing PWA Installer Wiring & Honest Install Card
+        // =========================================================================
+        log('--- Starting Gate 77: Landing PWA Installer Wiring & Honest Install Card ---', true, 'INFO');
+
+        const gate77Iframe = document.createElement('iframe');
+        gate77Iframe.style.width = '1440px';
+        gate77Iframe.style.height = '900px';
+        gate77Iframe.style.position = 'absolute';
+        gate77Iframe.style.left = '-9999px';
+        gate77Iframe.src = '../index.html';
+        document.body.appendChild(gate77Iframe);
+
+        await new Promise(r => { gate77Iframe.onload = r; });
+        await new Promise(r => setTimeout(r, 600));
+
+        try {
+          const g77Doc = gate77Iframe.contentDocument;
+          const g77Win = gate77Iframe.contentWindow;
+
+          // Gate 77.1: pwa-installer is loaded on index.html
+          const pwaScript = g77Doc.querySelector('script[src*="pwa-installer"]');
+          const pwaScriptLoaded = Boolean(pwaScript);
+          log('Gate 77.1: pwa-installer script tag loaded on index.html', pwaScriptLoaded, pwaScript ? pwaScript.src : 'none');
+
+          // Gate 77.2: Clicking #pwa-card-install-btn with no deferred prompt opens install guide modal and does NOT show #pwa-installed-pill
+          const cardInstallBtn = g77Doc.getElementById('pwa-card-install-btn');
+          const installedPill = g77Doc.getElementById('pwa-installed-pill');
+          let modalOpened = false;
+          let pillStayedHidden = false;
+
+          if (cardInstallBtn && installedPill) {
+            cardInstallBtn.click();
+            let guideModal = null;
+            for (let i = 0; i < 20; i++) {
+              await new Promise(r => setTimeout(r, 100));
+              guideModal = g77Doc.getElementById('pwa-install-guide-modal');
+              if (guideModal) break;
+            }
+
+            modalOpened = Boolean(guideModal && g77Win.getComputedStyle(guideModal).display !== 'none');
+            const pillComputed = g77Win.getComputedStyle(installedPill);
+            pillStayedHidden = (pillComputed.display === 'none');
+
+            log('Gate 77.2: Clicking #pwa-card-install-btn opens guide modal and keeps #pwa-installed-pill hidden',
+              Boolean(modalOpened && pillStayedHidden),
+              `modalOpened: ${modalOpened}, pillDisplay: ${pillComputed.display}`);
+          } else {
+            log('Gate 77.2: Elements #pwa-card-install-btn or #pwa-installed-pill not found', false);
+          }
+        } catch (e) {
+          log('Gate 77: Execution exception', false, e.message);
+        } finally {
+          gate77Iframe.remove();
         }
 
 
