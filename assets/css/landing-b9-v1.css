@@ -134,8 +134,8 @@ body.lp .section-motif-bar .motif-voxel-stack svg { width: 36px; height: 30px; s
 body.lp .section-motif-bar .motif-voxel-stack .voxel-pixel,
 body.lp .section-motif-bar .motif-voxel-stack .voxel-cube { will-change: auto; }
 
-/* ---------- Headings & Accent Words: Soft Aqua Gradient (Replaces Italic Serif Cliché) ---------- */
-body.lp .serif-accent,
+/* ---------- Headings & Accent Words: Soft Aqua Gradient for all sections ---------- */
+body.lp :not(.hero-v3-title) > .serif-accent,
 body.lp .heading-stream-word.serif-accent {
   position: relative;
   display: inline-block !important;
@@ -150,6 +150,7 @@ body.lp .heading-stream-word.serif-accent {
   color: var(--accent) !important;
 }
 
+/* ---------- Hero headline: heavy tight type; the accent word rolls through what people lose track of ---------- */
 body.lp .hero-v3-title {
   font-weight: 720 !important;
   letter-spacing: -0.045em !important;
@@ -161,12 +162,14 @@ body.lp .hero-v3-title .serif-accent {
   font-family: inherit !important;
   font-style: normal !important;
   font-weight: 760 !important;
+  color: var(--accent) !important;
   padding-bottom: 0.1em;
 }
 /* the slot: words stack in one cell, the slot width follows the current word */
 body.lp .hero-v3-title .serif-accent.is-swap {
   vertical-align: top;
   height: 1.1em;
+  transition: width 420ms cubic-bezier(0.23, 1, 0.32, 1);
   cursor: default;
 }
 body.lp .hero-v3-title .swap-words { display: block; }
@@ -176,18 +179,9 @@ body.lp .hero-v3-title .swap-w {
   left: 0;
   top: 0;
   white-space: nowrap;
-  opacity: 1;
-  transform: none;
-  transition: transform 420ms cubic-bezier(0.23, 1, 0.32, 1), opacity 260ms ease-out;
-  background: linear-gradient(135deg, var(--text) 5%, var(--accent) 55%, var(--accent-2) 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  color: var(--accent) !important;
-}
-html.js body.lp .hero-v3-title .swap-w {
   opacity: 0;
   transform: translateY(0.5em);
+  transition: transform 420ms cubic-bezier(0.23, 1, 0.32, 1), opacity 260ms ease-out;
 }
 body.lp .hero-v3-title .swap-w.is-on { opacity: 1; transform: none; }
 body.lp .hero-v3-title .swap-w.is-out { opacity: 0; transform: translateY(-0.5em); transition-duration: 260ms; }
