@@ -327,6 +327,10 @@ html, body {
 
             <!-- Desktop Glitch Sweep: One soft aqua light sweep along staircase every ~12s (1.2s) -->
             <div class="hero-staircase-sweep desktop-only" aria-hidden="true"></div>
+            <!-- One-time 2-second startup illumination sweep on staircase planes -->
+            <div class="hero-startup-illumination desktop-only" aria-hidden="true"></div>
+            <!-- Subtle pointer-constrained surface lighting across staircase -->
+            <div class="hero-pointer-light desktop-only" aria-hidden="true"></div>
           </div>
         </div>
 
@@ -1127,21 +1131,22 @@ html, body {
     <!-- =========================================================================
          SECTION 04: Numbered Feature Sections (01 to 07)
          ========================================================================= -->
-    <section class="section-features" id="features">
+        <section class="section-features" id="features">
       <!-- Section anchor for in-motion navigation -->
       <div id="motion"></div>
 
       <div class="container features-container">
 
-        <!-- FEATURE 01: Instant Capture -->
+        <!-- FEATURE 01: Daily Capture & True Offline Engine -->
         <div class="feature-section" id="feature-01">
+          <div id="offline-demo"></div>
           <div class="feature-head">
             <div class="section-motif-bar" aria-hidden="true"><span class="motif-voxel-stack" aria-hidden="true"><svg  width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><g class="voxel-cube" style="--tx: -5px; --ty: 4px;"><polygon points="3,8 8,5 13,8 8,11" fill="#4DF3E0" /><polygon points="3,8 8,11 8,16 3,13" fill="#0E1316" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.3" /><polygon points="8,11 13,8 13,16 8,16" fill="#05080A" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.2" /></g><g class="voxel-cube" style="--tx: 5px; --ty: -4px;"><polygon points="11,4 16,1 21,4 16,7" fill="#4DF3E0" /><polygon points="11,4 16,7 16,12 11,9" fill="#0E1316" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.3" /><polygon points="16,7 21,4 21,9 16,12" fill="#05080A" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.2" /></g><rect class="voxel-pixel" x="19" y="0" width="2" height="2" fill="#4DF3E0" opacity="0.9" style="--tx: 3px; --ty: -3px;" /><rect class="voxel-pixel" x="1" y="14" width="2" height="2" fill="#4DF3E0" opacity="0.6" style="--tx: -3px; --ty: 3px;" /></svg></span></div>
             <h2 class="feature-title" data-appear style="--i: 1">
               Add an expense in two taps. It saves on your device right <span class="serif-accent">away</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Entries save to IndexedDB instantly. Nothing waits on an external network request.
+              Entries save to IndexedDB instantly. When connection drops, entries queue safely without loss.
             </p>
           </div>
 
@@ -1215,17 +1220,172 @@ html, body {
               <p class="caption-desc">Tap "Record Expense" to update your safe-to-spend balance and daily ledger immediately.</p>
             </div>
           </div>
+
+          <div style="margin-top: 24px;">
+            <div class="feature-demo-frame window-frame" data-appear style="--i: 3">
+            <div class="mac-window-topbar" data-allow-clip="true">
+              
+              <span class="mac-window-title" data-allow-clip="true">Offline Reliability Sandbox</span>
+            </div>
+            <div class="feature-card-body">
+              <div class="plug-card desktop-only lp-reveal" data-appear style="--i: 1">
+          <div class="plug-header">
+            <div class="network-toggle-wrapper">
+              <span class="plug-toggle-label">Network State:</span>
+              <button type="button" id="plug-sync-toggle-btn" class="replica-sync-pill plug-status-pill" title="Click to toggle Online/Offline mode">
+                <i class="fas fa-circle-check" id="plug-sync-icon"></i>
+                <span id="plug-sync-text">Cloud Synced</span>
+              </button>
+            </div>
+            <div id="plug-waiting-chip" class="plug-waiting-chip is-hidden">
+              <i class="fas fa-clock"></i>
+              <span><span id="plug-waiting-count">0</span> changes waiting for sync</span>
+            </div>
+            <div class="plug-balance-wrap">
+              Balance: <span id="plug-balance-val" class="lp-amount text-emerald plug-balance-val">₹48,250</span>
+            </div>
+          </div>
+
+          <!-- Quick Entry Form -->
+          <form class="plug-form" id="plug-tx-form">
+            <input type="number" id="plug-input-amt" class="plug-input" placeholder="Amount (₹)" required min="1" step="any">
+            <select id="plug-input-cat" class="plug-select">
+              <option value="Groceries">Groceries</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Transit">Transit</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Dining">Dining</option>
+            </select>
+            <input type="text" id="plug-input-note" class="plug-input" placeholder="Note (e.g. Kirana store)" required>
+            <button type="submit" class="plug-add-btn">
+              Record Entry
+            </button>
+          </form>
+
+          <!-- Transaction Ledger Feed -->
+          <div class="plug-tx-list" id="plug-tx-list">
+            <div class="plug-tx-item">
+              <span class="plug-tx-date">Yesterday</span>
+              <div class="plug-tx-desc-col">
+                <div class="plug-tx-note">Organic Groceries</div>
+                <div class="plug-tx-cat">Food &amp; Dining</div>
+              </div>
+              <div class="plug-tx-amt tx-out tabular-nums">−₹1,450</div>
+              <i class="fas fa-check sync-tick-icon" title="Synced"></i>
+            </div>
+          </div>
+
         </div>
 
-        <!-- FEATURE 02: Budgets That Talk Back -->
+        <!-- Mobile Phone Experience: Control-Centre Panel & Offline Sandbox (< 768px) -->
+        <div class="mobile-plug-phone mobile-only" id="mobile-plug-phone" data-allow-clip="true">
+          <!-- Control Centre Pull Handle -->
+          <div class="mob-control-centre-handle" id="mob-control-handle">
+            <div class="mob-handle-bar"></div>
+            <span><i class="fas fa-chevron-down"></i> Swipe down for Control Centre</span>
+          </div>
+
+          <!-- Dropdown Control Centre Panel -->
+          <div class="mob-control-centre-panel" id="mob-control-panel">
+            <div class="mob-cc-header">
+              <span>Control Centre</span>
+              <button type="button" class="mob-cc-close" id="mob-cc-close">&times;</button>
+            </div>
+            <div class="mob-cc-grid">
+              <button type="button" class="mob-cc-tile" id="mob-airplane-toggle">
+                <i class="fas fa-plane"></i>
+                <span>Airplane Mode</span>
+                <span class="mob-cc-status" id="mob-airplane-status">OFF</span>
+              </button>
+              <div class="mob-cc-tile active">
+                <i class="fas fa-wifi"></i>
+                <span>Wi-Fi</span>
+                <span class="mob-cc-status">ON</span>
+              </div>
+              <div class="mob-cc-tile active">
+                <i class="fas fa-tower-cell"></i>
+                <span>Cellular</span>
+                <span class="mob-cc-status">ON</span>
+              </div>
+            </div>
+            <div class="mob-cc-tip">Turn Airplane Mode ON to cut connectivity and see offline-first syncing in action.</div>
+          </div>
+
+          <!-- Inside Phone App -->
+          <div class="mob-plug-app">
+            <div class="mob-plug-header">
+              <div class="mob-plug-status-row">
+                <span class="mob-plug-status-pill online" id="mob-plug-pill">
+                  <i class="fas fa-circle-check text-emerald" id="mob-plug-icon"></i>
+                  <span id="mob-plug-status-text">Cloud Synced</span>
+                </span>
+                <span class="mob-plug-queue-badge" id="mob-plug-queue-badge" style="display: none;">0 changes waiting</span>
+              </div>
+              <div class="mob-plug-balance tabular-nums">
+                Balance: <strong id="mob-plug-bal" class="text-emerald">₹48,250</strong>
+              </div>
+            </div>
+
+            <!-- Mobile Quick Entry Form -->
+            <form class="mob-plug-form" id="mob-plug-tx-form">
+              <div class="mob-form-row">
+                <input type="number" id="mob-plug-amt" class="plug-input" placeholder="Amount (₹)" required min="1" step="any">
+                <select id="mob-plug-cat" class="plug-select">
+                  <option value="Groceries">Groceries</option>
+                  <option value="Dining">Dining</option>
+                  <option value="Transit">Transit</option>
+                  <option value="Bills">Bills</option>
+                </select>
+              </div>
+              <div class="mob-form-row">
+                <input type="text" id="mob-plug-note" class="plug-input" placeholder="Note (e.g. Kirana store)" required>
+                <button type="submit" class="btn-pill-emerald mob-plug-submit-btn">
+                  <span>Record</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Pull-to-refresh list -->
+            <div class="mob-ptr-container" id="mob-ptr-container">
+              <div class="mob-ptr-spinner" id="mob-ptr-spinner">
+                <i class="fas fa-rotate fa-spin text-emerald"></i>
+                <span>Pull down to sync...</span>
+              </div>
+              <div class="mob-plug-list" id="mob-plug-tx-list">
+                <div class="mob-tx-row">
+                  <div class="mob-tx-left">
+                    <span class="replica-cat-badge badge-groceries">Groceries</span>
+                    <span>Organic Groceries</span>
+                  </div>
+                  <div class="mob-tx-right">
+                    <span class="replica-tx-amt tx-out tabular-nums">−₹1,450</span>
+                    <i class="fas fa-check sync-tick-icon" title="Synced"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            </div>
+            <div class="feature-frame-caption">
+              <h3 class="caption-title">Offline mutation queue</h3>
+              <p class="caption-desc">Toggle network modes to watch entries persist locally and automatically flush when back online.</p>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+
+        <!-- FEATURE 02: Real-Time Category Caps & Visual Reports -->
         <div class="feature-section" id="feature-02">
+          <div id="feature-04"></div>
           <div class="feature-head">
             <div class="section-motif-bar" aria-hidden="true"><span class="motif-dither-cluster" aria-hidden="true"><svg  width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.95" /><rect x="6" y="1" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.8" /><rect x="6" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.6" /><rect x="10" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.9" /><rect x="10" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.5" /><rect x="14" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.75" /><rect x="14" y="9" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.35" /><rect x="18" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.65" /><rect x="18" y="11" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.25" /><rect x="2" y="9" width="2" height="2" fill="#4DF3E0" opacity="0.4" /></svg></span></div>
             <h2 class="feature-title" data-appear style="--i: 1">
-              Real-time category caps that protect your monthly <span class="serif-accent">surplus</span>.
+              Real-time category caps with visual monthly <span class="serif-accent">breakdowns</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Visual meters show remaining headroom so you never overspend by accident.
+              Visual meters alert you before categories overrun. Compare month-over-month distributions and audit real spending trends.
             </p>
           </div>
 
@@ -1293,6 +1453,105 @@ html, body {
               <h3 class="caption-title">Proactive budget alerts</h3>
               <p class="caption-desc">Tap "Add Dinner" to see color-shifting warning chips when spending nears category limits.</p>
             </div>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div class="feature-grid-two">
+            <div class="feature-demo-deck half-frame" data-appear style="--i: 3">
+              <div class="mac-window-topbar" data-allow-clip="true">
+                <span class="mac-window-title" data-allow-clip="true">Granular Category Caps</span>
+              </div>
+              <div class="feature-card-body cat-demo-body">
+                <div class="paper-card col-6 col-cat lp-reveal" data-appear style="--i: 1" id="paper-card-categories">
+              <div class="paper-card-crop">
+                <div class="paper-cat-chip-deck" id="paper-cat-chip-deck">
+                  <span class="cat-chip-btn active" data-cat="all">All</span>
+                  <span class="cat-chip-btn" data-cat="Food & Dining">Food</span>
+                  <span class="cat-chip-btn" data-cat="Transit & Fuel">Transit</span>
+                  <span class="cat-chip-btn" data-cat="Bills & Utilities">Bills</span>
+                </div>
+              </div>
+            </div>
+                <div class="cat-inspector-cap tabular-nums" id="cat-inspector-cap">₹4,200 / ₹5,000 cap</div>
+
+                <div class="cat-recent-list" id="cat-recent-list">
+                  <div class="cat-recent-row"><span>Weekly Groceries</span><span class="tabular-nums">−₹2,100</span></div>
+                  <div class="cat-recent-row"><span>Dinner with team</span><span class="tabular-nums">−₹1,450</span></div>
+                  <div class="cat-recent-row"><span>Coffee &amp; Bakery</span><span class="tabular-nums">−₹650</span></div>
+                </div>
+              </div>
+              <div class="feature-frame-caption">
+                <h3 class="caption-title">Category filters</h3>
+                <p class="caption-desc">Filter recent transactions by category chips to audit individual spending drivers.</p>
+              </div>
+            </div>
+
+            <div class="feature-demo-frame half-frame" data-appear style="--i: 4">
+              <div class="mac-window-topbar" data-allow-clip="true">
+                <span class="mac-window-title" data-allow-clip="true">Tactile Cash Flow Distribution</span>
+              </div>
+              <div class="feature-card-body">
+                <div class="paper-card col-6 col-reports lp-reveal" data-appear style="--i: 2" id="paper-card-reports">
+            <div class="paper-card-crop paper-donut-crop">
+              <div class="donut-month-switch">
+                <button type="button" class="month-switch-btn active" id="btn-month-this" data-month="this">This Month</button>
+                <button type="button" class="month-switch-btn" id="btn-month-last" data-month="last">Last Month</button>
+              </div>
+
+              <div class="donut-interactive-wrap">
+                <div class="donut-svg-container">
+                  <svg  width="130" height="130" viewBox="0 0 42 42" class="interactive-donut-svg" id="reports-donut-svg" aria-hidden="true">
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="rgba(0,0,0,0.06)" stroke-width="4.5"></circle>
+                    <circle class="mini-donut-slice slice-food" data-cat="Food" cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--accent)" stroke-width="4.5" stroke-dasharray="45 55" stroke-dashoffset="25"></circle>
+                    <circle class="mini-donut-slice slice-bills" data-cat="Bills" cx="21" cy="21" r="15.915" fill="transparent" stroke="#f59e0b" stroke-width="4.5" stroke-dasharray="26 74" stroke-dashoffset="80"></circle>
+                    <circle class="mini-donut-slice slice-transit" data-cat="Transit" cx="21" cy="21" r="15.915" fill="transparent" stroke="#f43f5e" stroke-width="4.5" stroke-dasharray="9 91" stroke-dashoffset="54"></circle>
+                    <circle class="mini-donut-slice slice-shopping" data-cat="Shopping" cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--accent-2)" stroke-width="4.5" stroke-dasharray="20 80" stroke-dashoffset="45"></circle>
+                  </svg>
+                  <div class="donut-center-info" id="donut-center-info">
+                    <div class="donut-center-amt tabular-nums" id="donut-center-amt">₹9,350</div>
+                    <div class="donut-center-lbl" id="donut-center-lbl">Total spent</div>
+                  </div>
+                </div>
+
+                <div class="mini-donut-legend" id="donut-legend">
+                  <div class="mini-donut-legend-row active" data-cat="Food"><span class="cat-swatch swatch-emerald"></span> Food (45%)</div>
+                  <div class="mini-donut-legend-row" data-cat="Bills"><span class="cat-swatch swatch-amber"></span> Bills (26%)</div>
+                  <div class="mini-donut-legend-row" data-cat="Transit"><span class="cat-swatch swatch-coral"></span> Transit (9%)</div>
+                  <div class="mini-donut-legend-row" data-cat="Shopping"><span class="cat-swatch swatch-purple"></span> Shopping (20%)</div>
+                </div>
+              </div>
+
+              <div class="donut-insight-line" id="donut-insight-line">
+                <i class="fas fa-arrow-trend-down text-emerald"></i>
+                <span id="donut-insight-text">Food down 12% vs last month</span>
+              </div>
+              <div class="donut-top-category-row" id="donut-top-category-row">
+                <i class="fas fa-crown text-amber"></i>
+                <span>Top category this month: <strong>Food ₹4,200</strong></span>
+              </div>
+            </div>
+
+          </div>
+              </div>
+              <div class="feature-frame-caption">
+                <h3 class="caption-title">Distribution chart</h3>
+                <p class="caption-desc">Interactive spending wheel comparing monthly distributions with automatic trend insights.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-demo-frame feature-shot-frame" data-appear style="--i: 5" data-allow-clip="true">
+            <div class="mac-window-topbar" data-allow-clip="true">
+              <span class="mac-window-title" data-allow-clip="true">The real reports screen</span>
+            </div>
+            <div class="feature-card-body" data-allow-clip="true">
+              <div class="rep-demo" id="rep-demo"></div>
+              <figure class="feature-product-figure">
+              <img src="assets/img/reports-desktop-b4-v1.webp" alt="Ledgio category spending report" width="1140" height="700" loading="lazy" class="product-shot-img">
+              <figcaption class="product-shot-caption">Real category breakdown from the local reports view.</figcaption>
+            </figure>
+            </div>
+          </div>
           </div>
         </div>
 
@@ -1459,116 +1718,6 @@ html, body {
           </div>
         </div>
 
-        <!-- FEATURE 04: Reports You Can Touch (2-Column Paper Cards) -->
-        <div class="feature-section" id="feature-04">
-          <div class="feature-head">
-            <div class="section-motif-bar" aria-hidden="true"><span class="motif-dither-cluster" aria-hidden="true"><svg  width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.95" /><rect x="6" y="1" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.8" /><rect x="6" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.6" /><rect x="10" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.9" /><rect x="10" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.5" /><rect x="14" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.75" /><rect x="14" y="9" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.35" /><rect x="18" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.65" /><rect x="18" y="11" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.25" /><rect x="2" y="9" width="2" height="2" fill="#4DF3E0" opacity="0.4" /></svg></span></div>
-            <h2 class="feature-title" data-appear style="--i: 1">
-              Clear spending breakdowns without opening a <span class="serif-accent">spreadsheet</span>.
-            </h2>
-            <p class="feature-desc" data-appear style="--i: 2">
-              Compare this month to last month and tap category segments to inspect exact purchases.
-            </p>
-          </div>
-
-          <div class="feature-grid-two">
-            <div class="feature-demo-deck half-frame" data-appear style="--i: 3">
-              <div class="mac-window-topbar" data-allow-clip="true">
-                <span class="mac-window-title" data-allow-clip="true">Granular Category Caps</span>
-              </div>
-              <div class="feature-card-body cat-demo-body">
-                <div class="paper-card col-6 col-cat lp-reveal" data-appear style="--i: 1" id="paper-card-categories">
-              <div class="paper-card-crop">
-                <div class="paper-cat-chip-deck" id="paper-cat-chip-deck">
-                  <span class="cat-chip-btn active" data-cat="all">All</span>
-                  <span class="cat-chip-btn" data-cat="Food & Dining">Food</span>
-                  <span class="cat-chip-btn" data-cat="Transit & Fuel">Transit</span>
-                  <span class="cat-chip-btn" data-cat="Bills & Utilities">Bills</span>
-                </div>
-              </div>
-            </div>
-                <div class="cat-inspector-cap tabular-nums" id="cat-inspector-cap">₹4,200 / ₹5,000 cap</div>
-
-                <div class="cat-recent-list" id="cat-recent-list">
-                  <div class="cat-recent-row"><span>Weekly Groceries</span><span class="tabular-nums">−₹2,100</span></div>
-                  <div class="cat-recent-row"><span>Dinner with team</span><span class="tabular-nums">−₹1,450</span></div>
-                  <div class="cat-recent-row"><span>Coffee &amp; Bakery</span><span class="tabular-nums">−₹650</span></div>
-                </div>
-              </div>
-              <div class="feature-frame-caption">
-                <h3 class="caption-title">Category filters</h3>
-                <p class="caption-desc">Filter recent transactions by category chips to audit individual spending drivers.</p>
-              </div>
-            </div>
-
-            <div class="feature-demo-frame half-frame" data-appear style="--i: 4">
-              <div class="mac-window-topbar" data-allow-clip="true">
-                <span class="mac-window-title" data-allow-clip="true">Tactile Cash Flow Distribution</span>
-              </div>
-              <div class="feature-card-body">
-                <div class="paper-card col-6 col-reports lp-reveal" data-appear style="--i: 2" id="paper-card-reports">
-            <div class="paper-card-crop paper-donut-crop">
-              <div class="donut-month-switch">
-                <button type="button" class="month-switch-btn active" id="btn-month-this" data-month="this">This Month</button>
-                <button type="button" class="month-switch-btn" id="btn-month-last" data-month="last">Last Month</button>
-              </div>
-
-              <div class="donut-interactive-wrap">
-                <div class="donut-svg-container">
-                  <svg  width="130" height="130" viewBox="0 0 42 42" class="interactive-donut-svg" id="reports-donut-svg" aria-hidden="true">
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="rgba(0,0,0,0.06)" stroke-width="4.5"></circle>
-                    <circle class="mini-donut-slice slice-food" data-cat="Food" cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--accent)" stroke-width="4.5" stroke-dasharray="45 55" stroke-dashoffset="25"></circle>
-                    <circle class="mini-donut-slice slice-bills" data-cat="Bills" cx="21" cy="21" r="15.915" fill="transparent" stroke="#f59e0b" stroke-width="4.5" stroke-dasharray="26 74" stroke-dashoffset="80"></circle>
-                    <circle class="mini-donut-slice slice-transit" data-cat="Transit" cx="21" cy="21" r="15.915" fill="transparent" stroke="#f43f5e" stroke-width="4.5" stroke-dasharray="9 91" stroke-dashoffset="54"></circle>
-                    <circle class="mini-donut-slice slice-shopping" data-cat="Shopping" cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--accent-2)" stroke-width="4.5" stroke-dasharray="20 80" stroke-dashoffset="45"></circle>
-                  </svg>
-                  <div class="donut-center-info" id="donut-center-info">
-                    <div class="donut-center-amt tabular-nums" id="donut-center-amt">₹9,350</div>
-                    <div class="donut-center-lbl" id="donut-center-lbl">Total spent</div>
-                  </div>
-                </div>
-
-                <div class="mini-donut-legend" id="donut-legend">
-                  <div class="mini-donut-legend-row active" data-cat="Food"><span class="cat-swatch swatch-emerald"></span> Food (45%)</div>
-                  <div class="mini-donut-legend-row" data-cat="Bills"><span class="cat-swatch swatch-amber"></span> Bills (26%)</div>
-                  <div class="mini-donut-legend-row" data-cat="Transit"><span class="cat-swatch swatch-coral"></span> Transit (9%)</div>
-                  <div class="mini-donut-legend-row" data-cat="Shopping"><span class="cat-swatch swatch-purple"></span> Shopping (20%)</div>
-                </div>
-              </div>
-
-              <div class="donut-insight-line" id="donut-insight-line">
-                <i class="fas fa-arrow-trend-down text-emerald"></i>
-                <span id="donut-insight-text">Food down 12% vs last month</span>
-              </div>
-              <div class="donut-top-category-row" id="donut-top-category-row">
-                <i class="fas fa-crown text-amber"></i>
-                <span>Top category this month: <strong>Food ₹4,200</strong></span>
-              </div>
-            </div>
-
-          </div>
-              </div>
-              <div class="feature-frame-caption">
-                <h3 class="caption-title">Distribution chart</h3>
-                <p class="caption-desc">Interactive spending wheel comparing monthly distributions with automatic trend insights.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="feature-demo-frame feature-shot-frame" data-appear style="--i: 5" data-allow-clip="true">
-            <div class="mac-window-topbar" data-allow-clip="true">
-              <span class="mac-window-title" data-allow-clip="true">The real reports screen</span>
-            </div>
-            <div class="feature-card-body" data-allow-clip="true">
-              <div class="rep-demo" id="rep-demo"></div>
-              <figure class="feature-product-figure">
-              <img src="assets/img/reports-desktop-b4-v1.webp" alt="Ledgio category spending report" width="1140" height="700" loading="lazy" class="product-shot-img">
-              <figcaption class="product-shot-caption">Real category breakdown from the local reports view.</figcaption>
-            </figure>
-            </div>
-          </div>
-        </div>
-
         <div class="feature-section" id="feature-05">
           <div class="feature-head">
             <div class="section-motif-bar" aria-hidden="true"><span class="motif-voxel-stack" aria-hidden="true"><svg  width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><g class="voxel-cube" style="--tx: -5px; --ty: 4px;"><polygon points="3,8 8,5 13,8 8,11" fill="#4DF3E0" /><polygon points="3,8 8,11 8,16 3,13" fill="#0E1316" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.3" /><polygon points="8,11 13,8 13,16 8,16" fill="#05080A" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.2" /></g><g class="voxel-cube" style="--tx: 5px; --ty: -4px;"><polygon points="11,4 16,1 21,4 16,7" fill="#4DF3E0" /><polygon points="11,4 16,7 16,12 11,9" fill="#0E1316" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.3" /><polygon points="16,7 21,4 21,9 16,12" fill="#05080A" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.2" /></g><rect class="voxel-pixel" x="19" y="0" width="2" height="2" fill="#4DF3E0" opacity="0.9" style="--tx: 3px; --ty: -3px;" /><rect class="voxel-pixel" x="1" y="14" width="2" height="2" fill="#4DF3E0" opacity="0.6" style="--tx: -3px; --ty: 3px;" /></svg></span></div>
@@ -1693,169 +1842,6 @@ html, body {
         </div>
 
         <!-- FEATURE 06: Works Offline, Syncs Later -->
-        <div class="feature-section" id="offline-demo">
-          <div class="feature-head">
-            <div class="section-motif-bar" aria-hidden="true"><span class="motif-dither-cluster" aria-hidden="true"><svg  width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.95" /><rect x="6" y="1" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.8" /><rect x="6" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.6" /><rect x="10" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.9" /><rect x="10" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.5" /><rect x="14" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.75" /><rect x="14" y="9" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.35" /><rect x="18" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.65" /><rect x="18" y="11" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.25" /><rect x="2" y="9" width="2" height="2" fill="#4DF3E0" opacity="0.4" /></svg></span></div>
-            <h2 class="feature-title" data-appear style="--i: 1">
-              Turn off your wifi anytime. Ledgio keeps <span class="serif-accent">working</span>.
-            </h2>
-            <p class="feature-desc" data-appear style="--i: 2">
-              Everything runs locally on your device. When connection returns, queued changes sync cleanly.
-            </p>
-          </div>
-
-          <div class="feature-demo-frame window-frame" data-appear style="--i: 3">
-            <div class="mac-window-topbar" data-allow-clip="true">
-              
-              <span class="mac-window-title" data-allow-clip="true">Offline Reliability Sandbox</span>
-            </div>
-            <div class="feature-card-body">
-              <div class="plug-card desktop-only lp-reveal" data-appear style="--i: 1">
-          <div class="plug-header">
-            <div class="network-toggle-wrapper">
-              <span class="plug-toggle-label">Network State:</span>
-              <button type="button" id="plug-sync-toggle-btn" class="replica-sync-pill plug-status-pill" title="Click to toggle Online/Offline mode">
-                <i class="fas fa-circle-check" id="plug-sync-icon"></i>
-                <span id="plug-sync-text">Cloud Synced</span>
-              </button>
-            </div>
-            <div id="plug-waiting-chip" class="plug-waiting-chip is-hidden">
-              <i class="fas fa-clock"></i>
-              <span><span id="plug-waiting-count">0</span> changes waiting for sync</span>
-            </div>
-            <div class="plug-balance-wrap">
-              Balance: <span id="plug-balance-val" class="lp-amount text-emerald plug-balance-val">₹48,250</span>
-            </div>
-          </div>
-
-          <!-- Quick Entry Form -->
-          <form class="plug-form" id="plug-tx-form">
-            <input type="number" id="plug-input-amt" class="plug-input" placeholder="Amount (₹)" required min="1" step="any">
-            <select id="plug-input-cat" class="plug-select">
-              <option value="Groceries">Groceries</option>
-              <option value="Utilities">Utilities</option>
-              <option value="Transit">Transit</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Dining">Dining</option>
-            </select>
-            <input type="text" id="plug-input-note" class="plug-input" placeholder="Note (e.g. Kirana store)" required>
-            <button type="submit" class="plug-add-btn">
-              Record Entry
-            </button>
-          </form>
-
-          <!-- Transaction Ledger Feed -->
-          <div class="plug-tx-list" id="plug-tx-list">
-            <div class="plug-tx-item">
-              <span class="plug-tx-date">Yesterday</span>
-              <div class="plug-tx-desc-col">
-                <div class="plug-tx-note">Organic Groceries</div>
-                <div class="plug-tx-cat">Food &amp; Dining</div>
-              </div>
-              <div class="plug-tx-amt tx-out tabular-nums">−₹1,450</div>
-              <i class="fas fa-check sync-tick-icon" title="Synced"></i>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Mobile Phone Experience: Control-Centre Panel & Offline Sandbox (< 768px) -->
-        <div class="mobile-plug-phone mobile-only" id="mobile-plug-phone" data-allow-clip="true">
-          <!-- Control Centre Pull Handle -->
-          <div class="mob-control-centre-handle" id="mob-control-handle">
-            <div class="mob-handle-bar"></div>
-            <span><i class="fas fa-chevron-down"></i> Swipe down for Control Centre</span>
-          </div>
-
-          <!-- Dropdown Control Centre Panel -->
-          <div class="mob-control-centre-panel" id="mob-control-panel">
-            <div class="mob-cc-header">
-              <span>Control Centre</span>
-              <button type="button" class="mob-cc-close" id="mob-cc-close">&times;</button>
-            </div>
-            <div class="mob-cc-grid">
-              <button type="button" class="mob-cc-tile" id="mob-airplane-toggle">
-                <i class="fas fa-plane"></i>
-                <span>Airplane Mode</span>
-                <span class="mob-cc-status" id="mob-airplane-status">OFF</span>
-              </button>
-              <div class="mob-cc-tile active">
-                <i class="fas fa-wifi"></i>
-                <span>Wi-Fi</span>
-                <span class="mob-cc-status">ON</span>
-              </div>
-              <div class="mob-cc-tile active">
-                <i class="fas fa-tower-cell"></i>
-                <span>Cellular</span>
-                <span class="mob-cc-status">ON</span>
-              </div>
-            </div>
-            <div class="mob-cc-tip">Turn Airplane Mode ON to cut connectivity and see offline-first syncing in action.</div>
-          </div>
-
-          <!-- Inside Phone App -->
-          <div class="mob-plug-app">
-            <div class="mob-plug-header">
-              <div class="mob-plug-status-row">
-                <span class="mob-plug-status-pill online" id="mob-plug-pill">
-                  <i class="fas fa-circle-check text-emerald" id="mob-plug-icon"></i>
-                  <span id="mob-plug-status-text">Cloud Synced</span>
-                </span>
-                <span class="mob-plug-queue-badge" id="mob-plug-queue-badge" style="display: none;">0 changes waiting</span>
-              </div>
-              <div class="mob-plug-balance tabular-nums">
-                Balance: <strong id="mob-plug-bal" class="text-emerald">₹48,250</strong>
-              </div>
-            </div>
-
-            <!-- Mobile Quick Entry Form -->
-            <form class="mob-plug-form" id="mob-plug-tx-form">
-              <div class="mob-form-row">
-                <input type="number" id="mob-plug-amt" class="plug-input" placeholder="Amount (₹)" required min="1" step="any">
-                <select id="mob-plug-cat" class="plug-select">
-                  <option value="Groceries">Groceries</option>
-                  <option value="Dining">Dining</option>
-                  <option value="Transit">Transit</option>
-                  <option value="Bills">Bills</option>
-                </select>
-              </div>
-              <div class="mob-form-row">
-                <input type="text" id="mob-plug-note" class="plug-input" placeholder="Note (e.g. Kirana store)" required>
-                <button type="submit" class="btn-pill-emerald mob-plug-submit-btn">
-                  <span>Record</span>
-                </button>
-              </div>
-            </form>
-
-            <!-- Pull-to-refresh list -->
-            <div class="mob-ptr-container" id="mob-ptr-container">
-              <div class="mob-ptr-spinner" id="mob-ptr-spinner">
-                <i class="fas fa-rotate fa-spin text-emerald"></i>
-                <span>Pull down to sync...</span>
-              </div>
-              <div class="mob-plug-list" id="mob-plug-tx-list">
-                <div class="mob-tx-row">
-                  <div class="mob-tx-left">
-                    <span class="replica-cat-badge badge-groceries">Groceries</span>
-                    <span>Organic Groceries</span>
-                  </div>
-                  <div class="mob-tx-right">
-                    <span class="replica-tx-amt tx-out tabular-nums">−₹1,450</span>
-                    <i class="fas fa-check sync-tick-icon" title="Synced"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-            </div>
-            <div class="feature-frame-caption">
-              <h3 class="caption-title">Offline mutation queue</h3>
-              <p class="caption-desc">Toggle network modes to watch entries persist locally and automatically flush when back online.</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
         <!-- FEATURE 07: Try the Maths (Simulator) -->
         <div class="feature-section" id="simulator">
@@ -1944,6 +1930,150 @@ html, body {
             </div>
           </div>
         </div>
+
+      </div>
+    </section>
+
+    <div class="ascii-ticker-divider" aria-hidden="true">&middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377;</div>
+
+    <!-- =========================================================================
+         SECTION 05: Frequently Asked Questions
+         ========================================================================= -->
+    <section class="section-faq" id="faq">
+      <div class="container faq-container">
+        <div class="faq-head" data-appear>
+          <div class="section-motif-bar" aria-hidden="true"><span class="motif-dither-cluster" aria-hidden="true"><svg  width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.95" /><rect x="6" y="1" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.8" /><rect x="6" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.6" /><rect x="10" y="3" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.9" /><rect x="10" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.5" /><rect x="14" y="5" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.75" /><rect x="14" y="9" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.35" /><rect x="18" y="7" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.65" /><rect x="18" y="11" width="2.5" height="2.5" fill="#4DF3E0" opacity="0.25" /><rect x="2" y="9" width="2" height="2" fill="#4DF3E0" opacity="0.4" /></svg></span></div>
+          <h2 class="faq-title" data-appear style="--i: 1">
+            Common <span class="serif-accent">questions</span>.
+          </h2>
+          <p class="faq-desc" data-appear style="--i: 2">
+            Straightforward answers about your data, privacy, and how sync works.
+          </p>
+        </div>
+
+        <div class="faq-accordion-wrap" data-appear style="--i: 3">
+          <div class="faq-accordion-list" role="region" aria-label="Frequently Asked Questions">
+
+            <div class="faq-accordion-item" id="faq-item-1">
+              <button type="button" class="faq-accordion-trigger" id="faq-btn-1" aria-expanded="false" aria-controls="faq-panel-1">
+                <span class="faq-trigger-num" aria-hidden="true">01</span>
+                <span class="faq-trigger-text">Is Ledgio really 100% free forever?</span>
+                <span class="faq-icon-circle" aria-hidden="true">
+                  <i class="fas fa-chevron-down faq-trigger-icon"></i>
+                </span>
+              </button>
+              <div id="faq-panel-1" class="faq-accordion-panel" role="region" aria-labelledby="faq-btn-1" hidden>
+                <div class="faq-panel-inner">
+                  <p>Yes. Ledgio is an open-source project released under the MIT license. There are no paid tiers, no premium paywalls, no trial expirations, and no ads. Every capability, from multi-currency tracking to reports and data export, is completely free.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-accordion-item" id="faq-item-2">
+              <button type="button" class="faq-accordion-trigger" id="faq-btn-2" aria-expanded="false" aria-controls="faq-panel-2">
+                <span class="faq-trigger-num" aria-hidden="true">02</span>
+                <span class="faq-trigger-text">Where is my data stored, and is it private?</span>
+                <span class="faq-icon-circle" aria-hidden="true">
+                  <i class="fas fa-chevron-down faq-trigger-icon"></i>
+                </span>
+              </button>
+              <div id="faq-panel-2" class="faq-accordion-panel" role="region" aria-labelledby="faq-btn-2" hidden>
+                <div class="faq-panel-inner">
+                  <p>Your ledger is saved on your device first in browser localStorage. When you sign in, changes sync securely to your private account in Supabase with strict Row Level Security. We never sell your data or show you ads; we only count anonymous app installs and launches.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-accordion-item" id="faq-item-3">
+              <button type="button" class="faq-accordion-trigger" id="faq-btn-3" aria-expanded="false" aria-controls="faq-panel-3">
+                <span class="faq-trigger-num" aria-hidden="true">03</span>
+                <span class="faq-trigger-text">Do I need to connect my real bank account?</span>
+                <span class="faq-icon-circle" aria-hidden="true">
+                  <i class="fas fa-chevron-down faq-trigger-icon"></i>
+                </span>
+              </button>
+              <div id="faq-panel-3" class="faq-accordion-panel" role="region" aria-labelledby="faq-btn-3" hidden>
+                <div class="faq-panel-inner">
+                  <p>No. Ledgio intentionally does not connect to bank APIs, require net banking passwords, or integrate third-party screen scrapers. Manual and quick entries give you total deliberate control and privacy over every recorded expense.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-accordion-item" id="faq-item-4">
+              <button type="button" class="faq-accordion-trigger" id="faq-btn-4" aria-expanded="false" aria-controls="faq-panel-4">
+                <span class="faq-trigger-num" aria-hidden="true">04</span>
+                <span class="faq-trigger-text">How do I back up or transfer my data to a new device?</span>
+                <span class="faq-icon-circle" aria-hidden="true">
+                  <i class="fas fa-chevron-down faq-trigger-icon"></i>
+                </span>
+              </button>
+              <div id="faq-panel-4" class="faq-accordion-panel" role="region" aria-labelledby="faq-btn-4" hidden>
+                <div class="faq-panel-inner">
+                  <p>You can export your entire ledger to portable JSON or CSV spreadsheet files at any time with a single click. When switching devices, simply import your JSON backup file or sign in to your free account for automatic secure cloud sync (encrypted in transit, private to your account).</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-accordion-item" id="faq-item-5">
+              <button type="button" class="faq-accordion-trigger" id="faq-btn-5" aria-expanded="false" aria-controls="faq-panel-5">
+                <span class="faq-trigger-num" aria-hidden="true">05</span>
+                <span class="faq-trigger-text">Which devices and operating systems are supported?</span>
+                <span class="faq-icon-circle" aria-hidden="true">
+                  <i class="fas fa-chevron-down faq-trigger-icon"></i>
+                </span>
+              </button>
+              <div id="faq-panel-5" class="faq-accordion-panel" role="region" aria-labelledby="faq-btn-5" hidden>
+                <div class="faq-panel-inner">
+                  <p>Ledgio is built as an installable Progressive Web Application (PWA). It works smoothly across modern browsers on iOS, Android, Windows, macOS, and Linux. You can add it directly to your home screen or desktop for a fast, full-screen offline experience.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ascii-ticker-divider" aria-hidden="true">&middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377; &middot; : + 0 1 $ &#8377;</div>
+
+    <!-- =========================================================================
+         SECTION 06: Closing Call to Action
+         ========================================================================= -->
+    <section class="section-closing" id="closing-cta">
+
+
+      <div class="container closing-container" data-appear>
+        <div class="closing-cta-card" data-appear>
+          <div class="section-motif-bar" aria-hidden="true"><span class="motif-voxel-stack" aria-hidden="true"><svg  width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><g class="voxel-cube" style="--tx: -5px; --ty: 4px;"><polygon points="3,8 8,5 13,8 8,11" fill="#4DF3E0" /><polygon points="3,8 8,11 8,16 3,13" fill="#0E1316" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.3" /><polygon points="8,11 13,8 13,16 8,16" fill="#05080A" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.2" /></g><g class="voxel-cube" style="--tx: 5px; --ty: -4px;"><polygon points="11,4 16,1 21,4 16,7" fill="#4DF3E0" /><polygon points="11,4 16,7 16,12 11,9" fill="#0E1316" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.3" /><polygon points="16,7 21,4 21,9 16,12" fill="#05080A" stroke="#4DF3E0" stroke-width="0.5" stroke-opacity="0.2" /></g><rect class="voxel-pixel" x="19" y="0" width="2" height="2" fill="#4DF3E0" opacity="0.9" style="--tx: 3px; --ty: -3px;" /><rect class="voxel-pixel" x="1" y="14" width="2" height="2" fill="#4DF3E0" opacity="0.6" style="--tx: -3px; --ty: 3px;" /></svg></span></div>
+          <h2 class="closing-title" data-appear style="--i: 1">
+          Set up your first budget in two <span class="serif-accent">minutes</span>.
+        </h2>
+          <p class="closing-desc" data-appear style="--i: 2">
+            Take complete control of your finances on your own device. Zero advertising telemetry, zero bank credentials, and zero subscription walls.
+          </p>
+          <div class="closing-actions" style="--i: 3">
+            <a href="signup.html" class="btn-pill-white nav-signup-btn">Create free account</a>
+          </div>
+          <div class="closing-guarantee" style="--i: 4"><span>Free forever</span><span>No bank credentials</span><span>Your data stays on your device</span></div>
+
+          <!-- Mobile App Store Install Card (< 768px) -->
+          <div class="mobile-closing-appstore mobile-only" style="display: none;">
+            <div class="mob-appstore-icon">
+              <i class="fas fa-chart-pie" aria-hidden="true"></i>
+            </div>
+            <h2 class="mob-appstore-title">Ledgio   Private Money Tracker</h2>
+            <p class="mob-appstore-tagline">100% Free   Trackers: 0   Offline-First</p>
+            <div class="mob-appstore-actions">
+              <a href="signup.html" class="btn-pill-emerald btn-mobile-signup mob-appstore-cta">
+                <span>Get Started Free</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+              <button type="button" class="btn-pill-ghost pwa-install-btn mob-appstore-pwa" data-pwa-install="true">
+                <i class="fas fa-download"></i>
+                <span>Install App</span>
+              </button>
+            </div>
+          </div>
 
       </div>
     </section>

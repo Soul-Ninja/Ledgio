@@ -10937,26 +10937,22 @@
             g63_4_passed = Boolean(allTargetsInside);
             g63_4_details = 'Targets: budgets(' + inTabBudgets + '), food(' + inFoodCard + '), goals(' + inTabGoals + '), ring(' + inRingCard + '), vault(' + inTabVault + '), hint(' + inVaultHint + '), dash(' + inTabDash + '), safe(' + inSafeStat + ')';
 
-            // Gate 63.5: All 7 numbered sections show live scenes / interactive content
+            // Gate 63.5: All 5 streamlined feature sections show live scenes / interactive content
             const f1 = pDoc63.getElementById('feature-01');
             const f2 = pDoc63.getElementById('feature-02');
             const f3 = pDoc63.getElementById('feature-03');
-            const f4 = pDoc63.getElementById('feature-04');
             const f5 = pDoc63.getElementById('feature-05');
-            const f6 = pDoc63.getElementById('offline-demo');
             const f7 = pDoc63.getElementById('simulator');
 
             const allSectionsExistAndHaveContent = Boolean(
-              f1 && f1.querySelector('.motion-scene') &&
+              f1 && f1.querySelector('.plug-card') &&
               f2 && f2.querySelector('.motion-scene') &&
               f3 && f3.querySelector('.motion-scene') &&
-              f4 && f4.querySelector('.feature-card-body') &&
               f5 && f5.querySelector('.feature-card-body') &&
-              f6 && f6.querySelector('.plug-card') &&
               f7 && f7.querySelector('.sim-grid')
             );
             g63_5_passed = Boolean(allSectionsExistAndHaveContent);
-            g63_5_details = 'All 7 numbered sections exist with active live DOM demo bodies';
+            g63_5_details = 'All 5 streamlined feature sections exist with active live DOM demo bodies';
           }
         } catch (e) {
           g63_1_details = e.message;
@@ -12791,7 +12787,7 @@
           const g75MobWin = gate75MobIframe.contentWindow;
 
           // Gate 75.1: Motifs present in section headers (problem, steps, features 01-05, offline, simulator, faq, closing)
-          const targetSectionIds = ['problem', 'steps', 'feature-01', 'feature-02', 'feature-03', 'feature-04', 'feature-05', 'offline-demo', 'simulator', 'faq', 'closing-cta'];
+          const targetSectionIds = ['problem', 'steps', 'feature-01', 'feature-02', 'feature-03', 'feature-05', 'simulator', 'faq', 'closing-cta'];
           let missingMotifs = 0;
           targetSectionIds.forEach(id => {
             const sec = g75Doc.getElementById(id);
