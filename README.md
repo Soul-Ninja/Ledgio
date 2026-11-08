@@ -70,7 +70,7 @@ Ledgio is a calm, honest ledger for your money. You log what you earn and spend,
 <td width="50%" valign="top">
 
 ### 📊 Dashboard at a glance
-Net worth, income, expenses, what's remaining and your savings rate, all on one screen. Tap the Income or Expenses card to flip between **₹ amounts and % of income**.
+Net worth, income, expenses, safe-to-spend remainder and savings rate on one screen. Flip between **amounts and percentage of income**. Fully optimized for mobile with touch targets and dynamic viewport units.
 
 ### 🏷️ Categories & spending limits
 10 built-in categories plus your own (**15 in total**), each with an icon and colour. Set a monthly limit per category and watch the bar move from green to amber to red as you approach it.
@@ -84,8 +84,8 @@ Track money you **lent** and money you **borrowed**, including bills someone pai
 </td>
 <td width="50%" valign="top">
 
-### 💵 Income & pay cycles
-A dated income ledger with opening balances and adjustments. Set your **payday** (1st–28th) so months follow your salary, and optionally auto-credit a **recurring salary** each cycle.
+### 💵 Pay cycles & recurring salary
+A dated income ledger with opening balances and adjustments. Set your **payday** (1st–28th) so months follow your salary, and optionally auto-credit a **recurring salary** each cycle with deterministic idempotency.
 
 ### 📈 Reports
 Spending by category as a donut chart with a tappable legend, plus a 6-month trend. Pick any month to look back.
@@ -156,7 +156,7 @@ The app is plain JavaScript split into domain modules. Each module exposes a sma
 
 | Module | Namespace | Responsibility |
 |:---|:---|:---|
-| `supabase-config-p3a-v1.js` | `SUPABASE_CONFIG` | Project URL/anon key, admin ids, the single Supabase client factory, app version |
+| `supabase-config.js` | `SUPABASE_CONFIG` | Project URL/anon key, admin ids, the single Supabase client factory, app version |
 | `sync-engine.js` | `LedgioSyncEngine` | Offline FIFO mutation queue, per-record ordering, backoff, auth refresh, dead-letter queue |
 | `income.js` | `LedgioIncome` | Dated income ledger, opening balances, pay-cycle ranges, deterministic ids |
 | `expenses.js` | `LedgioExpenses` | Expenses, category limits, 80% / 100% warnings |
