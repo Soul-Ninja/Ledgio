@@ -36,6 +36,12 @@ Free forever. No ads. No paywalls. Open source.
 
 <br>
 
+<video src="assets/video/ledgio-demo.mp4" width="640" controls muted playsinline poster="assets/img/landing/screen_dashboard_dark.webp"></video>
+<br>
+<sub>30-second demo · <a href="assets/video/ledgio-demo.mp4">open the video</a></sub>
+
+<br><br>
+
 <img src="assets/img/landing/screen_dashboard_dark.webp" alt="Ledgio dashboard in dark mode" width="260">
 &nbsp;&nbsp;
 <img src="assets/img/landing/screen_reports.webp" alt="Ledgio reports with spending donut chart" width="260">
@@ -216,9 +222,9 @@ erDiagram
 | **Offline** | Service worker app-shell cache, local-first storage, custom sync queue |
 | **Charts** | [Chart.js](https://www.chartjs.org/) |
 | **Security** | Web Crypto (salted SHA-256 PIN), WebAuthn biometric unlock |
-| **Type & icons** | Plus Jakarta Sans, Space Grotesk, Instrument Serif, Font Awesome 6 |
+| **Type & icons** | Inter, Geist Mono, Instrument Serif (self-hosted), Font Awesome 6 |
 | **Hosting** | Cloudflare Pages (<https://ledgio.pages.dev/>) |
-| **Quality** | 334 headless-browser runtime gates, innerHTML security audit, overflow & desktop-parity checks |
+| **Quality** | 451 headless-browser runtime gates, innerHTML security audit, overflow & desktop-parity checks |
 
 <br>
 
@@ -308,7 +314,7 @@ The source files (`*.js`, `*.css`) are what you edit; the `*.min.*` files are ge
 | Command | What it does |
 |:---|:---|
 | `scripts/build.ps1` | Minifies JS/CSS, syncs SQL migrations, and **fails** if the version differs between `supabase-config-p3a-v1.js`, `sw.js`, this README badge and any `?v=` in the HTML files |
-| `scripts/test_runtime_gate.ps1` | Runs **334 runtime gates** in headless Edge against `tests/headless_regression.html` (sync engine, accounting, vault, viewport, landing page integrity and more) |
+| `scripts/test_runtime_gate.ps1` | Runs **451 runtime gates** in headless Edge against `tests/headless_regression.html` (sync engine, accounting, vault, viewport, landing page integrity and more) |
 | `scripts/verify_innerhtml_audit.ps1` | Checks that every `innerHTML` sink is listed and reviewed in [`docs/security/innerhtml-audit.md`](docs/security/innerhtml-audit.md) |
 | `scripts/check_overflow.ps1` | Fails if the landing page scrolls sideways at 360–1440px |
 | `scripts/verify_desktop_parity.ps1` | Pixel-compares desktop and tablet screenshots before and after a change |
@@ -324,7 +330,7 @@ Every release must verify the following automated gates and checks before taggin
 
 1. **Minification & Asset Verification**: Run `scripts/build.ps1` — validates version string parity across `supabase-config-p3a-v1.js`, `sw.js`, `README.md`, and HTML files; ensures all referenced scripts, styles, icons, and images exist; runs `node --check` on all minified bundles.
 2. **Horizontal Overflow Audit**: Run `scripts/check_overflow.ps1` — validates zero horizontal overflow from 320px to 1440px viewports.
-3. **Runtime Regression Suite**: Run `scripts/test_runtime_gate.ps1` — ensures all 334+ automated DOM runtime assertions pass (0 failures).
+3. **Runtime Regression Suite**: Run `scripts/test_runtime_gate.ps1` — ensures all 451 automated DOM runtime assertions pass (0 failures).
 4. **Live Smoke Test**: Verify core flows (index, login, signup, reset-password, dashboard) on `https://ledgio.pages.dev` with zero console errors and <1s local-first paint.
 
 <details>
