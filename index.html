@@ -1033,7 +1033,7 @@ html, body {
             Most budgeting apps want your bank login. Ledgio <span class="serif-accent">doesn't</span>.
           </h2>
           <p class="problem-desc" style="--i: 2">
-            Ledgio keeps your entries in your own browser, encrypted with a key only you hold. There is nothing to link, and nothing for us to sell. Syncing between devices is optional.
+            Ledgio stores your financial entries directly on your device. No bank credentials, no data selling, and no subscription fees. Syncing between devices is optional.
           </p>
         </div>
 
@@ -1043,7 +1043,7 @@ html, body {
               <i class="fas fa-laptop"></i>
             </div>
             <h3 class="why-card-title">On your device first</h3>
-            <p class="why-card-desc">Entries are saved in your browser before anything else happens.</p>
+            <p class="why-card-desc">Every transaction writes directly to your browser's local storage.</p>
           </div>
 
           <div class="why-card" data-appear style="--i: 4">
@@ -1051,7 +1051,7 @@ html, body {
               <i class="fas fa-shield-halved"></i>
             </div>
             <h3 class="why-card-title">No bank login</h3>
-            <p class="why-card-desc">You type in what you spend. Ledgio never asks for account access.</p>
+            <p class="why-card-desc">You type what you spend. Ledgio never asks for credentials or links to your bank.</p>
           </div>
 
           <div class="why-card" data-appear style="--i: 5">
@@ -1059,7 +1059,7 @@ html, body {
               <i class="fas fa-file-export"></i>
             </div>
             <h3 class="why-card-title">Yours to take</h3>
-            <p class="why-card-desc">Export or move your data to another device whenever you want.</p>
+            <p class="why-card-desc">Export clean JSON anytime or sync across devices through your private account.</p>
           </div>
         </div>
       </div>
@@ -1115,7 +1115,7 @@ html, body {
             </div>
             <h3 class="step-card-title">Private sync</h3>
             <p class="step-card-body">
-              Sync across your phone and laptop whenever you want, protected by end-to-end encryption.
+              Sync across phone and laptop through your private Supabase database when you choose.
             </p>
           </div>
         </div>
@@ -1141,7 +1141,7 @@ html, body {
               Add an expense in two taps. It saves on your device right <span class="serif-accent">away</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Entries save to your local browser storage instantly. Nothing waits for a remote server.
+              Entries save to IndexedDB instantly. Nothing waits on an external network request.
             </p>
           </div>
 
@@ -1211,8 +1211,8 @@ html, body {
           </div>
             </div>
             <div class="feature-frame-caption">
-              <h3 class="caption-title">Saved on your device</h3>
-              <p class="caption-desc">Your entries write straight to IndexedDB in your browser.</p>
+              <h3 class="caption-title">Instant offline capture</h3>
+              <p class="caption-desc">Tap "Record Expense" to update your safe-to-spend balance and daily ledger immediately.</p>
             </div>
           </div>
         </div>
@@ -1225,7 +1225,7 @@ html, body {
               Real-time category caps that protect your monthly <span class="serif-accent">surplus</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Visual bars show how much room you have left in each category before the month wraps up.
+              Visual meters show remaining headroom so you never overspend by accident.
             </p>
           </div>
 
@@ -1290,8 +1290,8 @@ html, body {
           </div>
             </div>
             <div class="feature-frame-caption">
-              <h3 class="caption-title">Budget warnings</h3>
-              <p class="caption-desc">Simple progress bars alert you as spending approaches your category limit.</p>
+              <h3 class="caption-title">Proactive budget alerts</h3>
+              <p class="caption-desc">Tap "Add Dinner" to see color-shifting warning chips when spending nears category limits.</p>
             </div>
           </div>
         </div>
@@ -1304,7 +1304,7 @@ html, body {
               Track savings milestones and peer debts with <span class="serif-accent">ease</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Visual rings for emergency funds alongside clear records of money lent to friends.
+              Visual progress for emergency runway alongside settlement logs for money lent to friends.
             </p>
           </div>
 
@@ -1381,8 +1381,8 @@ html, body {
           </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Savings goals</h3>
-                <p class="caption-desc">See how many months of living expenses your savings cover.</p>
+                <h3 class="caption-title">Savings runway</h3>
+                <p class="caption-desc">Tap "Add Funds" to update your buffer and see your target completion timeline adjust.</p>
               </div>
             </div>
 
@@ -1452,8 +1452,8 @@ html, body {
           </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Friend loans</h3>
-                <p class="caption-desc">Keep a clean record of money lent and repayments received.</p>
+                <h3 class="caption-title">Peer loan ledger</h3>
+                <p class="caption-desc">Tap "Log Repayment" to record partial or full settlements with verified UPI timestamps.</p>
               </div>
             </div>
           </div>
@@ -1467,7 +1467,7 @@ html, body {
               Clear spending breakdowns without opening a <span class="serif-accent">spreadsheet</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Tap any category to see recent purchases and compare this month to last month.
+              Compare this month to last month and tap category segments to inspect exact purchases.
             </p>
           </div>
 
@@ -1496,8 +1496,8 @@ html, body {
                 </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Category Caps &amp; Chips</h3>
-                <p class="caption-desc">Tap any category chip to inspect budget headroom and recent ledger rows.</p>
+                <h3 class="caption-title">Category filters</h3>
+                <p class="caption-desc">Filter recent transactions by category chips to audit individual spending drivers.</p>
               </div>
             </div>
 
@@ -1549,8 +1549,8 @@ html, body {
           </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Visual Reports &amp; Momentum</h3>
-                <p class="caption-desc">Interactive cash flow distribution. Tap segments to inspect exact category spending.</p>
+                <h3 class="caption-title">Distribution chart</h3>
+                <p class="caption-desc">Interactive spending wheel comparing monthly distributions with automatic trend insights.</p>
               </div>
             </div>
           </div>
@@ -1599,8 +1599,8 @@ html, body {
           </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Multi-Currency Conversion</h3>
-                <p class="caption-desc">Instant offline exchange rate conversions between 12 currencies with zero trackers.</p>
+                <h3 class="caption-title">Multi-currency engine</h3>
+                <p class="caption-desc">Cycle between 12 currencies with zero third-party exchange rate trackers.</p>
               </div>
             </div>
 
@@ -1620,8 +1620,8 @@ html, body {
           </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Encrypted Financial Vault</h3>
-                <p class="caption-desc">Client-side AES-GCM encryption. Sensitive account numbers are decrypted only when you touch them.</p>
+                <h3 class="caption-title">Client-side vault</h3>
+                <p class="caption-desc">AES-GCM 256-bit encryption. Sensitive account numbers decrypt in-memory only on touch.</p>
               </div>
             </div>
           </div>
@@ -1664,8 +1664,8 @@ html, body {
           </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Installable Native Experience</h3>
-                <p class="caption-desc">Works as a fast desktop and mobile Progressive Web App with zero app store gatekeepers.</p>
+                <h3 class="caption-title">Installable PWA</h3>
+                <p class="caption-desc">Install directly to your home screen or desktop without app store permissions.</p>
               </div>
             </div>
 
@@ -1685,8 +1685,8 @@ html, body {
           </div>
               </div>
               <div class="feature-frame-caption">
-                <h3 class="caption-title">Zero Analytics   Zero Cookies</h3>
-                <p class="caption-desc">True local-first autonomy. Your financial ledger belongs exclusively to you.</p>
+                <h3 class="caption-title">Zero Analytics &bull; Zero Cookies</h3>
+                <p class="caption-desc">Zero tracking scripts, zero advertising cookies, and zero behavioral telemetry.</p>
               </div>
             </div>
           </div>
@@ -1700,7 +1700,7 @@ html, body {
               Turn off your wifi anytime. Ledgio keeps <span class="serif-accent">working</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Everything runs locally on your device. When you get back online, changes sync smoothly.
+              Everything runs locally on your device. When connection returns, queued changes sync cleanly.
             </p>
           </div>
 
@@ -1850,8 +1850,8 @@ html, body {
 
             </div>
             <div class="feature-frame-caption">
-              <h3 class="caption-title">Airplane Mode Simulation</h3>
-              <p class="caption-desc">Simulate cutting your network connection and watch local mutations queue without errors.</p>
+              <h3 class="caption-title">Offline mutation queue</h3>
+              <p class="caption-desc">Toggle network modes to watch entries persist locally and automatically flush when back online.</p>
             </div>
           </div>
         </div>
@@ -1865,7 +1865,7 @@ html, body {
               Find your safe-to-spend number in <span class="serif-accent">seconds</span>.
             </h2>
             <p class="feature-desc" data-appear style="--i: 2">
-              Move the sliders to see how your income and expenses change your monthly buffer.
+              Move the sliders to project how income and living costs shape your monthly savings buffer.
             </p>
           </div>
 
@@ -1939,8 +1939,8 @@ html, body {
 
             </div>
             <div class="feature-frame-caption">
-              <h3 class="caption-title">Instant Surplus Mathematics</h3>
-              <p class="caption-desc">Client-side ledger algorithms calculate savings capacity and months of runway buffer.</p>
+              <h3 class="caption-title">Interactive savings model</h3>
+              <p class="caption-desc">Client-side projection estimating monthly surplus and 1-year accumulated savings runway.</p>
             </div>
           </div>
         </div>
