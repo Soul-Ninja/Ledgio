@@ -52,21 +52,24 @@ body.c1-page {
   color: var(--accent);
 }
 .c1-auth .auth-split-wrapper {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 100svh;
-  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 60% 40%, rgba(77,243,224,0.12) 0%, transparent 55%),
+              radial-gradient(circle at 20% 80%, rgba(16,49,47,0.3) 0%, transparent 60%),
+              linear-gradient(180deg, rgba(2,4,5,0.4) 0%, rgba(2,4,5,0.1) 40%, #020405 100%),
+              url('../img/hero-art-v1.webp') center center / cover no-repeat;
 }
 .c1-auth .auth-brand-panel {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(32px, 4.5vw, 64px);
+  padding: clamp(36px, 4.5vw, 64px);
   position: relative;
-  overflow: hidden;
-  background: radial-gradient(circle at 65% 45%, rgba(77,243,224,0.07) 0%, transparent 60%),
-              linear-gradient(90deg, rgba(2,4,5,0.15) 0%, rgba(2,4,5,0.45) 75%, #020405 100%),
-              linear-gradient(180deg, rgba(2,4,5,0.4) 0%, rgba(2,4,5,0.1) 40%, #020405 100%),
-              url('../img/hero-art-v1.webp') right 40% / cover;
+  z-index: 2;
+  background: none;
   --art-play: paused;
 }
 .c1-auth .auth-brand-panel .auth-panel-logo {
@@ -125,11 +128,13 @@ body.c1-page {
 .c1-auth .auth-glass-card {
   max-width: 500px;
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border-subtle);
+  background: rgba(10, 15, 18, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(77, 243, 224, 0.18);
   border-radius: 24px;
   padding: 30px;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(77, 243, 224, 0.05);
 }
 .c1-auth .auth-card-avatar {
   width: 28px;
@@ -149,20 +154,24 @@ body.c1-page {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--bg);
-  padding: clamp(24px, 4vw, 56px);
+  background: none;
+  padding: clamp(24px, 3.5vw, 48px);
   min-height: 100svh;
   min-width: 0;
+  position: relative;
+  z-index: 2;
 }
 .c1-auth .auth-form-container {
   max-width: 520px;
   width: 100%;
   margin: auto;
   padding: clamp(28px, 3.5vw, 44px);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(77, 243, 224, 0.16);
   border-radius: 26px;
-  background: var(--surface);
-  box-shadow: inset 0 1px 0 rgba(234,242,242,.06), 0 24px 64px rgba(0, 0, 0, 0.6);
+  background: rgba(14, 19, 23, 0.72);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 35px rgba(77, 243, 224, 0.04), inset 0 1px 0 rgba(234, 242, 242, 0.08);
 }
 .c1-auth .auth-panel-logo { color: var(--text); font-size: 22px; margin-bottom: 36px; min-height: 44px; align-items: flex-start; }
 .c1-auth .mobile-auth-header { display: block; padding: 0; margin: 0; max-width: none; }
