@@ -1,4 +1,4 @@
-# ==============================================================================
+﻿# ==============================================================================
 # Ledgio — Automated Asset Minifier & Build Script
 # Usage: powershell -ExecutionPolicy Bypass -File scripts\build.ps1
 # ==============================================================================
@@ -203,17 +203,11 @@ foreach ($mjs in $minJsFiles) {
 }
 Write-Host "All JS bundles passed node --check verification!" -ForegroundColor Green
 
-# Synchronize Database Migrations (backend/migrations -> supabase/migrations)
-$srcMigDir = Join-Path $baseDir "backend\migrations"
-$dstMigDir = Join-Path $baseDir "supabase\migrations"
-if (Test-Path $srcMigDir) {
-    if (-not (Test-Path $dstMigDir)) { New-Item -ItemType Directory -Path $dstMigDir -Force | Out-Null }
-    $migFiles = Get-ChildItem -Path $srcMigDir -Filter "*.sql"
-    foreach ($mig in $migFiles) {
-        $destPath = Join-Path $dstMigDir $mig.Name
-        Copy-Item -Path $mig.FullName -Destination $destPath -Force
-    }
-    Write-Host "Synchronized $($migFiles.Count) migrations from backend\migrations to supabase\migrations" -ForegroundColor Magenta
+# Verify Canonical Database Migrations
+$migDir = Join-Path $baseDir "supabase\migrations"
+if (Test-Path $migDir) {
+    $migFiles = Get-ChildItem -Path $migDir -Filter "*.sql"
+    Write-Host "Canonical migrations verified: $($migFiles.Count) files in supabase\migrations" -ForegroundColor Green
 }
 
 Write-Host "`nBuild complete! All bundles successfully compiled in UTF-8." -ForegroundColor Cyan

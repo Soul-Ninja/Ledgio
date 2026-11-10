@@ -62,7 +62,7 @@ Anonymous telemetry for app launches, standalone PWA ratio, and platform breakdo
 4. RLS policies will automatically secure all tables so users can only read and write their own financial records.
 
 ### Option B: Incremental Migration Sequence
-For existing Ledgio installations, run the migration scripts in `backend/migrations/` in the following sequence:
+For existing Ledgio installations, run the migration scripts in `supabase/migrations/` in the following sequence:
 
 1. `phase3_offline_sync.sql` — Offline sync queue support, timestamps, and profiles sync
 2. `phase4_savings_goals.sql` — Savings goals and milestone deposits tables & RLS

@@ -19,7 +19,7 @@ Free forever. No ads. No paywalls. Open source.
 
 <br>
 
-[![Version](https://img.shields.io/badge/Version-1.12.4-emerald.svg?style=flat-square)](https://github.com/Soul-Ninja/Ledgio/commits/main)
+[![Version](https://img.shields.io/badge/Version-1.12.5-emerald.svg?style=flat-square)](https://github.com/Soul-Ninja/Ledgio/commits/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3b82f6?style=flat-square)](LICENSE)
 [![Runtime gates](https://img.shields.io/github/actions/workflow/status/Soul-Ninja/Ledgio/runtime-gate.yml?style=flat-square&label=runtime%20gates)](https://github.com/Soul-Ninja/Ledgio/actions/workflows/runtime-gate.yml)
 [![Last commit](https://img.shields.io/github/last-commit/Soul-Ninja/Ledgio?style=flat-square&color=8b5cf6)](https://github.com/Soul-Ninja/Ledgio/commits/main)
@@ -249,20 +249,20 @@ In the [Supabase SQL editor](https://supabase.com/dashboard), run these files **
 | # | File | Adds |
 |:---:|:---|:---|
 | 1 | `backend/supabase-schema.sql` | Base tables and RLS policies |
-| 2 | `backend/migrations/phase3_offline_sync.sql` | Sync timestamps and triggers |
-| 3 | `backend/migrations/phase4_savings_goals.sql` | Goals and deposits |
-| 4 | `backend/migrations/phase5_loans.sql` | Loans and settlements |
-| 5 | `backend/migrations/phase5b_announcements.sql` | Announcements |
-| 6 | `backend/migrations/phase5c_analytics_rls.sql` | Analytics read lockdown |
-| 7 | `backend/migrations/phase5d_analytics_hardening.sql` | Analytics constraints |
-| 8 | `backend/migrations/phase6_income_entries.sql` | Income ledger |
-| 9 | `backend/migrations/phase6b_loan_linked_income.sql` | Loan ↔ income links |
-| 10 | `backend/migrations/phase7_categories.sql` | Custom categories |
-| 11 | `backend/migrations/phase7b_reset_epoch.sql` | Multi-device reset epoch |
-| 12 | `backend/migrations/phase8_loan_kinds.sql` | Cash vs paid-on-your-behalf loans |
-| 13 | `backend/migrations/phase9_hardening.sql` | Stricter profile and analytics policies |
-| 14 | `backend/migrations/phase9b_analytics_userid.sql` | Analytics cannot carry another user's id |
-| 15 | `backend/migrations/phase10_analytics_retention.sql` | Nightly clean-up of launch analytics older than 90 days |
+| 2 | `supabase/migrations/phase3_offline_sync.sql` | Sync timestamps and triggers |
+| 3 | `supabase/migrations/phase4_savings_goals.sql` | Goals and deposits |
+| 4 | `supabase/migrations/phase5_loans.sql` | Loans and settlements |
+| 5 | `supabase/migrations/phase5b_announcements.sql` | Announcements |
+| 6 | `supabase/migrations/phase5c_analytics_rls.sql` | Analytics read lockdown |
+| 7 | `supabase/migrations/phase5d_analytics_hardening.sql` | Analytics constraints |
+| 8 | `supabase/migrations/phase6_income_entries.sql` | Income ledger |
+| 9 | `supabase/migrations/phase6b_loan_linked_income.sql` | Loan ↔ income links |
+| 10 | `supabase/migrations/phase7_categories.sql` | Custom categories |
+| 11 | `supabase/migrations/phase7b_reset_epoch.sql` | Multi-device reset epoch |
+| 12 | `supabase/migrations/phase8_loan_kinds.sql` | Cash vs paid-on-your-behalf loans |
+| 13 | `supabase/migrations/phase9_hardening.sql` | Stricter profile and analytics policies |
+| 14 | `supabase/migrations/phase9b_analytics_userid.sql` | Analytics cannot carry another user's id |
+| 15 | `supabase/migrations/phase10_analytics_retention.sql` | Nightly clean-up of launch analytics older than 90 days |
 | ✓ | `backend/verify_schema_phase9.sql` | Optional: prints PASS/FAIL for the security policies |
 
 </details>
@@ -343,8 +343,8 @@ Ledgio/
 │   ├── js/                 domain modules, see "How it works"
 │   ├── img/landing/        real app screenshots (WebP)
 │   └── icons/
-├── backend/                schema, migrations, verification SQL
-├── supabase/migrations/    mirror of backend/migrations (synced by build)
+├── backend/                schema, verification SQL
+├── supabase/migrations/    canonical SQL migrations (single source of truth)
 ├── scripts/                build, tests, screenshot and audit tooling
 ├── tests/                  headless regression and screenshot harnesses
 └── docs/                   security audit, UI review screenshots, debugging notes

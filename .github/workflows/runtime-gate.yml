@@ -19,6 +19,21 @@ jobs:
         run: |
           powershell -ExecutionPolicy Bypass -File scripts/verify_innerhtml_audit.ps1
 
+      - name: Verify Version Consistency
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/check_version_consistency.ps1
+
+      - name: Verify Minified Bundles Are Current
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/check_build_current.ps1
+
+      - name: Verify Database Migrations Integrity
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/check_migrations.ps1
+
       - name: Execute Runtime Regression Gate Test Suite
         shell: powershell
         run: |
