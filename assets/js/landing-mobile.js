@@ -1369,6 +1369,16 @@
       });
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     // Form submission
     if (plugForm) {
       plugForm.addEventListener('submit', function(e) {
@@ -1393,8 +1403,8 @@
 
         row.innerHTML =
           '<div class="mob-tx-left">' +
-            '<span class="replica-cat-badge badge-groceries">' + cat + '</span>' +
-            '<span>' + note + '</span>' +
+            '<span class="replica-cat-badge badge-groceries">' + escapeHtml(cat) + '</span>' +
+            '<span>' + escapeHtml(note) + '</span>' +
           '</div>' +
           '<div class="mob-tx-right">' +
             '<span class="replica-tx-amt tx-out tabular-nums">−₹' + amt.toLocaleString('en-IN') + '</span>' +

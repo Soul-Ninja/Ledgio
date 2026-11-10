@@ -14,6 +14,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Verify innerHTML Security Audit Gate
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/verify_innerhtml_audit.ps1
+
       - name: Execute Runtime Regression Gate Test Suite
         shell: powershell
         run: |
