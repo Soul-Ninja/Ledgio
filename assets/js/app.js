@@ -94,7 +94,7 @@
       window.location.hostname === 'localhost' ||
       window.location.protocol === 'file:'
     );
-    if (isDevOrTest && /^[a-zA-Z0-9_\-\.]+$/.test(trimmed)) {
+    if (isDevOrTest && /^[a-zA-Z0-9_.-]+$/.test(trimmed)) {
       return true;
     }
     return false;
@@ -171,6 +171,7 @@
   // Resolve shared Supabase singleton client (getSupabaseClient is the sole createClient factory)
   let supabase = window.supabaseClient || (typeof window.getSupabaseClient === 'function' ? window.getSupabaseClient() : null);
 
+  // eslint-disable-next-line no-unused-vars -- legacy client helper
   function getClient() {
     if (!supabase) {
       supabase = window.supabaseClient || (typeof window.getSupabaseClient === 'function' ? window.getSupabaseClient() : null);
@@ -180,6 +181,7 @@
 
   // Phase 6: Income Ledger State & Storage Bridge
   let legacyIncome = 0;
+  // eslint-disable-next-line no-unused-vars -- legacy flag
   let hasPulledIncomeEntries = false;
 
   function loadIncomeEntries() {
@@ -371,6 +373,7 @@
       return true;
     }
   });
+  // eslint-disable-next-line no-unused-vars -- legacy state
   let isVaultLocked = false;
   let isStealthModeActive = false;
   // Persistent per-card view preferences (Device-local only: ledgio_stat_views_<userId>)
@@ -395,7 +398,7 @@
         income: sanitizeStatView(parsed.income),
         expenses: sanitizeStatView(parsed.expenses)
       };
-    } catch (e) {
+    } catch {
       return { income: 'number', expenses: 'number' };
     }
   }
@@ -407,7 +410,7 @@
         expenses: sanitizeStatView(modes?.expenses)
       };
       localStorage.setItem(getStatViewsStorageKey(userId), JSON.stringify(payload));
-    } catch (e) {
+    } catch {
       // Storage access failure (e.g., quota exceeded / private mode) - in-memory state continues
     }
   }
@@ -438,6 +441,7 @@
   // Phase 3: Offline-First Sync Engine Bridge (extracted to sync-engine.js)
   // =========================================================================
   let isSyncProcessing = false;
+  // eslint-disable-next-line no-unused-vars -- legacy state
   let isWaitingForNetwork = false;
   let isSignInRequired = false;
 
@@ -475,7 +479,7 @@
       const raw = localStorage.getItem(getResetEpochStorageKey(userId));
       const num = parseInt(raw, 10);
       return (!isNaN(num) && num >= 0) ? num : 0;
-    } catch (e) {
+    } catch {
       return 0;
     }
   }
@@ -485,7 +489,7 @@
       const val = Math.max(0, parseInt(epoch, 10) || 0);
       localStorage.setItem(getResetEpochStorageKey(userId), String(val));
       return val;
-    } catch (e) {
+    } catch {
       return 0;
     }
   }
@@ -528,11 +532,11 @@
           saveDeadLetterQueue([]);
           localStorage.removeItem(getIncomeEntriesStorageKey());
           localStorage.removeItem(getCategoriesCacheKey());
-          try { localStorage.removeItem('ledgio_income_pulled_' + getUserId()); } catch (e) {}
-          try { localStorage.removeItem('ledgio_legacy_income_' + getUserId()); } catch (e) {}
-          try { localStorage.removeItem('ledgio_last_sync_' + getUserId()); } catch (e) {}
-          try { localStorage.removeItem(getVaultStorageKey()); } catch (e) {}
-          try { localStorage.removeItem('ledgio_vault_default_user'); } catch (e) {}
+          try { localStorage.removeItem('ledgio_income_pulled_' + getUserId()); } catch { /* ignore */ }
+          try { localStorage.removeItem('ledgio_legacy_income_' + getUserId()); } catch { /* ignore */ }
+          try { localStorage.removeItem('ledgio_last_sync_' + getUserId()); } catch { /* ignore */ }
+          try { localStorage.removeItem(getVaultStorageKey()); } catch { /* ignore */ }
+          try { localStorage.removeItem('ledgio_vault_default_user'); } catch { /* ignore */ }
           if (window.LedgioVault) window.LedgioVault.resetVaultConfig(getUserId());
           legacyIncome = 0;
           state = createInitialState({ income_entries: [], customCategories: [], hiddenBuiltins: [] });
@@ -551,11 +555,11 @@
           saveDeadLetterQueue([]);
           localStorage.removeItem(getIncomeEntriesStorageKey());
           localStorage.removeItem(getCategoriesCacheKey());
-          try { localStorage.removeItem('ledgio_income_pulled_' + getUserId()); } catch (e) {}
-          try { localStorage.removeItem('ledgio_legacy_income_' + getUserId()); } catch (e) {}
-          try { localStorage.removeItem('ledgio_last_sync_' + getUserId()); } catch (e) {}
-          try { localStorage.removeItem(getVaultStorageKey()); } catch (e) {}
-          try { localStorage.removeItem('ledgio_vault_default_user'); } catch (e) {}
+          try { localStorage.removeItem('ledgio_income_pulled_' + getUserId()); } catch { /* ignore */ }
+          try { localStorage.removeItem('ledgio_legacy_income_' + getUserId()); } catch { /* ignore */ }
+          try { localStorage.removeItem('ledgio_last_sync_' + getUserId()); } catch { /* ignore */ }
+          try { localStorage.removeItem(getVaultStorageKey()); } catch { /* ignore */ }
+          try { localStorage.removeItem('ledgio_vault_default_user'); } catch { /* ignore */ }
           if (window.LedgioVault) window.LedgioVault.resetVaultConfig(getUserId());
           legacyIncome = 0;
           state = createInitialState({ income_entries: [], customCategories: [], hiddenBuiltins: [] });
@@ -868,7 +872,7 @@
         try {
           localStorage.removeItem('ledgio_pending_cloud_reset_default_user');
           localStorage.setItem(tombstoneKey, rawTombstone);
-        } catch (e) {}
+        } catch { /* ignore */ }
       }
     }
     if (!rawTombstone) return;
@@ -876,7 +880,7 @@
     let tombstoneObj = null;
     try {
       tombstoneObj = JSON.parse(rawTombstone);
-    } catch (e) {}
+    } catch { /* ignore */ }
 
     const targetEpoch = (tombstoneObj && typeof tombstoneObj.resetEpoch === 'number')
       ? tombstoneObj.resetEpoch
@@ -936,7 +940,7 @@
 
       try {
         await supabase.auth.updateUser({ data: { income: 0 } });
-      } catch (e) {}
+      } catch { /* ignore */ }
 
       // c. Only remove the tombstone and affirm local epoch if profiles.reset_epoch succeeded on cloud
       if (resetEpochUpdatedOnRemote) {
@@ -991,11 +995,11 @@
         saveDeadLetterQueue([]);
         localStorage.removeItem(getIncomeEntriesStorageKey());
         localStorage.removeItem(getCategoriesCacheKey());
-        try { localStorage.removeItem('ledgio_income_pulled_' + currentUser.id); } catch (e) {}
-        try { localStorage.removeItem('ledgio_legacy_income_' + currentUser.id); } catch (e) {}
-        try { localStorage.removeItem('ledgio_last_sync_' + currentUser.id); } catch (e) {}
-        try { localStorage.removeItem(getVaultStorageKey()); } catch (e) {}
-        try { localStorage.removeItem('ledgio_vault_default_user'); } catch (e) {}
+        try { localStorage.removeItem('ledgio_income_pulled_' + currentUser.id); } catch { /* ignore */ }
+        try { localStorage.removeItem('ledgio_legacy_income_' + currentUser.id); } catch { /* ignore */ }
+        try { localStorage.removeItem('ledgio_last_sync_' + currentUser.id); } catch { /* ignore */ }
+        try { localStorage.removeItem(getVaultStorageKey()); } catch { /* ignore */ }
+        try { localStorage.removeItem('ledgio_vault_default_user'); } catch { /* ignore */ }
         if (window.LedgioVault) window.LedgioVault.resetVaultConfig(currentUser.id);
         legacyIncome = 0;
         state = createInitialState({ income_entries: [], customCategories: [], hiddenBuiltins: [] });
@@ -1053,7 +1057,7 @@
               } else {
                 localStorage.removeItem('ledgio_legacy_income_' + currentUser.id);
               }
-            } catch (e) {}
+            } catch { /* ignore */ }
           }
           if (Array.isArray(profile.hidden_builtins)) {
             const hasPendingProfile = queue.some(m => m.table === 'profiles' && m.data?.hidden_builtins !== undefined);
@@ -1416,7 +1420,7 @@
         hasPulledIncomeEntries = true;
         try {
           localStorage.setItem('ledgio_income_pulled_' + currentUser.id, 'true');
-        } catch (e) {}
+        } catch { /* ignore */ }
 
         const queue = getSyncQueue();
         const pendingIncMutations = queue.filter(m => m.table === 'income_entries');
@@ -1544,7 +1548,7 @@
       refreshUI();
       try {
         localStorage.setItem(getLastSyncKey(), new Date().toISOString());
-      } catch (e) {}
+      } catch { /* ignore */ }
     } catch (err) {
       console.warn('[Sync Engine] Error pulling remote changes:', err);
     }
@@ -1817,7 +1821,7 @@
               });
               localStorage.setItem(targetIncomeKey, JSON.stringify(tgtEntries));
             }
-          } catch (e) {}
+          } catch { /* ignore */ }
         }
         localStorage.removeItem(defaultIncomeKey);
       }
@@ -1847,7 +1851,7 @@
         'smartBudgetData'
       ];
       defaultKeysToDelete.forEach(k => {
-        try { localStorage.removeItem(k); } catch (e) {}
+        try { localStorage.removeItem(k); } catch { /* ignore */ }
       });
     } catch (err) {
       console.warn('Error during default_user migration:', err);
@@ -1922,9 +1926,9 @@
     // Reset epoch check: stale-epoch data must NOT paint; adopt reset (empty) state
     if (hasPendingReset) {
       legacyIncome = 0;
-      try { localStorage.removeItem(getIncomeEntriesStorageKey()); } catch (e) {}
-      try { localStorage.removeItem(getCategoriesCacheKey()); } catch (e) {}
-      try { localStorage.removeItem('ledgio_legacy_income_' + uid); } catch (e) {}
+      try { localStorage.removeItem(getIncomeEntriesStorageKey()); } catch { /* ignore */ }
+      try { localStorage.removeItem(getCategoriesCacheKey()); } catch { /* ignore */ }
+      try { localStorage.removeItem('ledgio_legacy_income_' + uid); } catch { /* ignore */ }
       state = createInitialState({
         resetEpoch: localEpoch,
         income_entries: [],
@@ -1942,9 +1946,9 @@
         if (parsedEpoch < localEpoch) {
           // Stale epoch data! Stale data must NOT paint; adopt empty reset state per epoch rules
           legacyIncome = 0;
-          try { localStorage.removeItem(getIncomeEntriesStorageKey()); } catch (e) {}
-          try { localStorage.removeItem(getCategoriesCacheKey()); } catch (e) {}
-          try { localStorage.removeItem('ledgio_legacy_income_' + uid); } catch (e) {}
+          try { localStorage.removeItem(getIncomeEntriesStorageKey()); } catch { /* ignore */ }
+          try { localStorage.removeItem(getCategoriesCacheKey()); } catch { /* ignore */ }
+          try { localStorage.removeItem('ledgio_legacy_income_' + uid); } catch { /* ignore */ }
           state = createInitialState({
             resetEpoch: localEpoch,
             income_entries: [],
@@ -1958,7 +1962,7 @@
         } else {
           if (typeof parsed.income === 'number' && !isNaN(parsed.income) && parsed.income > 0) {
             legacyIncome = parsed.income;
-            try { localStorage.setItem('ledgio_legacy_income_' + uid, String(parsed.income)); } catch (e) {}
+            try { localStorage.setItem('ledgio_legacy_income_' + uid, String(parsed.income)); } catch { /* ignore */ }
           }
           if (parsed.resetEpoch === undefined) {
             parsed.resetEpoch = localEpoch;
@@ -1982,10 +1986,11 @@
     // Remove legacy un-scoped data key to avoid data bleed between accounts
     try {
       localStorage.removeItem('smartBudgetData');
-    } catch (e) {}
+    } catch { /* ignore */ }
   }
 
   // Full asynchronous data load (backward compatible)
+  // eslint-disable-next-line no-unused-vars -- backward compatible loader
   async function loadData() {
     loadLocalState();
     if (supabase && currentUser && navigator.onLine) {
@@ -2027,7 +2032,7 @@
     if (legacyIncome > 0) {
       try {
         localStorage.setItem('ledgio_legacy_income_' + uid, String(legacyIncome));
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
     const isDark = Boolean(state.settings?.darkMode);
     try {
@@ -2144,7 +2149,7 @@
       if (queueBreakdownEl && queueListEl) {
         if (queue.length > 0) {
           queueBreakdownEl.style.display = 'block';
-          queueListEl.innerHTML = queue.map((m, idx) => {
+          queueListEl.innerHTML = queue.map(m => {
             if (!m || typeof m !== 'object') return '';
             const action = m.action || 'MUTATION';
             const actionClass = String(action).toLowerCase();
@@ -2347,7 +2352,7 @@
   }
 
   async function generateSyncDiagnosticsReport() {
-    const sb = window.supabaseClient || (typeof getSupabaseClient === 'function' ? getSupabaseClient() : null);
+    const sb = window.supabaseClient || (typeof window.getSupabaseClient === 'function' ? window.getSupabaseClient() : null);
     const user = (typeof currentUser !== 'undefined' ? currentUser : null) || (sb?.auth?.user ? sb.auth.user() : null);
     const currentUserId = user?.id || null;
     const lsUserId = localStorage.getItem('sb_user_id') || null;
@@ -2442,7 +2447,6 @@
   }
 
   async function copySyncDiagnostics() {
-    const btn = document.getElementById('copy-sync-diagnostics-btn');
     const textEl = document.getElementById('copy-diagnostics-btn-text');
     try {
       const report = await generateSyncDiagnosticsReport();
@@ -2453,7 +2457,7 @@
         try {
           await navigator.clipboard.writeText(jsonStr);
           copied = true;
-        } catch (clipErr) {
+        } catch {
           copied = false;
         }
       }
@@ -2471,7 +2475,7 @@
         textarea.select();
         try {
           copied = document.execCommand('copy');
-        } catch (e) {
+        } catch {
           copied = false;
         }
         document.body.removeChild(textarea);
@@ -2766,7 +2770,7 @@
     }
 
     try {
-      const { data, error } = await supabase.auth.updateUser({ email: newEmail });
+      const { error } = await supabase.auth.updateUser({ email: newEmail });
       if (error) throw error;
 
       feedback.className = 'account-feedback-msg success';
@@ -2891,7 +2895,7 @@
       }
 
       // Step 2: Update password via Supabase Auth
-      const { data, error: updateErr } = await supabase.auth.updateUser({
+      const { error: updateErr } = await supabase.auth.updateUser({
         password: newPassword
       });
 
@@ -2922,6 +2926,7 @@
   }
 
   // Utilities
+  // eslint-disable-next-line no-unused-vars -- utility helper
   function generateId() {
     return crypto.randomUUID();
   }
@@ -3017,7 +3022,7 @@
         activeExchangeRates = Object.assign({}, ratesCache.rates);
       }
     }
-  } catch (e) {}
+  } catch { /* ignore */ }
 
   function updateRatesFreshnessUI() {
     const freshnessText = document.getElementById('rates-freshness-text');
@@ -3124,7 +3129,7 @@
       };
       try {
         localStorage.setItem('ledgio_exchange_rates_cache', JSON.stringify(ratesCache));
-      } catch (e) {}
+      } catch { /* ignore */ }
 
       // Sanity-check: convert ₹86,500 -> USD with live rate and log to console
       const sanityUsd = convertAmount(86500, 'INR', 'USD');
@@ -3209,7 +3214,7 @@
     if (navigator.onLine) {
       try {
         await fetchLiveExchangeRates(true);
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
 
     if (!hasExistingLedgerData()) {
@@ -3327,7 +3332,7 @@
     state.settings.currency = newCur;
     try {
       localStorage.setItem('ledgio_currency', newCur);
-    } catch (e) {}
+    } catch { /* ignore */ }
 
     const quickSelect = document.getElementById('quick-currency-select');
     const settingsSelect = document.getElementById('currency-select');
@@ -3609,7 +3614,6 @@
       }
     }
 
-    const currSymbol = (typeof CURRENCY_SYMBOLS !== 'undefined' && CURRENCY_SYMBOLS[state.settings?.currency || 'INR']) || '₹';
 
     if (incomeCard) {
       incomeCard.classList.toggle('stat-card-overspent', isOverspent);
@@ -3841,7 +3845,7 @@
           localStorage.removeItem(k);
         }
       }
-    } catch (e) {}
+    } catch { /* ignore */ }
 
     // 4. Check if already dismissed today
     if (localStorage.getItem(todayDismissKey) === 'true') {
@@ -3855,6 +3859,7 @@
 
   window.updateDailyNudgeUI = updateDailyNudgeUI;
 
+  /* eslint-disable no-unused-vars -- compatibility delegates for extracted domain modules */
   function createActionButtons(id) {
     return window.LedgioExpenses ? window.LedgioExpenses.createActionButtons(id) : null;
   }
@@ -4043,13 +4048,13 @@
             orphan.destroy();
           }
         }
-      } catch (e) {}
+      } catch { /* ignore */ }
       try {
         const ctx = c.getContext('2d');
         if (ctx) {
           ctx.clearRect(0, 0, c.width, c.height);
         }
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
 
     if (key === 'category') {
@@ -4479,7 +4484,7 @@
                 const rowIdx = parseInt(row.getAttribute('data-index'), 10);
                 if (rowIdx === idx) {
                   row.classList.add('active-slice');
-                  try { row.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {}
+                  try { row.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch { /* ignore */ }
                 } else {
                   row.classList.remove('active-slice');
                 }
@@ -4901,7 +4906,7 @@
           localStorage.removeItem(k);
         }
       }
-    } catch (e) {}
+    } catch { /* ignore */ }
 
     const isDismissed = localStorage.getItem(dismissKey) === 'true';
 
@@ -4997,7 +5002,7 @@
     });
 
     if (alreadyCredited) {
-      try { localStorage.setItem(markerKey, 'true'); } catch (e) {}
+      try { localStorage.setItem(markerKey, 'true'); } catch { /* ignore */ }
       return null;
     }
 
@@ -5011,7 +5016,7 @@
     }
 
     if ((state.income_entries || []).some(e => e && e.id === entryId)) {
-      try { localStorage.setItem(markerKey, 'true'); } catch (e) {}
+      try { localStorage.setItem(markerKey, 'true'); } catch { /* ignore */ }
       return null;
     }
 
@@ -5035,14 +5040,14 @@
 
     try {
       localStorage.setItem(markerKey, 'true');
-    } catch (e) {}
+    } catch { /* ignore */ }
 
     if (window.LedgioIncome && typeof window.LedgioIncome.saveIncomeEntries === 'function') {
       window.LedgioIncome.saveIncomeEntries(state.income_entries);
     } else {
       try {
         localStorage.setItem(getIncomeEntriesStorageKey(), JSON.stringify(state.income_entries));
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
 
     saveData(false);
@@ -5147,6 +5152,7 @@
     return window.LedgioExpenses ? window.LedgioExpenses.getFilteredExpenses() : [];
   }
 
+  /* eslint-disable no-unused-vars -- compatibility delegates for extracted domain modules */
   async function setBudget(category, limit) {
     return window.LedgioExpenses ? await window.LedgioExpenses.setBudget(category, limit) : false;
   }
@@ -5366,7 +5372,7 @@
     try {
       localStorage.setItem('ledgio_theme', isDark ? 'dark' : 'light');
       localStorage.setItem('sb_dark_mode_' + getUserId(), isDark ? 'true' : 'false');
-    } catch (e) {}
+    } catch { /* ignore */ }
     
     const btn = document.getElementById('dark-mode-btn');
     if (btn) {
@@ -5406,12 +5412,12 @@
           dark_mode: state.settings.darkMode,
           updated_at: new Date().toISOString()
         }).eq('id', currentUser.id);
-      } catch (e) {}
+      } catch { /* ignore */ }
       try {
         await supabase.auth.updateUser({
           data: { darkMode: state.settings.darkMode }
         });
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
 
     if (document.getElementById('section-dashboard').classList.contains('active')) {
@@ -5559,6 +5565,7 @@
     return window.LedgioVault ? await window.LedgioVault.hashPin(pin, salt) : null;
   }
 
+  /* eslint-disable no-unused-vars -- compatibility delegates for extracted domain modules */
   function generateSalt() {
     return window.LedgioVault ? window.LedgioVault.generateSalt() : '';
   }
@@ -6050,7 +6057,7 @@
           updateCollapseUI(nextState);
           try {
             localStorage.setItem('ledgio_sidebar_collapsed_' + getUserId(), nextState ? 'true' : 'false');
-          } catch (err) {}
+          } catch { /* ignore */ }
 
           // Allow charts to reflow smoothly after width transition
           setTimeout(() => {
@@ -6115,7 +6122,7 @@
         const todayStr = getLocalDateString();
         try {
           localStorage.setItem(`ledgio_nudge_dismissed_${todayStr}`, 'true');
-        } catch (e) {}
+        } catch { /* ignore */ }
         const banner = document.getElementById('daily-nudge-banner');
         if (banner) banner.style.display = 'none';
       });
@@ -6235,7 +6242,7 @@
               dark_mode: dark,
               updated_at: new Date().toISOString()
             }).eq('id', currentUser.id);
-          } catch (err) {}
+          } catch { /* ignore */ }
         }
         refreshUI();
         showToast('Preferences saved');
@@ -6441,7 +6448,7 @@
                 customCategories: state.customCategories,
                 hiddenBuiltins: state.hiddenBuiltins
               }));
-            } catch (e) {}
+            } catch { /* ignore */ }
           }
 
           // 4. Update UI Immediately
@@ -6529,19 +6536,19 @@
         localStorage.removeItem(getStorageKey());
         localStorage.removeItem(getIncomeEntriesStorageKey());
         localStorage.removeItem(getCategoriesCacheKey());
-        try { localStorage.removeItem('ledgio_income_pulled_' + getUserId()); } catch (e) {}
-        try { localStorage.removeItem('ledgio_legacy_income_' + getUserId()); } catch (e) {}
-        try { localStorage.removeItem('ledgio_last_sync_' + getUserId()); } catch (e) {}
-        try { localStorage.removeItem('smartBudgetData'); } catch (e) {}
-        try { localStorage.removeItem(getVaultStorageKey()); } catch (e) {}
-        try { localStorage.removeItem('ledgio_vault_default_user'); } catch (e) {}
+        try { localStorage.removeItem('ledgio_income_pulled_' + getUserId()); } catch { /* ignore */ }
+        try { localStorage.removeItem('ledgio_legacy_income_' + getUserId()); } catch { /* ignore */ }
+        try { localStorage.removeItem('ledgio_last_sync_' + getUserId()); } catch { /* ignore */ }
+        try { localStorage.removeItem('smartBudgetData'); } catch { /* ignore */ }
+        try { localStorage.removeItem(getVaultStorageKey()); } catch { /* ignore */ }
+        try { localStorage.removeItem('ledgio_vault_default_user'); } catch { /* ignore */ }
         try {
           const prefix = 'ledgio_recurring_credited_' + getUserId();
           for (let i = localStorage.length - 1; i >= 0; i--) {
             const k = localStorage.key(i);
             if (k && k.startsWith(prefix)) localStorage.removeItem(k);
           }
-        } catch (e) {}
+        } catch { /* ignore */ }
         if (window.LedgioVault) window.LedgioVault.resetVaultConfig(getUserId());
         legacyIncome = 0;
         state = createInitialState({ income_entries: [], customCategories: [], hiddenBuiltins: [] });
@@ -6589,7 +6596,7 @@
           }
         });
         if (modified) saveSyncQueue(q);
-      } catch (e) {}
+      } catch { /* ignore */ }
       // Recover expired session before attempting sync
       if (!hasLiveSession()) {
         await tryRecoverSession();
@@ -6768,7 +6775,7 @@
           populateDropdowns();
           refreshUI();
           updateSyncStatusUI();
-        } catch (err) {}
+        } catch { /* ignore */ }
       } else if (e.key === getSyncQueueKey()) {
         updateSyncStatusUI();
       }
@@ -7154,7 +7161,7 @@
             ? item.created_at
             : (item.created_at ? new Date(item.created_at).toISOString() : new Date().toISOString());
           localStorage.setItem(seenKey, createdAtStr);
-        } catch (e) {}
+        } catch { /* ignore */ }
         banner.style.display = 'none';
       };
     }
@@ -7476,7 +7483,7 @@
       if (typeof window.__ledgio_ensureMobileViewport === 'function') {
         window.__ledgio_ensureMobileViewport('phase1_startup');
       }
-    } catch (e) {}
+    } catch { /* ignore */ }
   }
 
   // =========================================================================
@@ -7625,7 +7632,7 @@
       // 2. Announcements fetch if offline or not authenticated
       try {
         await fetchLatestAnnouncement();
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
 
     // 3. Deferred background services
@@ -7646,7 +7653,7 @@
     if (window.__ledgio_checkAuthPromise) {
       try {
         await window.__ledgio_checkAuthPromise;
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
     if (!getUserId()) {
       console.log('[Ledgio App] No authenticated user identity. Aborting paint.');
@@ -7657,7 +7664,7 @@
     if (window.location.hash && window.location.hash.startsWith('#migrate=')) {
       try {
         window.history.replaceState(null, '', window.location.pathname);
-      } catch (e) {}
+      } catch { /* ignore */ }
     }
 
     // Phase 1: Synchronous Local Paint (0ms)

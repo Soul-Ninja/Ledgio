@@ -166,7 +166,7 @@
       };
     }
     // 3. Check built-in categories by label (e.g. 'Food & Dining')
-    const builtInEntry = Object.entries(CATEGORIES).find(([k, v]) =>
+    const builtInEntry = Object.entries(CATEGORIES).find(([, v]) =>
       v.label.toLowerCase() === String(keyOrName).toLowerCase()
     );
     if (builtInEntry) {
@@ -263,7 +263,9 @@
           };
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('[LedgioCategories] Error reading categories cache:', e);
+    }
     return { customCategories: [], hiddenBuiltins: [] };
   }
 

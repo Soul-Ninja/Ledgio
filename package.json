@@ -1,0 +1,13 @@
+{
+  "name": "ledgio",
+  "version": "1.12.6",
+  "private": true,
+  "description": "Ledgio local-first expense tracker and financial dashboard",
+  "scripts": {
+    "lint": "eslint assets/js/ sw.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "eslint": "^9.20.0"
+  }
+}

@@ -588,7 +588,9 @@
           const [y, m] = mKey.split('-');
           const d = new Date(parseInt(y, 10), parseInt(m, 10) - 1, 1);
           headerLabel = d.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
-        } catch (e) {}
+        } catch {
+          /* fallback to raw mKey */
+        }
       }
 
       html += `<div class="income-history-group-header">${incomeBridge.escapeHtml(headerLabel)}</div>`;
@@ -919,7 +921,9 @@
       set(val) { currentIncomeMode = val; },
       configurable: true
     });
-  } catch (e) {}
+  } catch {
+    /* window property redefine fallback */
+  }
   window.isLoanAdjustment = isLoanAdjustment;
   window.deterministicOpeningId = deterministicOpeningId;
   window.deterministicUuid = deterministicUuid;

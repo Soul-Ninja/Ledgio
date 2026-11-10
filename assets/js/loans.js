@@ -206,7 +206,6 @@
     });
 
     // 4. Filter loans within each person group
-    let renderedGroupCount = 0;
     let totalFilteredLoans = 0;
     const groupHtmls = [];
 
@@ -239,7 +238,6 @@
 
       if (filteredLoans.length === 0) return;
 
-      renderedGroupCount++;
       totalFilteredLoans += filteredLoans.length;
 
       // Render net position badge

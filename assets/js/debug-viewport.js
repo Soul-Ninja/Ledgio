@@ -27,7 +27,7 @@
       if (entries.length) {
         anomalyLog = entries.map(e => `${e.t.slice(5, 19)} ${e.reason} ${e.action} w:${e.innerW} scr:${e.screenW} cw:${e.clientW} sw:${e.scrollW} sc:${e.vvScale} nav:${e.nav} ref:${e.ref} swc:${e.sw} wide:${(e.widest || []).join(',') || '-'}`).join('\n  ');
       }
-    } catch (err) {
+    } catch {
       anomalyLog = 'unreadable';
     }
     el.innerText = `[VIEWPORT DEBUG: ${evt}]

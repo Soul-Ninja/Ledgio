@@ -29,7 +29,7 @@
       window.location.hostname === 'localhost' ||
       window.location.protocol === 'file:'
     );
-    if (isDevOrTest && /^[a-zA-Z0-9_\-\.]+$/.test(trimmed)) {
+    if (isDevOrTest && /^[a-zA-Z0-9_.-]+$/.test(trimmed)) {
       return true;
     }
     return false;
@@ -110,7 +110,9 @@
                   }
                 });
               }
-            } catch (e) {}
+            } catch {
+              /* ignore invalid queue json */
+            }
           }
         });
       } catch (e) {
@@ -155,7 +157,9 @@
                   }
                 });
               }
-            } catch (err) {}
+            } catch {
+              /* ignore invalid queue record json */
+            }
           }
         });
 
@@ -184,7 +188,9 @@
                 }
               });
             }
-          } catch (err) {}
+          } catch {
+            /* ignore invalid income entries json */
+          }
         }
       } catch (e) {
         console.warn('Error checking local financial records on logout:', e);
@@ -249,7 +255,7 @@
         }
       }
       keysToRemove.forEach(k => {
-        try { localStorage.removeItem(k); } catch (e) {}
+        try { localStorage.removeItem(k); } catch { /* ignore storage error */ }
       });
 
       const defaultUserKeys = [
@@ -265,7 +271,7 @@
         'smartBudgetData'
       ];
       defaultUserKeys.forEach(k => {
-        try { localStorage.removeItem(k); } catch (e) {}
+        try { localStorage.removeItem(k); } catch { /* ignore storage error */ }
       });
     } catch (err) {
       console.warn('Error purging localStorage on logout:', err);
@@ -329,7 +335,9 @@
           }
           alertEl.style.display = 'flex';
         }
-      } catch (e) {}
+      } catch {
+        /* ignore alert display error */
+      }
     }
 
     supabase = (typeof window.getSupabaseClient === 'function' ? window.getSupabaseClient() : null) || window.supabaseClient || getClient();
@@ -359,7 +367,7 @@
         try {
           const { error: exchangeErr } = await withTimeout(supabase.auth.exchangeCodeForSession(authCode), 6000);
           if (exchangeErr) throw exchangeErr;
-          try { window.history.replaceState(null, '', window.location.pathname); } catch (e) {}
+          try { window.history.replaceState(null, '', window.location.pathname); } catch { /* ignore */ }
         } catch (e) {
           const msg = (e && e.message && e.message !== 'auth_timeout') ? e.message : "Sign-in didn't finish";
           handleAuthRedirect('login.html?reason=oauth_error&msg=' + encodeURIComponent(String(msg).slice(0, 200)));
@@ -370,7 +378,6 @@
 
     // 1. Live Supabase session check
     let liveUser = null;
-    let getSessionTimedOut = false;
     if (supabase && typeof supabase.auth?.getSession === 'function') {
       try {
         const { data: sessionData } = await withTimeout(supabase.auth.getSession(), 4000);
@@ -379,7 +386,6 @@
         }
       } catch (e) {
         if (e && (e.message === 'auth_timeout' || e.isTimeout)) {
-          getSessionTimedOut = true;
           if (typeof window !== 'undefined') window.__ledgio_authTimedOut = true;
         }
         console.warn('[Ledgio Auth] Supabase getSession check (timeout or error):', e);
@@ -576,7 +582,7 @@
         if (window.__ledgio_isOAuthCallback) {
           window.__ledgio_isOAuthCallback = false;
           markAuthReady();
-          try { window.history.replaceState(null, '', window.location.pathname); } catch (e) {}
+          try { window.history.replaceState(null, '', window.location.pathname); } catch { /* ignore */ }
           if (typeof window.updateSyncStatusUI === 'function') {
             window.updateSyncStatusUI();
           }
@@ -732,7 +738,7 @@
               const fullName = userMetaName || (emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1));
               localStorage.setItem('sb_username', fullName);
               localStorage.setItem('sb_user_id', data.user.id);
-              try { localStorage.removeItem('smartBudgetData'); } catch (e) {}
+              try { localStorage.removeItem('smartBudgetData'); } catch { /* ignore */ }
               navigateToDashboard();
             }
           } else {
@@ -743,10 +749,10 @@
             const fullName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
             localStorage.setItem('sb_username', fullName);
             localStorage.setItem('sb_user_id', 'local_' + emailInput.value.trim().toLowerCase());
-            try { localStorage.removeItem('smartBudgetData'); } catch (e) {}
+            try { localStorage.removeItem('smartBudgetData'); } catch { /* ignore */ }
             navigateToDashboard();
           }
-        } catch (err) {
+        } catch {
           showError('password', 'Authentication failed. Please try again.');
         } finally {
           if (textSpan) textSpan.style.display = 'inline-flex';
@@ -845,7 +851,7 @@
               localStorage.setItem('sb_auth', 'true');
               localStorage.setItem('sb_username', fullName);
               localStorage.setItem('sb_user_id', data.user.id);
-              try { localStorage.removeItem('smartBudgetData'); } catch (e) {}
+              try { localStorage.removeItem('smartBudgetData'); } catch { /* ignore */ }
               navigateToDashboard();
             }
           } else {
@@ -854,10 +860,10 @@
             localStorage.setItem('sb_auth', 'true');
             localStorage.setItem('sb_username', fullName);
             localStorage.setItem('sb_user_id', 'local_' + emailInput.value.trim().toLowerCase());
-            try { localStorage.removeItem('smartBudgetData'); } catch (e) {}
+            try { localStorage.removeItem('smartBudgetData'); } catch { /* ignore */ }
             navigateToDashboard();
           }
-        } catch (err) {
+        } catch {
           showError('email', 'An error occurred during signup.');
         } finally {
           if (textSpan) textSpan.style.display = 'inline-flex';
@@ -886,7 +892,7 @@
           localStorage.setItem('sb_auth', 'true');
           localStorage.setItem('sb_username', 'Google User');
           localStorage.setItem('sb_user_id', 'local_google');
-          try { localStorage.removeItem('smartBudgetData'); } catch (e) {}
+          try { localStorage.removeItem('smartBudgetData'); } catch { /* ignore */ }
           navigateToDashboard();
         }
       });
@@ -910,7 +916,7 @@
           localStorage.setItem('sb_auth', 'true');
           localStorage.setItem('sb_username', 'GitHub User');
           localStorage.setItem('sb_user_id', 'local_github');
-          try { localStorage.removeItem('smartBudgetData'); } catch (e) {}
+          try { localStorage.removeItem('smartBudgetData'); } catch { /* ignore */ }
           navigateToDashboard();
         }
       });

@@ -11,7 +11,9 @@
   // Purge legacy installation flag that survived uninstallation in localStorage
   try {
     localStorage.removeItem('ledgio_is_installed');
-  } catch (e) {}
+  } catch {
+    /* ignore storage access error */
+  }
 
   const pageLoadTimestamp = Date.now();
   let deferredPrompt = null;
@@ -75,7 +77,7 @@
     if (perm === 'default') {
       try {
         perm = await Notification.requestPermission();
-      } catch (err) {
+      } catch {
         return;
       }
     }
@@ -265,7 +267,9 @@
     } else if (standaloneMediaQuery.addListener) {
       standaloneMediaQuery.addListener(applyStandaloneUI);
     }
-  } catch (e) {}
+  } catch {
+    /* matchMedia listener fallback */
+  }
 
   function revealInstallButtons() {
     if (isStandaloneApp()) return;
@@ -632,7 +636,7 @@
 
       const payload = await buildAnalyticsPayload(eventType, meta);
       await client.from('app_analytics').insert([payload]);
-    } catch (err) {
+    } catch {
       // Fail silently without disrupting user experience
     }
   }

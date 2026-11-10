@@ -63,7 +63,9 @@
         }
       });
       if (mod) saveSyncQueue(q);
-    } catch (e) {}
+    } catch {
+      /* ignore queue reset error */
+    }
   }
 
   let authListenerAttached = false;
@@ -76,7 +78,9 @@
           }
         });
         authListenerAttached = true;
-      } catch (e) {}
+      } catch {
+        /* auth listener attach error */
+      }
     }
   }
 
@@ -190,7 +194,9 @@
         try {
           const parsed = JSON.parse(orphanRaw);
           if (Array.isArray(parsed)) orphanItems = parsed;
-        } catch (e) {}
+        } catch {
+          /* invalid orphan queue json */
+        }
 
         if (orphanItems.length > 0) {
           let targetQueue = [];
@@ -199,7 +205,9 @@
             try {
               const parsed = JSON.parse(targetRaw);
               if (Array.isArray(parsed)) targetQueue = parsed;
-            } catch (e) {}
+            } catch {
+              /* invalid target queue json */
+            }
           }
 
           const existingIds = new Set(targetQueue.map(it => it.id));
@@ -248,7 +256,9 @@
         try {
           const parsed = JSON.parse(orphanDlRaw);
           if (Array.isArray(parsed)) orphanDlItems = parsed;
-        } catch (e) {}
+        } catch {
+          /* invalid orphan dl queue json */
+        }
 
         if (orphanDlItems.length > 0) {
           let targetDl = [];
@@ -257,7 +267,9 @@
             try {
               const parsed = JSON.parse(targetDlRaw);
               if (Array.isArray(parsed)) targetDl = parsed;
-            } catch (e) {}
+            } catch {
+              /* invalid target dl queue json */
+            }
           }
 
           const existingDlIds = new Set(targetDl.map(it => it.id));
@@ -881,7 +893,7 @@
             }
           } else if (item.table === 'loans') {
             if (item.action === 'UPSERT') {
-              let { id, user_id, person_name, direction, principal, loan_date, notes, kind, created_at } = item.data || {};
+              let { id, user_id, person_name } = item.data || {};
               const uid = user_id || currentUser.id;
               const isUuid = id && typeof id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
               if (!isUuid && id && (id.startsWith('loan_') || /^\d+$/.test(id) || id.includes('legacy'))) {
@@ -908,7 +920,7 @@
             }
           } else if (item.table === 'loan_settlements') {
             if (item.action === 'UPSERT') {
-              let { id, user_id, loan_id, amount, settle_date, note, created_at } = item.data || {};
+              let { id, user_id } = item.data || {};
               const uid = user_id || currentUser.id;
               const isUuid = id && typeof id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
               if (!isUuid && id && (id.startsWith('settle_') || /^\d+$/.test(id) || id.includes('legacy'))) {
@@ -1211,7 +1223,7 @@
                   refreshSucceeded = true;
                 }
               }
-            } catch (authErr) {
+            } catch {
               refreshSucceeded = false;
             }
 

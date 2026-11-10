@@ -75,7 +75,7 @@
       if (typeof window.broadcastSyncEvent === 'function') return window.broadcastSyncEvent(type, payload);
       if (window.__ledgio_broadcastSyncEvent) return window.__ledgio_broadcastSyncEvent(type, payload);
     },
-    onStealthChange: (isActive) => {},
+    onStealthChange: () => {},
     isDevOrTest: false
   };
 
@@ -157,8 +157,8 @@
     };
     isVaultLocked = false;
     const targetUid = uid || vaultBridge.getUserId();
-    try { localStorage.removeItem(`ledgio_vault_${targetUid}`); } catch (e) {}
-    try { localStorage.removeItem('ledgio_vault_default_user'); } catch (e) {}
+    try { localStorage.removeItem(`ledgio_vault_${targetUid}`); } catch { /* ignore */ }
+    try { localStorage.removeItem('ledgio_vault_default_user'); } catch { /* ignore */ }
     updateVaultSettingsUI();
   }
 
@@ -175,7 +175,9 @@
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      } catch (e) {}
+      } catch {
+        /* fallback to DJB2 hash */
+      }
     }
     // Fallback hash for non-secure contexts (e.g. plain HTTP local testing)
     let hash = 5381;
@@ -221,8 +223,8 @@
   async function checkBiometricSupport() {
     try {
       if (window.PublicKeyCredential && 
-          typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function') {
-        const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+          typeof window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function') {
+        const available = await window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
         return Boolean(available);
       }
     } catch (e) {
@@ -949,8 +951,8 @@
           let isHardwareAvailable = false;
           try {
             if (window.PublicKeyCredential && 
-                typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function') {
-              isHardwareAvailable = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+                typeof window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function') {
+              isHardwareAvailable = await window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
             }
           } catch (err) {
             console.warn('[Ledgio Vault] Hardware biometric check error:', err);

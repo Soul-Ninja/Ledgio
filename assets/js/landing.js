@@ -28,6 +28,7 @@
     clearTimeout(id);
   }
 
+  // eslint-disable-next-line no-unused-vars -- companion desktop interval helper
   function safeDesktopInterval(fn, ms) {
     var id = setInterval(fn, ms);
     desktopIntervals.push(id);
@@ -112,6 +113,7 @@
     requestAnimationFrame(step);
   }
 
+  // eslint-disable-next-line no-unused-vars -- spotlight tilt effect reserved for desktop hero
   function initHeroSpotlightAndTilt() {
     var hero = document.getElementById('hero');
     var spotlight = document.getElementById('hero-spotlight');
@@ -1069,6 +1071,7 @@
     stepTour();
   }
 
+  // eslint-disable-next-line no-unused-vars -- paper cards spotlight effect
   function initPaperCardsEmeraldSpotlight() {
     var cards = document.querySelectorAll('.paper-card');
     if (!cards.length) return;
@@ -1144,6 +1147,7 @@
       return fallback;
     }
 
+    // eslint-disable-next-line no-unused-vars -- demo row addition helper
     function addLiveRow() {
       if (isPaused || !isVisible || isReducedMotion) return;
 
@@ -1231,7 +1235,7 @@
             tickNumber(valEl, Math.max(0, raw - 5), raw, 500, '', '%', 1);
             return;
           }
-          var raw = parseInt(valEl.textContent.replace(/[^0-9]/g, ''), 10) || 0;
+          raw = parseInt(valEl.textContent.replace(/[^0-9]/g, ''), 10) || 0;
           if (raw > 0) {
             var prefix = valEl.textContent.indexOf('%') !== -1 ? '' : '₹';
             var suffix = valEl.textContent.indexOf('%') !== -1 ? '%' : '';
@@ -1259,7 +1263,6 @@
 
   function initChartScrubbing() {
     var wrap = document.getElementById('replica-chart-wrap');
-    var svg = document.getElementById('replica-chart-svg');
     var curve = document.getElementById('hero-balance-curve');
     var crosshair = document.getElementById('chart-scrub-line');
     var dot = document.getElementById('chart-scrub-dot');
@@ -1269,7 +1272,7 @@
     var curveLength = 0;
     try {
       curveLength = curve.getTotalLength();
-    } catch(err) {
+    } catch {
       curveLength = 550;
     }
 
@@ -1282,7 +1285,9 @@
       if (curve.getPointAtLength && curveLength > 0) {
         try {
           pt = curve.getPointAtLength(t * curveLength);
-        } catch(e) {}
+        } catch {
+          /* curve point fallback */
+        }
       }
 
       crosshair.setAttribute('x1', pt.x);
@@ -2222,7 +2227,9 @@
       try {
         var cleanup = desktopCleanups.pop();
         if (typeof cleanup === 'function') cleanup();
-      } catch (e) {}
+      } catch {
+        /* ignore cleanup error */
+      }
     }
   }
 
@@ -2314,19 +2321,19 @@
       overlay.classList.add('active');
       overlay.setAttribute('aria-hidden', 'false');
       overlay.removeAttribute('inert');
-      try { overlay.inert = false; } catch (e) {}
+      try { overlay.inert = false; } catch { /* inert fallback */ }
 
       if (mainContent) {
         mainContent.setAttribute('inert', '');
-        try { mainContent.inert = true; } catch (e) {}
+        try { mainContent.inert = true; } catch { /* inert fallback */ }
       }
       if (navPill) {
         navPill.setAttribute('inert', '');
-        try { navPill.inert = true; } catch (e) {}
+        try { navPill.inert = true; } catch { /* inert fallback */ }
       }
       if (footer) {
         footer.setAttribute('inert', '');
-        try { footer.inert = true; } catch (e) {}
+        try { footer.inert = true; } catch { /* inert fallback */ }
       }
 
       // Lock body scroll without layout shift
@@ -2353,19 +2360,19 @@
       overlay.classList.remove('active');
       overlay.setAttribute('aria-hidden', 'true');
       overlay.setAttribute('inert', '');
-      try { overlay.inert = true; } catch (e) {}
+      try { overlay.inert = true; } catch { /* inert fallback */ }
 
       if (mainContent) {
         mainContent.removeAttribute('inert');
-        try { mainContent.inert = false; } catch (e) {}
+        try { mainContent.inert = false; } catch { /* inert fallback */ }
       }
       if (navPill) {
         navPill.removeAttribute('inert');
-        try { navPill.inert = false; } catch (e) {}
+        try { navPill.inert = false; } catch { /* inert fallback */ }
       }
       if (footer) {
         footer.removeAttribute('inert');
-        try { footer.inert = false; } catch (e) {}
+        try { footer.inert = false; } catch { /* inert fallback */ }
       }
 
       // Restore body scroll

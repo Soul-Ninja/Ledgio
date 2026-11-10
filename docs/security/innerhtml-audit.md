@@ -29,77 +29,77 @@ Total verified lines: **217** across all non-minified application source files.
 
 | # | `file:line` | Target Element | Interpolated / Dynamic Expressions | Origin of Values | Sanitization / Escaping | Static? |
 | :-: | :--- | :--- | :--- | :--- | :--- | :-: |
-| 1 | `assets/js/app.js:776` | `btn` | `${count > 0 ? `Offline (${count}` | Queue length and dead-letter length numeric counts | Numeric integer count | No |
-| 2 | `assets/js/app.js:780` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 3 | `assets/js/app.js:784` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 4 | `assets/js/app.js:789` | `btn` | `${count > 0 ? `Syncing (${count}` | Queue length and dead-letter length numeric counts | Numeric integer count | No |
-| 5 | `assets/js/app.js:793` | `btn` | `${deadLetter.length}`<br>`${deadLetter.length > 1 ? 's' : ''}` | Queue length and dead-letter length numeric counts | Numeric integer count | No |
-| 6 | `assets/js/app.js:798` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 7 | `assets/js/app.js:802` | `netStatusEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 8 | `assets/js/app.js:806` | `cloudStatusEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 9 | `assets/js/app.js:2124` | `queueListEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 10 | `assets/js/app.js:2130` | `queueListEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 11 | `assets/js/app.js:2147` | `dlListEl` | `${idx}` | Dead-letter sync items (item name, note, person, amounts, technical error messages) | `escapeHtml(itemName)`, `escapeHtml(amountText)`, `escapeHtml(action)`, `escapeHtml(table)`, `escapeHtml(targetLabel)`, `escapeHtml(timeLabel)`, `escapeHtml(errText)` | No |
-| 12 | `assets/js/app.js:2207` | `dlListEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 13 | `assets/js/app.js:2215` | `subtitle` | `${escapeHtml(firstName)}` | Profile greeting user first name (profiles table / session user metadata) | `escapeHtml(firstName)` | No |
-| 14 | `assets/js/app.js:2336` | `authBadgeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 15 | `assets/js/app.js:2512` | `authBadgeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 16 | `assets/js/app.js:2697` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 17 | `assets/js/app.js:2707` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 18 | `assets/js/app.js:2723` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 19 | `assets/js/app.js:2731` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 20 | `assets/js/app.js:2739` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 21 | `assets/js/app.js:2749` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 22 | `assets/js/app.js:2758` | `feedback` | `${escapeHtml(newEmail)}` | User new email input from account modal | `escapeHtml(newEmail)` | No |
-| 23 | `assets/js/app.js:2765` | `feedback` | `${escapeHtml(errMsg)}` | Server auth error message returned by Supabase Auth API | `escapeHtml(errMsg)` / `escapeHtml(msg)` | No |
-| 24 | `assets/js/app.js:2773` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 25 | `assets/js/app.js:2781` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 26 | `assets/js/app.js:2787` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 27 | `assets/js/app.js:2803` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 28 | `assets/js/app.js:2809` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 29 | `assets/js/app.js:2817` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 30 | `assets/js/app.js:2829` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 31 | `assets/js/app.js:2838` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 32 | `assets/js/app.js:2847` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 33 | `assets/js/app.js:2856` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 34 | `assets/js/app.js:2864` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 35 | `assets/js/app.js:2878` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 36 | `assets/js/app.js:2883` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 37 | `assets/js/app.js:2890` | `feedback` | `${escapeHtml(msg)}` | Server auth error message returned by Supabase Auth API | `escapeHtml(errMsg)` / `escapeHtml(msg)` | No |
-| 38 | `assets/js/app.js:2901` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 39 | `assets/js/app.js:2913` | `subtitleEl` | `${escapeHtml(oldCur)}`<br>`${escapeHtml(newCur)}` | Old currency and new currency codes from currency switch select | `escapeHtml(oldCur)`, `escapeHtml(newCur)` | No |
-| 40 | `assets/js/app.js:2919` | `incomeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 41 | `assets/js/app.js:3246` | `incomeEl` | `${incColor}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
-| 42 | `assets/js/app.js:3552` | `incomeEl` | `${incColor}`<br>`${savingsRateVal}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
-| 43 | `assets/js/app.js:3556` | `lifetimeEl` | `${qualifier}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
-| 44 | `assets/js/app.js:3561` | `lifetimeEl` | `${qualifier}`<br>`${escapeHtml(earnedFormatted)}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
-| 45 | `assets/js/app.js:3594` | `lifetimeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 46 | `assets/js/app.js:3597` | `expensesEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 47 | `assets/js/app.js:3603` | `expensesEl` | `${expColorVar}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
-| 48 | `assets/js/app.js:3640` | `expensesEl` | `${expColorVar}`<br>`${spendPctOfIncome}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
-| 49 | `assets/js/app.js:3643` | `spendPctEl` | `${qualifier}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
-| 50 | `assets/js/app.js:3648` | `spendPctEl` | `${qualifier}`<br>`${escapeHtml(spentFormatted)}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
-| 51 | `assets/js/app.js:3675` | `spendPctEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 52 | `assets/js/app.js:3678` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 53 | `assets/js/app.js:3684` | `el` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 54 | `assets/js/app.js:5092` | `catFilter` | `${allOpts}` | Filter dropdown options (categories, distinct expense months, cycle reset days) | `escapeHtml(m)` for dates, `escapeHtml(c.name)` for categories, integer loop for cycle days | No |
-| 55 | `assets/js/app.js:5168` | `moFilter` | `${escapeHtml(m)}`<br>`${escapeHtml(m)}` | Filter dropdown options (categories, distinct expense months, cycle reset days) | `escapeHtml(m)` for dates, `escapeHtml(c.name)` for categories, integer loop for cycle days | No |
-| 56 | `assets/js/app.js:5202` | `cycleSelect` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 57 | `assets/js/app.js:5203` | `recurringDaySelect` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 58 | `assets/js/app.js:5373` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 59 | `assets/js/app.js:5470` | `platformContainer` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 60 | `assets/js/app.js:5494` | `platformContainer` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 61 | `assets/js/app.js:6303` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 62 | `assets/js/app.js:6305` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 63 | `assets/js/app.js:6988` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 64 | `assets/js/app.js:6993` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 65 | `assets/js/app.js:7010` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 66 | `assets/js/app.js:7015` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 67 | `assets/js/categories.js:361` | `el` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 68 | `assets/js/categories.js:375` | `catFilter` | `${allOpts}` | Built-in categories & user custom categories from state | `categoriesBridge.escapeHtml(c.name)` for values & labels, `categoriesBridge.escapeHtml(k)` | No |
-| 69 | `assets/js/categories.js:394` | `container` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 70 | `assets/js/categories.js:398` | `container` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 71 | `assets/js/categories.js:644` | `select` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 1 | `assets/js/app.js:780` | `btn` | `${count > 0 ? `Offline (${count}` | Queue length and dead-letter length numeric counts | Numeric integer count | No |
+| 2 | `assets/js/app.js:784` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 3 | `assets/js/app.js:788` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 4 | `assets/js/app.js:793` | `btn` | `${count > 0 ? `Syncing (${count}` | Queue length and dead-letter length numeric counts | Numeric integer count | No |
+| 5 | `assets/js/app.js:797` | `btn` | `${deadLetter.length}`<br>`${deadLetter.length > 1 ? 's' : ''}` | Queue length and dead-letter length numeric counts | Numeric integer count | No |
+| 6 | `assets/js/app.js:802` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 7 | `assets/js/app.js:806` | `netStatusEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 8 | `assets/js/app.js:810` | `cloudStatusEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 9 | `assets/js/app.js:2129` | `queueListEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 10 | `assets/js/app.js:2135` | `queueListEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 11 | `assets/js/app.js:2152` | `dlListEl` | `${idx}` | Dead-letter sync items (item name, note, person, amounts, technical error messages) | `escapeHtml(itemName)`, `escapeHtml(amountText)`, `escapeHtml(action)`, `escapeHtml(table)`, `escapeHtml(targetLabel)`, `escapeHtml(timeLabel)`, `escapeHtml(errText)` | No |
+| 12 | `assets/js/app.js:2212` | `dlListEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 13 | `assets/js/app.js:2220` | `subtitle` | `${escapeHtml(firstName)}` | Profile greeting user first name (profiles table / session user metadata) | `escapeHtml(firstName)` | No |
+| 14 | `assets/js/app.js:2341` | `authBadgeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 15 | `assets/js/app.js:2516` | `authBadgeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 16 | `assets/js/app.js:2701` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 17 | `assets/js/app.js:2711` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 18 | `assets/js/app.js:2727` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 19 | `assets/js/app.js:2735` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 20 | `assets/js/app.js:2743` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 21 | `assets/js/app.js:2753` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 22 | `assets/js/app.js:2762` | `feedback` | `${escapeHtml(newEmail)}` | User new email input from account modal | `escapeHtml(newEmail)` | No |
+| 23 | `assets/js/app.js:2769` | `feedback` | `${escapeHtml(errMsg)}` | Server auth error message returned by Supabase Auth API | `escapeHtml(errMsg)` / `escapeHtml(msg)` | No |
+| 24 | `assets/js/app.js:2777` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 25 | `assets/js/app.js:2785` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 26 | `assets/js/app.js:2791` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 27 | `assets/js/app.js:2807` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 28 | `assets/js/app.js:2813` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 29 | `assets/js/app.js:2821` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 30 | `assets/js/app.js:2833` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 31 | `assets/js/app.js:2842` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 32 | `assets/js/app.js:2851` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 33 | `assets/js/app.js:2860` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 34 | `assets/js/app.js:2868` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 35 | `assets/js/app.js:2882` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 36 | `assets/js/app.js:2887` | `feedback` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 37 | `assets/js/app.js:2894` | `feedback` | `${escapeHtml(msg)}` | Server auth error message returned by Supabase Auth API | `escapeHtml(errMsg)` / `escapeHtml(msg)` | No |
+| 38 | `assets/js/app.js:2905` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 39 | `assets/js/app.js:2917` | `subtitleEl` | `${escapeHtml(oldCur)}`<br>`${escapeHtml(newCur)}` | Old currency and new currency codes from currency switch select | `escapeHtml(oldCur)`, `escapeHtml(newCur)` | No |
+| 40 | `assets/js/app.js:2923` | `incomeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 41 | `assets/js/app.js:3251` | `incomeEl` | `${incColor}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
+| 42 | `assets/js/app.js:3557` | `incomeEl` | `${incColor}`<br>`${savingsRateVal}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
+| 43 | `assets/js/app.js:3561` | `lifetimeEl` | `${qualifier}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
+| 44 | `assets/js/app.js:3566` | `lifetimeEl` | `${qualifier}`<br>`${escapeHtml(earnedFormatted)}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
+| 45 | `assets/js/app.js:3599` | `lifetimeEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 46 | `assets/js/app.js:3602` | `expensesEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 47 | `assets/js/app.js:3608` | `expensesEl` | `${expColorVar}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
+| 48 | `assets/js/app.js:3644` | `expensesEl` | `${expColorVar}`<br>`${spendPctOfIncome}` | Calculated savings rate and expense rate percentages & CSS color variables | Numeric integer / percentage (`savingsRateVal%`, `spendPctOfIncome%`) & CSS color variables | No |
+| 49 | `assets/js/app.js:3647` | `spendPctEl` | `${qualifier}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
+| 50 | `assets/js/app.js:3652` | `spendPctEl` | `${qualifier}`<br>`${escapeHtml(spentFormatted)}` | Sub-line qualifier text and formatted total earned / total spent lifetime figures | Predefined qualifier string literals & `escapeHtml(earnedFormatted)`, `escapeHtml(spentFormatted)` | No |
+| 51 | `assets/js/app.js:3679` | `spendPctEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 52 | `assets/js/app.js:3682` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 53 | `assets/js/app.js:3688` | `el` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 54 | `assets/js/app.js:5097` | `catFilter` | `${allOpts}` | Filter dropdown options (categories, distinct expense months, cycle reset days) | `escapeHtml(m)` for dates, `escapeHtml(c.name)` for categories, integer loop for cycle days | No |
+| 55 | `assets/js/app.js:5174` | `moFilter` | `${escapeHtml(m)}`<br>`${escapeHtml(m)}` | Filter dropdown options (categories, distinct expense months, cycle reset days) | `escapeHtml(m)` for dates, `escapeHtml(c.name)` for categories, integer loop for cycle days | No |
+| 56 | `assets/js/app.js:5208` | `cycleSelect` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 57 | `assets/js/app.js:5209` | `recurringDaySelect` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 58 | `assets/js/app.js:5379` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 59 | `assets/js/app.js:5476` | `platformContainer` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 60 | `assets/js/app.js:5500` | `platformContainer` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 61 | `assets/js/app.js:6310` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 62 | `assets/js/app.js:6312` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 63 | `assets/js/app.js:6995` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 64 | `assets/js/app.js:7000` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 65 | `assets/js/app.js:7017` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 66 | `assets/js/app.js:7022` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 67 | `assets/js/categories.js:363` | `el` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 68 | `assets/js/categories.js:377` | `catFilter` | `${allOpts}` | Built-in categories & user custom categories from state | `categoriesBridge.escapeHtml(c.name)` for values & labels, `categoriesBridge.escapeHtml(k)` | No |
+| 69 | `assets/js/categories.js:396` | `container` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 70 | `assets/js/categories.js:400` | `container` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 71 | `assets/js/categories.js:646` | `select` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 72 | `assets/js/expenses-p3a-v1.js:470` | `editBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 73 | `assets/js/expenses-p3a-v1.js:476` | `delBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 74 | `assets/js/expenses-p3a-v1.js:545` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
@@ -135,114 +135,114 @@ Total verified lines: **217** across all non-minified application source files.
 | 104 | `assets/js/goals.js:843` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 105 | `assets/js/goals.js:850` | `submitBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 106 | `assets/js/income.js:555` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 107 | `assets/js/income.js:637` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 108 | `assets/js/income.js:675` | `previewBox` | `${isStealth ? 'stealth-masked' : ''}`<br>`${incomeBridge.formatCurrency(resultingTotal)}` | Income adjustment / balance preview amounts & colors | Numeric `formatCurrency()`, constant CSS variables, `sign` literal | No |
-| 109 | `assets/js/income.js:687` | `previewBox` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 110 | `assets/js/income.js:693` | `previewBox` | `${isStealth ? 'stealth-masked' : ''}`<br>`${deltaColor}`<br>`${sign}`<br>`${deltaFormatted}` | Income adjustment / balance preview amounts & colors | Numeric `formatCurrency()`, constant CSS variables, `sign` literal | No |
-| 111 | `assets/js/income.js:742` | `previewBox` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 107 | `assets/js/income.js:639` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 108 | `assets/js/income.js:677` | `previewBox` | `${isStealth ? 'stealth-masked' : ''}`<br>`${incomeBridge.formatCurrency(resultingTotal)}` | Income adjustment / balance preview amounts & colors | Numeric `formatCurrency()`, constant CSS variables, `sign` literal | No |
+| 109 | `assets/js/income.js:689` | `previewBox` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 110 | `assets/js/income.js:695` | `previewBox` | `${isStealth ? 'stealth-masked' : ''}`<br>`${deltaColor}`<br>`${sign}`<br>`${deltaFormatted}` | Income adjustment / balance preview amounts & colors | Numeric `formatCurrency()`, constant CSS variables, `sign` literal | No |
+| 111 | `assets/js/income.js:744` | `previewBox` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 112 | `assets/js/landing-alive-b7-v1.js:97` | `railContainer` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 113 | `assets/js/landing-b3-v2.js:838` | `snaps` | `${el.innerHTML}` | Initial DOM element innerHTML snapshot | Inherently safe DOM snapshot read | Yes |
-| 114 | `assets/js/landing-b3-v2.js:866` | `el` | `${v.h}` | Initial DOM element innerHTML snapshot restore | Inherently safe DOM snapshot restore | Yes |
-| 115 | `assets/js/landing-b3-v2.js:897` | `row` | `${html}` | Prepend row helper with static string literals | Static string literal from caller | Yes |
-| 116 | `assets/js/landing-b3-v2.js:930` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 117 | `assets/js/landing-b3-v2.js:1345` | `row` | `${item.badge}`<br>`${item.cat}`<br>`${item.desc}`<br>`${amtClass}`<br>`${amtFormatted}` | Live demo feed transaction item | Hardcoded constant demo item pool | No |
-| 118 | `assets/js/landing-b3-v2.js:1558` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 119 | `assets/js/landing-b3-v2.js:1587` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 120 | `assets/js/landing-b3-v2.js:1610` | `newRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 121 | `assets/js/landing-b3-v2.js:1700` | `dRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 122 | `assets/js/landing-b3-v2.js:1747` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 123 | `assets/js/landing-b3-v2.js:1748` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 124 | `assets/js/landing-b3-v2.js:1777` | `hRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 125 | `assets/js/landing-b3-v2.js:1803` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 126 | `assets/js/landing-b3-v2.js:1806` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 127 | `assets/js/landing-b3-v2.js:1971` | `recentList` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 128 | `assets/js/landing-b3-v2.js:1975` | `row` | `${r.note}`<br>`${r.amt}` | Category breakdown demo transaction rows | Hardcoded mock category data | No |
-| 129 | `assets/js/landing-b3-v2.js:2066` | `row` | `${dotHtml}`<br>`${cat}`<br>`${sData.pct}` | Reports donut legend item | Hardcoded data-cat attribute and numeric percentage | No |
-| 130 | `assets/js/landing-b3-v2.js:2177` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 131 | `assets/js/landing-b3-v2.js:2179` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 132 | `assets/js/landing-b3-v2.js:2181` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 133 | `assets/js/landing-b3-v2.js:2295` | `row` | `${dateStr}`<br>`${escapeHtml(note)}`<br>`${escapeHtml(cat)}`<br>`${amt.toLocaleString()}`<br>`${iconClass}` | Pull-the-plug interactive demo transaction | `escapeHtml(note)`, `escapeHtml(cat)`, numeric format | No |
-| 134 | `assets/js/landing-b3-v2.js:2631` | `pillText` | `${ver}` | Release version text | Hardcoded application version constant | No |
-| 135 | `assets/js/landing-b3-v2.js:2762` | `h2` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 136 | `assets/js/landing-b3-v2.js:2783` | `span` | `${node.innerHTML}` | Heading word streamer element child clone | Static heading DOM markup from static HTML | Yes |
+| 113 | `assets/js/landing-b3-v2.js:840` | `snaps` | `${el.innerHTML}` | Initial DOM element innerHTML snapshot | Inherently safe DOM snapshot read | Yes |
+| 114 | `assets/js/landing-b3-v2.js:868` | `el` | `${v.h}` | Initial DOM element innerHTML snapshot restore | Inherently safe DOM snapshot restore | Yes |
+| 115 | `assets/js/landing-b3-v2.js:899` | `row` | `${html}` | Prepend row helper with static string literals | Static string literal from caller | Yes |
+| 116 | `assets/js/landing-b3-v2.js:932` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 117 | `assets/js/landing-b3-v2.js:1349` | `row` | `${item.badge}`<br>`${item.cat}`<br>`${item.desc}`<br>`${amtClass}`<br>`${amtFormatted}` | Live demo feed transaction item | Hardcoded constant demo item pool | No |
+| 118 | `assets/js/landing-b3-v2.js:1563` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 119 | `assets/js/landing-b3-v2.js:1592` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 120 | `assets/js/landing-b3-v2.js:1615` | `newRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 121 | `assets/js/landing-b3-v2.js:1705` | `dRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 122 | `assets/js/landing-b3-v2.js:1752` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 123 | `assets/js/landing-b3-v2.js:1753` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 124 | `assets/js/landing-b3-v2.js:1782` | `hRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 125 | `assets/js/landing-b3-v2.js:1808` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 126 | `assets/js/landing-b3-v2.js:1811` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 127 | `assets/js/landing-b3-v2.js:1976` | `recentList` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 128 | `assets/js/landing-b3-v2.js:1980` | `row` | `${r.note}`<br>`${r.amt}` | Category breakdown demo transaction rows | Hardcoded mock category data | No |
+| 129 | `assets/js/landing-b3-v2.js:2071` | `row` | `${dotHtml}`<br>`${cat}`<br>`${sData.pct}` | Reports donut legend item | Hardcoded data-cat attribute and numeric percentage | No |
+| 130 | `assets/js/landing-b3-v2.js:2182` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 131 | `assets/js/landing-b3-v2.js:2184` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 132 | `assets/js/landing-b3-v2.js:2186` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 133 | `assets/js/landing-b3-v2.js:2300` | `row` | `${dateStr}`<br>`${escapeHtml(note)}`<br>`${escapeHtml(cat)}`<br>`${amt.toLocaleString()}`<br>`${iconClass}` | Pull-the-plug interactive demo transaction | `escapeHtml(note)`, `escapeHtml(cat)`, numeric format | No |
+| 134 | `assets/js/landing-b3-v2.js:2638` | `pillText` | `${ver}` | Release version text | Hardcoded application version constant | No |
+| 135 | `assets/js/landing-b3-v2.js:2769` | `h2` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 136 | `assets/js/landing-b3-v2.js:2790` | `span` | `${node.innerHTML}` | Heading word streamer element child clone | Static heading DOM markup from static HTML | Yes |
 | 137 | `assets/js/landing-demo-b8-v1.js:56` | `root` | `${slices}`<br>`${legend}`<br>`${grid}`<br>`${bars}` | Reports walkthrough interactive SVG visualization | Hardcoded constant chapters, categories, and trends arrays | No |
-| 138 | `assets/js/landing-mobile-b3-v1.js:291` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 139 | `assets/js/landing-mobile-b3-v1.js:294` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 140 | `assets/js/landing-mobile-b3-v1.js:306` | `row` | `${item.badgeClass}`<br>`${item.cat}`<br>`${item.name}`<br>`${amtFormatted}`<br>`${amtClass}` | Live mobile feed transaction item | Hardcoded constant demo item pool | No |
-| 141 | `assets/js/landing-mobile-b3-v1.js:410` | `hint` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 142 | `assets/js/landing-mobile-b3-v1.js:612` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 143 | `assets/js/landing-mobile-b3-v1.js:650` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 144 | `assets/js/landing-mobile-b3-v1.js:676` | `depRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 145 | `assets/js/landing-mobile-b3-v1.js:1061` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 146 | `assets/js/landing-mobile-b3-v1.js:1064` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 147 | `assets/js/landing-mobile-b3-v1.js:1076` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 148 | `assets/js/landing-mobile-b3-v1.js:1079` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 149 | `assets/js/landing-mobile-b3-v1.js:1087` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 150 | `assets/js/landing-mobile-b3-v1.js:1202` | `catExpensesList` | `${item.name}`<br>`${item.amt}` | Mobile category drawer expense rows | Hardcoded mock expense data | No |
-| 151 | `assets/js/landing-mobile-b3-v1.js:1351` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 152 | `assets/js/landing-mobile-b3-v1.js:1356` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 153 | `assets/js/landing-mobile-b3-v1.js:1360` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 154 | `assets/js/landing-mobile-b3-v1.js:1407` | `row` | `${escapeHtml(cat)}`<br>`${escapeHtml(note)}`<br>`${amt.toLocaleString()}`<br>`${statusIcon}` | Mobile pull-the-plug interactive demo | `escapeHtml(cat)`, `escapeHtml(note)`, numeric format | No |
-| 155 | `assets/js/landing-mobile-b3-v1.js:1449` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 156 | `assets/js/landing-mobile.js:290` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 157 | `assets/js/landing-mobile.js:293` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 158 | `assets/js/landing-mobile.js:305` | `row` | `${item.badgeClass}`<br>`${item.cat}`<br>`${item.name}`<br>`${amtFormatted}`<br>`${amtClass}` | Live mobile feed transaction item | Hardcoded constant demo item pool | No |
-| 159 | `assets/js/landing-mobile.js:409` | `hint` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 160 | `assets/js/landing-mobile.js:611` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 161 | `assets/js/landing-mobile.js:649` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 162 | `assets/js/landing-mobile.js:675` | `depRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 163 | `assets/js/landing-mobile.js:1058` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 164 | `assets/js/landing-mobile.js:1061` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 165 | `assets/js/landing-mobile.js:1073` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 166 | `assets/js/landing-mobile.js:1076` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 167 | `assets/js/landing-mobile.js:1084` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 168 | `assets/js/landing-mobile.js:1199` | `catExpensesList` | `${item.name}`<br>`${item.amt}` | Mobile category drawer expense rows | Hardcoded mock expense data | No |
-| 169 | `assets/js/landing-mobile.js:1348` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 170 | `assets/js/landing-mobile.js:1353` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 171 | `assets/js/landing-mobile.js:1357` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 172 | `assets/js/landing-mobile.js:1404` | `row` | `${escapeHtml(cat)}`<br>`${escapeHtml(note)}`<br>`${amt.toLocaleString()}`<br>`${statusIcon}` | Mobile pull-the-plug interactive demo | `escapeHtml(cat)`, `escapeHtml(note)`, numeric format | No |
-| 173 | `assets/js/landing-mobile.js:1446` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 174 | `assets/js/landing.js:1158` | `row` | `${item.badge}`<br>`${item.cat}`<br>`${item.desc}`<br>`${amtClass}`<br>`${amtFormatted}` | Live demo feed transaction item | Hardcoded constant demo item pool | No |
-| 175 | `assets/js/landing.js:1371` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 176 | `assets/js/landing.js:1400` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 177 | `assets/js/landing.js:1423` | `newRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 178 | `assets/js/landing.js:1513` | `dRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 179 | `assets/js/landing.js:1560` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 180 | `assets/js/landing.js:1561` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 181 | `assets/js/landing.js:1590` | `hRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 182 | `assets/js/landing.js:1616` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 183 | `assets/js/landing.js:1619` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 184 | `assets/js/landing.js:1784` | `recentList` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 185 | `assets/js/landing.js:1788` | `row` | `${r.note}`<br>`${r.amt}` | Category breakdown demo transaction rows | Hardcoded mock category data | No |
-| 186 | `assets/js/landing.js:1879` | `row` | `${dotHtml}`<br>`${cat}`<br>`${sData.pct}` | Reports donut legend item | Hardcoded data-cat attribute and numeric percentage | No |
-| 187 | `assets/js/landing.js:1990` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 188 | `assets/js/landing.js:1992` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 189 | `assets/js/landing.js:1994` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 190 | `assets/js/landing.js:2120` | `row` | `${dateStr}`<br>`${escapeHtml(note)}`<br>`${escapeHtml(cat)}`<br>`${amt.toLocaleString()}`<br>`${iconClass}` | Pull-the-plug interactive demo transaction | `escapeHtml(note)`, `escapeHtml(cat)`, numeric format | No |
-| 191 | `assets/js/landing.js:2509` | `pillText` | `${ver}` | Release version text | Hardcoded application version constant | No |
-| 192 | `assets/js/landing.js:2640` | `h2` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 193 | `assets/js/landing.js:2661` | `span` | `${node.innerHTML}` | Heading word streamer element child clone | Static heading DOM markup from static HTML | Yes |
+| 138 | `assets/js/landing-mobile-b3-v1.js:293` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 139 | `assets/js/landing-mobile-b3-v1.js:296` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 140 | `assets/js/landing-mobile-b3-v1.js:308` | `row` | `${item.badgeClass}`<br>`${item.cat}`<br>`${item.name}`<br>`${amtFormatted}`<br>`${amtClass}` | Live mobile feed transaction item | Hardcoded constant demo item pool | No |
+| 141 | `assets/js/landing-mobile-b3-v1.js:412` | `hint` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 142 | `assets/js/landing-mobile-b3-v1.js:613` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 143 | `assets/js/landing-mobile-b3-v1.js:651` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 144 | `assets/js/landing-mobile-b3-v1.js:677` | `depRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 145 | `assets/js/landing-mobile-b3-v1.js:1063` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 146 | `assets/js/landing-mobile-b3-v1.js:1066` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 147 | `assets/js/landing-mobile-b3-v1.js:1078` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 148 | `assets/js/landing-mobile-b3-v1.js:1081` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 149 | `assets/js/landing-mobile-b3-v1.js:1089` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 150 | `assets/js/landing-mobile-b3-v1.js:1204` | `catExpensesList` | `${item.name}`<br>`${item.amt}` | Mobile category drawer expense rows | Hardcoded mock expense data | No |
+| 151 | `assets/js/landing-mobile-b3-v1.js:1353` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 152 | `assets/js/landing-mobile-b3-v1.js:1358` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 153 | `assets/js/landing-mobile-b3-v1.js:1362` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 154 | `assets/js/landing-mobile-b3-v1.js:1409` | `row` | `${escapeHtml(cat)}`<br>`${escapeHtml(note)}`<br>`${amt.toLocaleString()}`<br>`${statusIcon}` | Mobile pull-the-plug interactive demo | `escapeHtml(cat)`, `escapeHtml(note)`, numeric format | No |
+| 155 | `assets/js/landing-mobile-b3-v1.js:1451` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 156 | `assets/js/landing-mobile.js:292` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 157 | `assets/js/landing-mobile.js:295` | `syncPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 158 | `assets/js/landing-mobile.js:307` | `row` | `${item.badgeClass}`<br>`${item.cat}`<br>`${item.name}`<br>`${amtFormatted}`<br>`${amtClass}` | Live mobile feed transaction item | Hardcoded constant demo item pool | No |
+| 159 | `assets/js/landing-mobile.js:411` | `hint` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 160 | `assets/js/landing-mobile.js:612` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 161 | `assets/js/landing-mobile.js:650` | `row` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 162 | `assets/js/landing-mobile.js:676` | `depRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 163 | `assets/js/landing-mobile.js:1060` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 164 | `assets/js/landing-mobile.js:1063` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 165 | `assets/js/landing-mobile.js:1075` | `vaultOverlay` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 166 | `assets/js/landing-mobile.js:1078` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 167 | `assets/js/landing-mobile.js:1086` | `vaultRing` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 168 | `assets/js/landing-mobile.js:1201` | `catExpensesList` | `${item.name}`<br>`${item.amt}` | Mobile category drawer expense rows | Hardcoded mock expense data | No |
+| 169 | `assets/js/landing-mobile.js:1350` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 170 | `assets/js/landing-mobile.js:1355` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 171 | `assets/js/landing-mobile.js:1359` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 172 | `assets/js/landing-mobile.js:1406` | `row` | `${escapeHtml(cat)}`<br>`${escapeHtml(note)}`<br>`${amt.toLocaleString()}`<br>`${statusIcon}` | Mobile pull-the-plug interactive demo | `escapeHtml(cat)`, `escapeHtml(note)`, numeric format | No |
+| 173 | `assets/js/landing-mobile.js:1448` | `plugPill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 174 | `assets/js/landing.js:1162` | `row` | `${item.badge}`<br>`${item.cat}`<br>`${item.desc}`<br>`${amtClass}`<br>`${amtFormatted}` | Live demo feed transaction item | Hardcoded constant demo item pool | No |
+| 175 | `assets/js/landing.js:1376` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 176 | `assets/js/landing.js:1405` | `s1Tag` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 177 | `assets/js/landing.js:1428` | `newRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 178 | `assets/js/landing.js:1518` | `dRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 179 | `assets/js/landing.js:1565` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 180 | `assets/js/landing.js:1566` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 181 | `assets/js/landing.js:1595` | `hRow` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 182 | `assets/js/landing.js:1621` | `s4Settle` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 183 | `assets/js/landing.js:1624` | `s4Inc` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 184 | `assets/js/landing.js:1789` | `recentList` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 185 | `assets/js/landing.js:1793` | `row` | `${r.note}`<br>`${r.amt}` | Category breakdown demo transaction rows | Hardcoded mock category data | No |
+| 186 | `assets/js/landing.js:1884` | `row` | `${dotHtml}`<br>`${cat}`<br>`${sData.pct}` | Reports donut legend item | Hardcoded data-cat attribute and numeric percentage | No |
+| 187 | `assets/js/landing.js:1995` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 188 | `assets/js/landing.js:1997` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 189 | `assets/js/landing.js:1999` | `hintEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 190 | `assets/js/landing.js:2125` | `row` | `${dateStr}`<br>`${escapeHtml(note)}`<br>`${escapeHtml(cat)}`<br>`${amt.toLocaleString()}`<br>`${iconClass}` | Pull-the-plug interactive demo transaction | `escapeHtml(note)`, `escapeHtml(cat)`, numeric format | No |
+| 191 | `assets/js/landing.js:2516` | `pillText` | `${ver}` | Release version text | Hardcoded application version constant | No |
+| 192 | `assets/js/landing.js:2647` | `h2` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 193 | `assets/js/landing.js:2668` | `span` | `${node.innerHTML}` | Heading word streamer element child clone | Static heading DOM markup from static HTML | Yes |
 | 194 | `assets/js/loans.js:112` | `datalist` | `${escapeHtml(n)}` | Unique person names from loans state | `escapeHtml(n)` | No |
-| 195 | `assets/js/loans.js:370` | `container` | `${state.loans.length === 0 ? 'No loans or debts yet' : 'No records found'}`<br>`${escapeHtml(emptyDesc)}` | Loans state count & activeLoansFilter text | Ternary string & `escapeHtml(emptyDesc)` | No |
-| 196 | `assets/js/loans.js:385` | `container` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 197 | `assets/js/loans.js:419` | `titleEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 198 | `assets/js/loans.js:439` | `titleEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 199 | `assets/js/loans.js:1066` | `titleEl` | `${escapeHtml(loan.person_name)}` | Selected loan record person_name | `escapeHtml(loan.person_name)` | No |
-| 200 | `assets/js/loans.js:1073` | `subtitleEl` | `${dirText}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(pStr)}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(oStr)}` | Loan direction text & principal / outstanding strings | Direction literal & `escapeHtml(pStr)`, `escapeHtml(oStr)` via `formatCurrency()` | No |
-| 201 | `assets/js/loans.js:1082` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 202 | `assets/js/loans.js:1084` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 203 | `assets/js/pwa-installer.js:40` | `pill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 204 | `assets/js/pwa-installer.js:397` | `modal` | `${guideContent}` | Static button markup | Static markup (inherently safe) | No |
-| 205 | `assets/js/pwa-installer.js:470` | `element` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 206 | `assets/js/pwa-installer.js:472` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 207 | `assets/js/pwa-installer.js:492` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 208 | `assets/js/pwa-installer.js:557` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 209 | `assets/js/pwa-installer.js:561` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 210 | `assets/js/vault.js:356` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 211 | `assets/js/vault.js:361` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 212 | `assets/js/vault.js:393` | `stealthBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 213 | `assets/js/vault.js:397` | `stealthBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 214 | `assets/js/vault.js:610` | `title` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 215 | `assets/js/vault.js:760` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 216 | `assets/js/vault.js:764` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 217 | `assets/js/vault.js:962` | `noteEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 195 | `assets/js/loans.js:368` | `container` | `${state.loans.length === 0 ? 'No loans or debts yet' : 'No records found'}`<br>`${escapeHtml(emptyDesc)}` | Loans state count & activeLoansFilter text | Ternary string & `escapeHtml(emptyDesc)` | No |
+| 196 | `assets/js/loans.js:383` | `container` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 197 | `assets/js/loans.js:417` | `titleEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 198 | `assets/js/loans.js:437` | `titleEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 199 | `assets/js/loans.js:1064` | `titleEl` | `${escapeHtml(loan.person_name)}` | Selected loan record person_name | `escapeHtml(loan.person_name)` | No |
+| 200 | `assets/js/loans.js:1071` | `subtitleEl` | `${dirText}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(pStr)}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(oStr)}` | Loan direction text & principal / outstanding strings | Direction literal & `escapeHtml(pStr)`, `escapeHtml(oStr)` via `formatCurrency()` | No |
+| 201 | `assets/js/loans.js:1080` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 202 | `assets/js/loans.js:1082` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 203 | `assets/js/pwa-installer.js:42` | `pill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 204 | `assets/js/pwa-installer.js:401` | `modal` | `${guideContent}` | Static button markup | Static markup (inherently safe) | No |
+| 205 | `assets/js/pwa-installer.js:474` | `element` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 206 | `assets/js/pwa-installer.js:476` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 207 | `assets/js/pwa-installer.js:496` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 208 | `assets/js/pwa-installer.js:561` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 209 | `assets/js/pwa-installer.js:565` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 210 | `assets/js/vault.js:358` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 211 | `assets/js/vault.js:363` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 212 | `assets/js/vault.js:395` | `stealthBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 213 | `assets/js/vault.js:399` | `stealthBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 214 | `assets/js/vault.js:612` | `title` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 215 | `assets/js/vault.js:762` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 216 | `assets/js/vault.js:766` | `btn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 217 | `assets/js/vault.js:964` | `noteEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |

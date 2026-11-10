@@ -49,8 +49,10 @@
     if (typeof document !== 'undefined' && document.hidden) return;
     if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
       try {
-        navigator.vibrate(8);
-      } catch (e) {}
+        navigator.vibrate(duration || 8);
+      } catch {
+        /* vibration unsupported or blocked */
+      }
     }
   }
 
@@ -544,7 +546,6 @@
         }
 
       } else if (idx === 2) {
-        var gCard = document.getElementById('mob-s3-card');
         var gFundBtn = document.getElementById('mob-s3-fund-btn');
         var gBar = document.getElementById('mob-s3-bar');
         var gVal = document.getElementById('mob-s3-val');
@@ -1048,6 +1049,7 @@
     var vaultPointerStartX = 0;
     var vaultPointerStartY = 0;
 
+    // eslint-disable-next-line no-unused-vars -- state reset helper
     function resetVault() {
       if (vaultHoldTimer) { clearTimeout(vaultHoldTimer); vaultHoldTimer = null; }
       if (vaultBox) {

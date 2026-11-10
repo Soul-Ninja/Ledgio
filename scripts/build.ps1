@@ -12,28 +12,20 @@ Write-Host "=================================================" -ForegroundColor 
 Write-Host "  Ledgio Production Asset Minification Engine   " -ForegroundColor Cyan
 Write-Host "=================================================" -ForegroundColor Cyan
 
-function Minify-Css($code) {
-    $stamp = ""
-    if ($code -match '^\s*(/\*[\s\S]*?hallmark[\s\S]*?\*/)') {
-        $stamp = $matches[1] + "`n"
+$esbuildScript = Join-Path $PSScriptRoot "esbuild_minify.js"
+
+function Minify-Css-Esbuild($srcPath, $dstPath) {
+    & node $esbuildScript css $srcPath $dstPath
+    if ($LASTEXITCODE -ne 0) {
+        throw "esbuild CSS minification failed on $srcPath"
     }
-    $code = [regex]::Replace($code, '/\*[\s\S]*?\*/', '')
-    $code = [regex]::Replace($code, '\s+', ' ')
-    $code = [regex]::Replace($code, '\s*([{};:,>+~])\s*', '$1')
-    $code = [regex]::Replace($code, ';}', '}')
-    return $stamp + $code.Trim()
 }
 
-function Minify-Js($code) {
-    $code = [regex]::Replace($code, '/\*[\s\S]*?\*/', '')
-    $lines = $code -split "`r?`n"
-    $cleanLines = foreach ($line in $lines) {
-        $trimmed = $line.Trim()
-        if (-not $trimmed.StartsWith('//')) {
-            $line
-        }
+function Minify-Js-Esbuild($srcPath, $dstPath) {
+    & node $esbuildScript js $srcPath $dstPath
+    if ($LASTEXITCODE -ne 0) {
+        throw "esbuild JS minification failed on $srcPath"
     }
-    return ($cleanLines -join "`n")
 }
 
 $baseDir = Split-Path -Parent $PSScriptRoot
@@ -119,42 +111,11 @@ if ($indexHtml -match '<span id="hero-release-text">[^<]*</span>') {
     }
 }
 
-# Minify CSS
-$cssFiles = @("styles.css", "dashboard.css", "landing.css", "landing-b3-v2.css", "landing-b4-v1.css", "landing-b5-v1.css", "landing-b7-v1.css", "landing-b8-v1.css", "landing-b9-v1.css", "landing-alive-b7-v1.css", "tokens.css")
-foreach ($css in $cssFiles) {
-    $srcPath = Join-Path $baseDir "assets\css\$css"
-    $minName = $css.Replace(".css", ".min.css")
-    if ($css -eq "landing.css") { $minName = "landing-b3-v1.min.css" }
-    if ($css -eq "dashboard.css") { $minName = "dashboard-c2-v1.min.css" }
-    if ($css -eq "styles.css") { $minName = "styles-c1-v1.min.css" }
-    $dstPath = Join-Path $baseDir "assets\css\$minName"
-    
-    if (Test-Path $srcPath) {
-        Write-Host "Minifying CSS: $css -> $minName" -ForegroundColor Green
-        $content = [System.IO.File]::ReadAllText($srcPath, [System.Text.Encoding]::UTF8)
-        $minified = Minify-Css $content
-        [System.IO.File]::WriteAllText($dstPath, $minified, $utf8NoBom)
-    }
-}
-
-# Minify JS
-$jsFiles = @("app.js", "auth.js", "categories.js", "expenses.js", "expenses-p3a-v1.js", "goals.js", "hero-ascii.js", "hero-ascii-b3-v2.js", "hero-ascii-b7-v1.js", "closing-ascii-b3-v2.js", "closing-ascii-b7-v1.js", "hero-ascii-v1.js", "closing-ascii-v1.js", "income.js", "landing.js", "landing-b3-v2.js", "landing-ledger.js", "landing-mobile.js", "landing-mobile-b3-v1.js", "landing-alive-b7-v1.js", "landing-demo-b8-v1.js", "loans.js", "pwa-installer.js", "supabase-config-p3a-v1.js", "sync-engine.js", "vault.js")
-foreach ($js in $jsFiles) {
-    $srcPath = Join-Path $baseDir "assets\js\$js"
-    $minName = $js.Replace(".js", ".min.js")
-    if ($js -eq "landing.js") { $minName = "landing-b3-v1.min.js" }
-    if ($js -eq "expenses.js") { $minName = "expenses-c2-v1.min.js" }
-    if ($js -eq "app.js") { $minName = "app-c2-v1.min.js" }
-    if ($js -eq "auth.js") { $minName = "auth-c1-v1.min.js" }
-    if ($js -eq "supabase-config-p3a-v1.js") { $minName = "supabase-config-p3a-v1.min.js" }
-    $dstPath = Join-Path $baseDir "assets\js\$minName"
-    
-    if (Test-Path $srcPath) {
-        Write-Host "Minifying JS:  $js -> $minName" -ForegroundColor Yellow
-        $content = [System.IO.File]::ReadAllText($srcPath, [System.Text.Encoding]::UTF8)
-        $minified = Minify-Js $content
-        [System.IO.File]::WriteAllText($dstPath, $minified, $utf8NoBom)
-    }
+# Minify CSS and JS Assets via esbuild
+Write-Host "Minifying production CSS and JS assets with esbuild..." -ForegroundColor Green
+& node $esbuildScript --all $baseDir
+if ($LASTEXITCODE -ne 0) {
+    throw "esbuild asset minification failed! Build aborted."
 }
 
 # Validate that all same-origin assets referenced in root HTML files exist on disk
