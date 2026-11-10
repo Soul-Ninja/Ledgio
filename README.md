@@ -218,7 +218,7 @@ erDiagram
 | **Security** | Web Crypto (salted SHA-256 PIN), WebAuthn biometric unlock |
 | **Type & icons** | Inter, Geist Mono, Instrument Serif (self-hosted), Font Awesome 6 |
 | **Hosting** | Cloudflare Pages (<https://ledgio.pages.dev/>) |
-| **Quality** | 451 headless-browser runtime gates, innerHTML security audit, overflow & desktop-parity checks |
+| **Quality** | 465 headless-browser runtime gates, innerHTML security audit, overflow & desktop-parity checks |
 
 <br>
 
@@ -263,6 +263,7 @@ In the [Supabase SQL editor](https://supabase.com/dashboard), run these files **
 | 13 | `supabase/migrations/phase9_hardening.sql` | Stricter profile and analytics policies |
 | 14 | `supabase/migrations/phase9b_analytics_userid.sql` | Analytics cannot carry another user's id |
 | 15 | `supabase/migrations/phase10_analytics_retention.sql` | Nightly clean-up of launch analytics older than 90 days |
+| 16 | `supabase/migrations/phase11_sync_indexes.sql` | Composite sync indexes for user queries and ordering |
 | ✓ | `backend/verify_schema_phase9.sql` | Optional: prints PASS/FAIL for the security policies |
 
 </details>
@@ -307,9 +308,13 @@ The source files (`*.js`, `*.css`) are what you edit; the `*.min.*` files are ge
 
 | Command | What it does |
 |:---|:---|
-| `scripts/build.ps1` | Minifies JS/CSS, syncs SQL migrations, and **fails** if the version differs between `supabase-config-p3a-v1.js`, `sw.js`, this README badge and any `?v=` in the HTML files |
-| `scripts/test_runtime_gate.ps1` | Runs **451 runtime gates** in headless Edge against `tests/headless_regression.html` (sync engine, accounting, vault, viewport, landing page integrity and more) |
+| `scripts/build.ps1` | Minifies JS/CSS with esbuild and **fails** if the version differs between `supabase-config-p3a-v1.js`, `sw.js`, this README badge and any `?v=` in the HTML files |
+| `scripts/test_runtime_gate.ps1` | Runs **465 runtime gates** in headless Edge against `tests/headless_regression.html` (sync engine, accounting, vault, viewport, landing page integrity and more) |
 | `scripts/verify_innerhtml_audit.ps1` | Checks that every `innerHTML` sink is listed and reviewed in [`docs/security/innerhtml-audit.md`](docs/security/innerhtml-audit.md) |
+| `scripts/check_version_consistency.ps1` | Asserts version string consistency across config, service worker, README and HTML query strings |
+| `scripts/check_build_current.ps1` | Fails if minified bundles in repo differ from source files (catches stale build output) |
+| `scripts/check_migrations.ps1` | Verifies SQL migration files integrity and single source of truth in `supabase/migrations/` |
+| `npm run lint` | Runs ESLint 9 across all JS assets with 0 errors |
 | `scripts/check_overflow.ps1` | Fails if the landing page scrolls sideways at 360–1440px |
 | `scripts/verify_desktop_parity.ps1` | Pixel-compares desktop and tablet screenshots before and after a change |
 
@@ -323,9 +328,11 @@ powershell -ExecutionPolicy Bypass -File scripts\test_runtime_gate.ps1
 Every release must verify the following automated gates and checks before tagging:
 
 1. **Minification & Asset Verification**: Run `scripts/build.ps1` — validates version string parity across `supabase-config-p3a-v1.js`, `sw.js`, `README.md`, and HTML files; ensures all referenced scripts, styles, icons, and images exist; runs `node --check` on all minified bundles.
-2. **Horizontal Overflow Audit**: Run `scripts/check_overflow.ps1` — validates zero horizontal overflow from 320px to 1440px viewports.
-3. **Runtime Regression Suite**: Run `scripts/test_runtime_gate.ps1` — ensures all 451 automated DOM runtime assertions pass (0 failures).
-4. **Live Smoke Test**: Verify core flows (index, login, signup, reset-password, dashboard) on `https://ledgio.pages.dev` with zero console errors and <1s local-first paint.
+2. **Linting & Code Quality**: Run `npm run lint` — ensures 0 ESLint errors across codebase.
+3. **Security Audit**: Run `scripts/verify_innerhtml_audit.ps1` — ensures 100% of `innerHTML` call sites are audited.
+4. **Migration & Build Freshness**: Run `scripts/check_migrations.ps1` and `scripts/check_build_current.ps1` — asserts 0 migration drift and 0 bundle drift.
+5. **Runtime Regression Suite**: Run `scripts/test_runtime_gate.ps1` — ensures all 465 automated DOM runtime assertions pass (0 failures).
+6. **Live Smoke Test**: Verify core flows (index, login, signup, reset-password, dashboard) on `https://ledgio.pages.dev` with zero console errors and <1s local-first paint.
 
 <details>
 <summary><b>📂 Project layout</b></summary>
