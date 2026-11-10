@@ -105,27 +105,27 @@ Total verified lines: **217** across all non-minified application source files.
 | 74 | `assets/js/expenses-p3a-v1.js:545` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 75 | `assets/js/expenses-p3a-v1.js:552` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 76 | `assets/js/expenses-p3a-v1.js:565` | `icon` | `${expensesBridge.sanitizeIcon(cat.icon, 'fa-tag')}` | Expense item category icon | `expensesBridge.sanitizeIcon(cat.icon, 'fa-tag')` | No |
-| 77 | `assets/js/expenses-p3a-v1.js:626` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 78 | `assets/js/expenses-p3a-v1.js:629` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 79 | `assets/js/expenses-p3a-v1.js:688` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 80 | `assets/js/expenses-p3a-v1.js:694` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 81 | `assets/js/expenses-p3a-v1.js:723` | `title` | `${safeCatIcon}`<br>`${safeCatColor}`<br>`${expensesBridge.escapeHtml(cat.label)}` | Budget item category label, icon, and color | `expensesBridge.escapeHtml(cat.label)`, `sanitizeIcon()`, `sanitizeColor()` | No |
-| 82 | `assets/js/expenses-p3a-v1.js:730` | `amounts` | `${expensesBridge.formatCurrency(spent)}`<br>`${expensesBridge.formatCurrency(limit)}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
-| 83 | `assets/js/expenses-p3a-v1.js:737` | `delBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 84 | `assets/js/expenses-p3a-v1.js:761` | `footer` | `${pct}`<br>`${expensesBridge.formatCurrency(Math.max(0, limit - spent))}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
+| 77 | `assets/js/expenses-p3a-v1.js:625` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 78 | `assets/js/expenses-p3a-v1.js:630` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 79 | `assets/js/expenses-p3a-v1.js:695` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 80 | `assets/js/expenses-p3a-v1.js:701` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 81 | `assets/js/expenses-p3a-v1.js:730` | `title` | `${safeCatIcon}`<br>`${safeCatColor}`<br>`${expensesBridge.escapeHtml(cat.label)}` | Budget item category label, icon, and color | `expensesBridge.escapeHtml(cat.label)`, `sanitizeIcon()`, `sanitizeColor()` | No |
+| 82 | `assets/js/expenses-p3a-v1.js:737` | `amounts` | `${expensesBridge.formatCurrency(spent)}`<br>`${expensesBridge.formatCurrency(limit)}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
+| 83 | `assets/js/expenses-p3a-v1.js:744` | `delBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 84 | `assets/js/expenses-p3a-v1.js:768` | `footer` | `${pct}`<br>`${expensesBridge.formatCurrency(Math.max(0, limit - spent))}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
 | 85 | `assets/js/expenses.js:470` | `editBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 86 | `assets/js/expenses.js:476` | `delBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 87 | `assets/js/expenses.js:545` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 88 | `assets/js/expenses.js:552` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 89 | `assets/js/expenses.js:565` | `icon` | `${expensesBridge.sanitizeIcon(cat.icon, 'fa-tag')}` | Expense item category icon | `expensesBridge.sanitizeIcon(cat.icon, 'fa-tag')` | No |
-| 90 | `assets/js/expenses.js:624` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 91 | `assets/js/expenses.js:627` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 92 | `assets/js/expenses.js:676` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 93 | `assets/js/expenses.js:682` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 94 | `assets/js/expenses.js:711` | `title` | `${safeCatIcon}`<br>`${safeCatColor}`<br>`${expensesBridge.escapeHtml(cat.label)}` | Budget item category label, icon, and color | `expensesBridge.escapeHtml(cat.label)`, `sanitizeIcon()`, `sanitizeColor()` | No |
-| 95 | `assets/js/expenses.js:718` | `amounts` | `${expensesBridge.formatCurrency(spent)}`<br>`${expensesBridge.formatCurrency(limit)}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
-| 96 | `assets/js/expenses.js:725` | `delBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 97 | `assets/js/expenses.js:749` | `footer` | `${pct}`<br>`${expensesBridge.formatCurrency(Math.max(0, limit - spent))}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
+| 90 | `assets/js/expenses.js:625` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 91 | `assets/js/expenses.js:630` | `tbody` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 92 | `assets/js/expenses.js:695` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 93 | `assets/js/expenses.js:701` | `list` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 94 | `assets/js/expenses.js:730` | `title` | `${safeCatIcon}`<br>`${safeCatColor}`<br>`${expensesBridge.escapeHtml(cat.label)}` | Budget item category label, icon, and color | `expensesBridge.escapeHtml(cat.label)`, `sanitizeIcon()`, `sanitizeColor()` | No |
+| 95 | `assets/js/expenses.js:737` | `amounts` | `${expensesBridge.formatCurrency(spent)}`<br>`${expensesBridge.formatCurrency(limit)}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
+| 96 | `assets/js/expenses.js:744` | `delBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 97 | `assets/js/expenses.js:768` | `footer` | `${pct}`<br>`${expensesBridge.formatCurrency(Math.max(0, limit - spent))}` | Budget amounts (spent, limit, remaining) & percentages | Numeric integer / percentage & `formatCurrency()` | No |
 | 98 | `assets/js/goals.js:207` | `grid` | `${state.goals.length === 0 ? 'No savings goals yet' : 'No goals match this filter'}`<br>`${goalsBridge.escapeHtml(emptyDesc)}` | Goals filter state & empty description string | `goalsBridge.escapeHtml(emptyDesc)` | No |
 | 99 | `assets/js/goals.js:223` | `grid` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 100 | `assets/js/goals.js:685` | `titleEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
@@ -227,10 +227,10 @@ Total verified lines: **217** across all non-minified application source files.
 | 196 | `assets/js/loans.js:383` | `container` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 197 | `assets/js/loans.js:417` | `titleEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 198 | `assets/js/loans.js:437` | `titleEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 199 | `assets/js/loans.js:1064` | `titleEl` | `${escapeHtml(loan.person_name)}` | Selected loan record person_name | `escapeHtml(loan.person_name)` | No |
-| 200 | `assets/js/loans.js:1071` | `subtitleEl` | `${dirText}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(pStr)}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(oStr)}` | Loan direction text & principal / outstanding strings | Direction literal & `escapeHtml(pStr)`, `escapeHtml(oStr)` via `formatCurrency()` | No |
-| 201 | `assets/js/loans.js:1080` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 202 | `assets/js/loans.js:1082` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 199 | `assets/js/loans.js:1069` | `titleEl` | `${escapeHtml(loan.person_name)}` | Selected loan record person_name | `escapeHtml(loan.person_name)` | No |
+| 200 | `assets/js/loans.js:1076` | `subtitleEl` | `${dirText}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(pStr)}`<br>`${stealth ? 'stealth-masked' : ''}`<br>`${escapeHtml(oStr)}` | Loan direction text & principal / outstanding strings | Direction literal & `escapeHtml(pStr)`, `escapeHtml(oStr)` via `formatCurrency()` | No |
+| 201 | `assets/js/loans.js:1095` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 202 | `assets/js/loans.js:1098` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 203 | `assets/js/pwa-installer.js:42` | `pill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 204 | `assets/js/pwa-installer.js:401` | `modal` | `${guideContent}` | Static button markup | Static markup (inherently safe) | No |
 | 205 | `assets/js/pwa-installer.js:474` | `element` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |

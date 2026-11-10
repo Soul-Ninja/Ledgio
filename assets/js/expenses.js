@@ -616,6 +616,7 @@
     return filtered;
   }
 
+  let allExpensesLimit = 50;
   function renderAllExpenses() {
     const tbody = document.getElementById('all-expenses-table');
     if (!tbody) return;
@@ -623,13 +624,31 @@
     const filtered = getFilteredExpenses();
     tbody.innerHTML = '';
     
+    const showMoreBtn = document.getElementById('expenses-show-more-btn');
+
     if (filtered.length === 0) {
       tbody.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><i class="fas fa-search"></i><p>No expenses found</p></div>';
+      if (showMoreBtn) showMoreBtn.style.display = 'none';
       return;
     }
     
+    const ordered = filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const isStealth = Boolean(expensesBridge.isStealthModeActive && expensesBridge.isStealthModeActive());
+
+    if (showMoreBtn) {
+      if (ordered.length > allExpensesLimit) {
+        showMoreBtn.style.display = 'block';
+        const remaining = ordered.length - allExpensesLimit;
+        showMoreBtn.textContent = `Show more expenses (${remaining} remaining)`;
+      } else {
+        showMoreBtn.style.display = 'none';
+      }
+    }
+
+    const visibleCount = Math.min(allExpensesLimit, ordered.length);
     const rows = document.createDocumentFragment();
-    filtered.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(exp => {
+    for (let index = 0; index < visibleCount; index++) {
+      const exp = ordered[index];
       const cat = expensesBridge.getCategoryMeta(exp.category);
       const row = document.createElement('div');
       row.className = 'table-row';
@@ -647,7 +666,7 @@
       catDiv.appendChild(badge);
       
       const amount = document.createElement('div');
-      amount.className = 'col-amount';
+      amount.className = 'col-amount' + (isStealth ? ' stealth-masked' : '');
       amount.textContent = expensesBridge.formatCurrency(exp.amount);
       amount.style.fontWeight = '600';
       
@@ -666,7 +685,7 @@
       row.appendChild(date);
       row.appendChild(actions);
       rows.appendChild(row);
-    });
+    }
     tbody.appendChild(rows);
   }
 
@@ -801,7 +820,20 @@
       
       // Filters
       ['expense-search', 'category-filter', 'month-filter'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', renderAllExpenses);
+        document.getElementById(id)?.addEventListener('input', () => {
+          allExpensesLimit = 50;
+          renderAllExpenses();
+        });
+        document.getElementById(id)?.addEventListener('change', () => {
+          allExpensesLimit = 50;
+          renderAllExpenses();
+        });
+      });
+
+      // Show More Button
+      document.getElementById('expenses-show-more-btn')?.addEventListener('click', () => {
+        allExpensesLimit += 50;
+        renderAllExpenses();
       });
 
       // Budget Settings

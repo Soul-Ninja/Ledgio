@@ -535,7 +535,7 @@
   }
 
   // UI State: History & Mode
-  let incomeHistoryLimit = 20;
+  let incomeHistoryLimit = 50;
   let isIncomeHistoryExpanded = false;
   let currentIncomeMode = 'add'; // 'add' or 'set'
 
@@ -864,7 +864,7 @@
       });
 
       document.getElementById('income-history-show-more-btn')?.addEventListener('click', () => {
-        incomeHistoryLimit += 20;
+        incomeHistoryLimit += 50;
         renderIncomeHistory();
       });
     } catch (e) {

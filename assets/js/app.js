@@ -7397,6 +7397,7 @@
   window.addExpense = addExpense;
   window.saveEdit = saveEdit;
   window.deleteExpense = deleteExpense;
+  window.showToast = showToast;
   window.openEditModal = openEditModal;
   window.renderExpenses = renderExpenses;
   window.renderAllExpenses = renderAllExpenses;

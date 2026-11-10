@@ -23,14 +23,14 @@
   <!-- Google Fonts with display=swap -->
 
   <!-- Core App Stylesheets (Minified) -->
-  <link rel="stylesheet" href="assets/css/styles-c1-v1.min.css?v=1.12.6">
-  <link rel="stylesheet" href="assets/css/dashboard-c2-v1.min.css?v=1.12.6">
+  <link rel="stylesheet" href="assets/css/styles-c1-v1.min.css?v=1.12.7">
+  <link rel="stylesheet" href="assets/css/dashboard-c2-v1.min.css?v=1.12.7">
 
-  <link rel="stylesheet" href="assets/css/dashboard-theme-p3b-v1.css?v=1.12.6">
+  <link rel="stylesheet" href="assets/css/dashboard-theme-p3b-v1.css?v=1.12.7">
   <!-- FontAwesome Icons (Non-blocking media swap) -->
   <link rel="stylesheet" href="assets/vendor/fontawesome-c2-v2.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="assets/vendor/fontawesome-c2-v2.css"></noscript>
-  <script src="assets/vendor/chart.min.js?v=1.12.6" defer></script>
+  <script src="assets/vendor/chart.min.js?v=1.12.7" defer></script>
   <!-- Early Vault Lock & Mobile Viewport Guard (Prevents Content Paint Before PIN & Overflow Zoom-Out) -->
   <style>
     html:not(.auth-ready) body {
@@ -915,6 +915,7 @@
                 </div>
               </div>
             </div>
+            <button type="button" id="expenses-show-more-btn" class="btn btn-outline" style="display: none; width: 100%; margin-top: 14px; font-size: 0.875rem; padding: 10px;">Show more expenses</button>
           </div>
         </section>
 
@@ -2376,6 +2377,7 @@
       <div id="loan-history-list" style="max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
         <!-- Populated dynamically by JS -->
       </div>
+      <button type="button" id="loan-history-show-more-btn" class="btn btn-outline btn-sm" style="display: none; width: 100%; margin-bottom: 12px; font-size: 0.8rem; padding: 6px 12px;">Show more settlements</button>
 
       <div class="modal-actions" style="margin-top: 0;">
         <button type="button" id="close-history-modal-btn" class="btn btn-outline" style="width: 100%;">Close</button>
@@ -2465,17 +2467,17 @@
   <div id="toast-container"></div>
 
   <!-- Supabase JS Client & Config -->
-  <script src="assets/vendor/supabase.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/supabase-config-p3a-v1.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/sync-engine.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/loans.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/income.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/goals.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/categories.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/expenses-p3a-v1.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/vault.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/pwa-installer.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/auth-c1-v1.min.js?v=1.12.6" defer></script>
-  <script src="assets/js/app-c2-v1.min.js?v=1.12.6" defer></script>
+  <script src="assets/vendor/supabase.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/supabase-config-p3a-v1.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/sync-engine.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/loans.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/income.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/goals.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/categories.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/expenses-p3a-v1.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/vault.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/pwa-installer.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/auth-c1-v1.min.js?v=1.12.7" defer></script>
+  <script src="assets/js/app-c2-v1.min.js?v=1.12.7" defer></script>
 </body>
 </html>

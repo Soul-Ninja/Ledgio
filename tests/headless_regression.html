@@ -12648,7 +12648,7 @@
           const pillEl = dDoc.getElementById('hero-release-text');
           const pillText = pillEl ? pillEl.textContent : '';
           const cfgVer = dWin.LEDGIO_VERSION;
-          g73_6_passed = Boolean(cfgVer === '1.12.6' && pillText.includes('v1.12.6'));
+          g73_6_passed = Boolean(cfgVer === '1.12.7' && pillText.includes('v1.12.7'));
           log('Gate 73.6: Version v1.11.5 consistent in config and hero pill',
             g73_6_passed, 'config: ' + cfgVer + ', pill: ' + pillText);
 
@@ -12999,6 +12999,176 @@
           log('Gate 77: Execution exception', false, e.message);
         } finally {
           gate77Iframe.remove();
+        }
+
+        // -----------------------------------------------------------------------
+        // GATE 78: High-Volume Performance & Windowing Gate (v1.12.7)
+        // -----------------------------------------------------------------------
+        log('--- Starting Gate 78: High-Volume Performance & Windowing ---', true, 'INFO');
+        try {
+          const perfState = win.__ledgio_getState ? win.__ledgio_getState() : null;
+          const origExpenses = perfState?.expenses ? [...perfState.expenses] : [];
+          const origIncome = perfState?.income_entries ? [...perfState.income_entries] : [];
+
+          // 1. Seed 5,000 synthetic expenses
+          const seededExpenses = [];
+          const baseDate = new Date();
+          for (let i = 0; i < 5000; i++) {
+            const d = new Date(baseDate.getTime() - i * 3600000);
+            const dateStr = d.toISOString().split('T')[0];
+            seededExpenses.push({
+              id: 'perf_exp_' + i,
+              name: 'Expense item #' + i,
+              category: i % 2 === 0 ? 'food' : 'shopping',
+              amount: 10 + (i % 100),
+              date: dateStr,
+              createdAt: d.toISOString(),
+              updatedAt: d.toISOString()
+            });
+          }
+
+          // 2. Seed 1,000 synthetic income entries
+          const seededIncome = [];
+          for (let i = 0; i < 1000; i++) {
+            const d = new Date(baseDate.getTime() - i * 7200000);
+            const dateStr = d.toISOString().split('T')[0];
+            seededIncome.push({
+              id: 'perf_inc_' + i,
+              type: i % 3 === 0 ? 'salary' : 'freelance',
+              amount: 500 + (i % 50),
+              entry_date: dateStr,
+              note: 'Performance income ' + i,
+              created_at: d.toISOString(),
+              updated_at: d.toISOString()
+            });
+          }
+
+          if (perfState) {
+            perfState.expenses = seededExpenses;
+            perfState.income_entries = seededIncome;
+          }
+
+          // 3. Measure first render of 5,000 expenses
+          const t0 = performance.now();
+          if (typeof win.renderAllExpenses === 'function') {
+            win.renderAllExpenses();
+          } else if (win.LedgioExpenses) {
+            win.LedgioExpenses.renderAllExpenses();
+          }
+          const tExpenseRender = performance.now() - t0;
+
+          // 4. Assert DOM node count stays <= 50 (window size)
+          const allExpTable = doc.getElementById('all-expenses-table');
+          const renderedRows = allExpTable ? allExpTable.querySelectorAll('.table-row').length : 0;
+          const showMoreBtn = doc.getElementById('expenses-show-more-btn');
+          const showMoreVisible = showMoreBtn && win.getComputedStyle(showMoreBtn).display !== 'none';
+          const btnText = showMoreBtn ? showMoreBtn.textContent : '';
+
+          log('Gate 78.1: Seeding 5,000 expenses renders initial window in < 500ms',
+            tExpenseRender < 500,
+            `Render time: ${tExpenseRender.toFixed(2)}ms (budget: 500ms)`);
+
+          log('Gate 78.2: Rendered DOM expense rows capped at window size (<= 50)',
+            renderedRows === 50,
+            `Rendered DOM rows: ${renderedRows} (total seeded: 5,000)`);
+
+          log('Gate 78.3: Show more expenses button visible with remaining count',
+            Boolean(showMoreVisible && btnText.includes('4950')),
+            `Button visible: ${showMoreVisible}, text: '${btnText}'`);
+
+          // 5. Test clicking "Show more" increments window to 100
+          if (showMoreBtn) {
+            showMoreBtn.click();
+            const rowsAfterClick = allExpTable ? allExpTable.querySelectorAll('.table-row').length : 0;
+            log('Gate 78.4: Clicking Show More appends next batch (100 rows)',
+              rowsAfterClick === 100,
+              `Rows after clicking Show More: ${rowsAfterClick}`);
+          }
+
+          // 6. Test Income History windowing
+          if (typeof win.renderIncomeHistory === 'function') {
+            win.renderIncomeHistory();
+          } else if (win.LedgioIncome) {
+            win.LedgioIncome.renderIncomeHistory();
+          }
+          const incHistoryList = doc.getElementById('income-history-list');
+          const incRows = incHistoryList ? incHistoryList.querySelectorAll('.income-history-row').length : 0;
+          const incShowMoreBtn = doc.getElementById('income-history-show-more-btn');
+          const incShowMoreVisible = incShowMoreBtn && win.getComputedStyle(incShowMoreBtn).display !== 'none';
+
+          log('Gate 78.5: Seeding 1,000 income entries caps DOM rows at 50 with Show More',
+            incRows === 50 && incShowMoreVisible,
+            `Income DOM rows: ${incRows}, showMoreVisible: ${incShowMoreVisible}`);
+
+          // Restore state
+          if (perfState) {
+            perfState.expenses = origExpenses;
+            perfState.income_entries = origIncome;
+          }
+          if (typeof win.renderAllExpenses === 'function') win.renderAllExpenses();
+          if (typeof win.renderIncomeHistory === 'function') win.renderIncomeHistory();
+        } catch (e) {
+          log('Gate 78: Execution exception', false, e.message);
+        }
+
+        // -----------------------------------------------------------------------
+        // GATE 79: LocalStorage Quota Safety & QuotaExceededError Gate (v1.12.7)
+        // -----------------------------------------------------------------------
+        log('--- Starting Gate 79: Storage Quota Safety & QuotaExceededError ---', true, 'INFO');
+        try {
+          const hasSafeHelper = typeof win.safeLocalStorageSet === 'function';
+          const hasQuotaChecker = typeof win.isQuotaExceededError === 'function';
+          log('Gate 79.1: Safe storage helper and quota checker exposed on window',
+            hasSafeHelper && hasQuotaChecker,
+            `safeLocalStorageSet: ${typeof win.safeLocalStorageSet}, isQuotaExceededError: ${typeof win.isQuotaExceededError}`);
+
+          // Mock toast capture
+          let lastToastMsg = '';
+          let lastToastType = '';
+          const origShowToast = win.showToast;
+          win.showToast = (msg, type) => {
+            lastToastMsg = msg;
+            lastToastType = type;
+            if (typeof origShowToast === 'function') origShowToast(msg, type);
+          };
+
+          // Simulate QuotaExceededError
+          const quotaErr = new Error('Quota exceeded');
+          quotaErr.name = 'QuotaExceededError';
+          quotaErr.code = 22;
+
+          let failWrites = true;
+          win.__ledgio_storage_override_set = (k) => {
+            if (failWrites && k.startsWith('simulated_quota_')) {
+              throw quotaErr;
+            }
+          };
+
+          // Perform write under quota failure
+          const writeRes = win.safeLocalStorageSet('simulated_quota_test', 'persisted_in_memory');
+          const memoryVal = win.localStorage.getItem('simulated_quota_test');
+
+          log('Gate 79.2: QuotaExceededError caught without throwing and preserved in memory fallback',
+            writeRes === false && memoryVal === 'persisted_in_memory',
+            `writeRes: ${writeRes}, retrieved: '${memoryVal}'`);
+
+          log('Gate 79.3: Quota warning toast displayed with exact message',
+            lastToastMsg.includes('Device storage is nearly full — your data is safe in the cloud if Cloud Synced') && lastToastType === 'warning',
+            `Toast: '${lastToastMsg}', type: '${lastToastType}'`);
+
+          // Test non-spammy throttle: write again immediately, toast count should not re-fire
+          lastToastMsg = '';
+          win.safeLocalStorageSet('simulated_quota_test_2', 'val2');
+          log('Gate 79.4: Storage quota warning toast throttled to prevent spam',
+            lastToastMsg === '',
+            `Toast message after immediate second quota failure: '${lastToastMsg}'`);
+
+          // Restore
+          failWrites = false;
+          delete win.__ledgio_storage_override_set;
+          win.showToast = origShowToast;
+        } catch (e) {
+          log('Gate 79: Execution exception', false, e.message);
         }
 
 

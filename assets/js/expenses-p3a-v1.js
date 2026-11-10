@@ -616,70 +616,77 @@
     return filtered;
   }
 
-  let ledgerRenderVersion = 0;
+  let allExpensesLimit = 50;
   function renderAllExpenses() {
-    const version = ++ledgerRenderVersion;
     const tbody = document.getElementById('all-expenses-table');
     if (!tbody) return;
     
     const filtered = getFilteredExpenses();
     tbody.innerHTML = '';
     
+    const showMoreBtn = document.getElementById('expenses-show-more-btn');
+
     if (filtered.length === 0) {
       tbody.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><i class="fas fa-search"></i><p>No expenses found</p></div>';
+      if (showMoreBtn) showMoreBtn.style.display = 'none';
       return;
     }
     
     const ordered = filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-    let index = 0;
-    // Bound style/layout work per frame without changing row order or handlers.
-    function appendBatch() {
-      if (version !== ledgerRenderVersion) return;
-      const rows = document.createDocumentFragment();
-      const end = Math.min(index + 48, ordered.length);
-      for (; index < end; index++) {
-        const exp = ordered[index];
-        const cat = expensesBridge.getCategoryMeta(exp.category);
-        const row = document.createElement('div');
-        row.className = 'table-row';
-        
-        const name = document.createElement('div');
-        name.className = 'col-name';
-        name.textContent = exp.name;
-        
-        const catDiv = document.createElement('div');
-        catDiv.className = 'col-category';
-        const badge = document.createElement('span');
-        badge.className = 'category-badge';
-        badge.style.backgroundColor = expensesBridge.sanitizeColor(cat.color, '#3b82f6');
-        badge.textContent = cat.label;
-        catDiv.appendChild(badge);
-        
-        const amount = document.createElement('div');
-        amount.className = 'col-amount';
-        amount.textContent = expensesBridge.formatCurrency(exp.amount);
-        amount.style.fontWeight = '600';
-        
-        const date = document.createElement('div');
-        date.className = 'col-date';
-        date.textContent = exp.date;
-        date.style.color = 'var(--color-text-muted)';
-        date.style.fontSize = '0.875rem';
-        
-        const actions = createActionButtons(exp.id);
-        actions.className = 'col-actions expense-item-actions';
-        
-        row.appendChild(name);
-        row.appendChild(catDiv);
-        row.appendChild(amount);
-        row.appendChild(date);
-        row.appendChild(actions);
-        rows.appendChild(row);
+    const isStealth = Boolean(expensesBridge.isStealthModeActive && expensesBridge.isStealthModeActive());
+
+    if (showMoreBtn) {
+      if (ordered.length > allExpensesLimit) {
+        showMoreBtn.style.display = 'block';
+        const remaining = ordered.length - allExpensesLimit;
+        showMoreBtn.textContent = `Show more expenses (${remaining} remaining)`;
+      } else {
+        showMoreBtn.style.display = 'none';
       }
-      tbody.appendChild(rows);
-      if (index < ordered.length) requestAnimationFrame(appendBatch);
     }
-    appendBatch();
+
+    const visibleCount = Math.min(allExpensesLimit, ordered.length);
+    const rows = document.createDocumentFragment();
+    for (let index = 0; index < visibleCount; index++) {
+      const exp = ordered[index];
+      const cat = expensesBridge.getCategoryMeta(exp.category);
+      const row = document.createElement('div');
+      row.className = 'table-row';
+      
+      const name = document.createElement('div');
+      name.className = 'col-name';
+      name.textContent = exp.name;
+      
+      const catDiv = document.createElement('div');
+      catDiv.className = 'col-category';
+      const badge = document.createElement('span');
+      badge.className = 'category-badge';
+      badge.style.backgroundColor = expensesBridge.sanitizeColor(cat.color, '#3b82f6');
+      badge.textContent = cat.label;
+      catDiv.appendChild(badge);
+      
+      const amount = document.createElement('div');
+      amount.className = 'col-amount' + (isStealth ? ' stealth-masked' : '');
+      amount.textContent = expensesBridge.formatCurrency(exp.amount);
+      amount.style.fontWeight = '600';
+      
+      const date = document.createElement('div');
+      date.className = 'col-date';
+      date.textContent = exp.date;
+      date.style.color = 'var(--color-text-muted)';
+      date.style.fontSize = '0.875rem';
+      
+      const actions = createActionButtons(exp.id);
+      actions.className = 'col-actions expense-item-actions';
+      
+      row.appendChild(name);
+      row.appendChild(catDiv);
+      row.appendChild(amount);
+      row.appendChild(date);
+      row.appendChild(actions);
+      rows.appendChild(row);
+    }
+    tbody.appendChild(rows);
   }
 
   function renderBudgets() {
@@ -813,7 +820,20 @@
       
       // Filters
       ['expense-search', 'category-filter', 'month-filter'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', renderAllExpenses);
+        document.getElementById(id)?.addEventListener('input', () => {
+          allExpensesLimit = 50;
+          renderAllExpenses();
+        });
+        document.getElementById(id)?.addEventListener('change', () => {
+          allExpensesLimit = 50;
+          renderAllExpenses();
+        });
+      });
+
+      // Show More Button
+      document.getElementById('expenses-show-more-btn')?.addEventListener('click', () => {
+        allExpensesLimit += 50;
+        renderAllExpenses();
       });
 
       // Budget Settings

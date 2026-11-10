@@ -1043,6 +1043,8 @@
     }
   }
 
+  let loanHistoryLimit = 50;
+
   function openLoanHistoryModal(loanId) {
     const modal = document.getElementById('loan-history-modal');
     if (!modal) return;
@@ -1051,6 +1053,9 @@
     const loan = (state?.loans || []).find(l => l.id === loanId);
     if (!loan) return;
 
+    if (modal.dataset.loanId !== loan.id) {
+      loanHistoryLimit = 50;
+    }
     modal.dataset.loanId = loan.id;
     const details = getLoanDetails(loan);
     const isLent = loan.direction === 'lent';
@@ -1076,10 +1081,21 @@
         .filter(s => s.loan_id === loan.id)
         .sort((a, b) => new Date(b.settle_date || b.created_at).getTime() - new Date(a.settle_date || a.created_at).getTime());
 
+      const showMoreBtn = document.getElementById('loan-history-show-more-btn');
+      if (showMoreBtn) {
+        if (settlements.length > loanHistoryLimit) {
+          showMoreBtn.style.display = 'block';
+          showMoreBtn.textContent = `Show more settlements (${settlements.length - loanHistoryLimit} remaining)`;
+        } else {
+          showMoreBtn.style.display = 'none';
+        }
+      }
+
       if (settlements.length === 0) {
         listEl.innerHTML = '<div style="text-align: center; color: var(--color-text-muted); padding: 24px 0; font-size: 0.85rem;">No settlements recorded yet</div>';
       } else {
-        listEl.innerHTML = settlements.map(s => {
+        const visibleSettlements = settlements.slice(0, loanHistoryLimit);
+        listEl.innerHTML = visibleSettlements.map(s => {
           let dateFormatted = s.settle_date;
           if (s.settle_date) {
             const d = new Date(s.settle_date + 'T00:00:00');
@@ -1424,6 +1440,13 @@
 
     document.getElementById('close-loan-history-btn')?.addEventListener('click', closeLoanHistoryModal);
     document.getElementById('close-history-modal-btn')?.addEventListener('click', closeLoanHistoryModal);
+    document.getElementById('loan-history-show-more-btn')?.addEventListener('click', () => {
+      loanHistoryLimit += 50;
+      const modal = document.getElementById('loan-history-modal');
+      if (modal && modal.dataset.loanId) {
+        openLoanHistoryModal(modal.dataset.loanId);
+      }
+    });
 
     document.getElementById('close-loan-rename-btn')?.addEventListener('click', closeRenamePersonModal);
     document.getElementById('cancel-rename-person-btn')?.addEventListener('click', closeRenamePersonModal);
