@@ -12648,7 +12648,7 @@
           const pillEl = dDoc.getElementById('hero-release-text');
           const pillText = pillEl ? pillEl.textContent : '';
           const cfgVer = dWin.LEDGIO_VERSION;
-          g73_6_passed = Boolean(cfgVer === '1.12.7' && pillText.includes('v1.12.7'));
+          g73_6_passed = Boolean(cfgVer === '1.12.8' && pillText.includes('v1.12.8'));
           log('Gate 73.6: Version v1.11.5 consistent in config and hero pill',
             g73_6_passed, 'config: ' + cfgVer + ', pill: ' + pillText);
 
@@ -13002,7 +13002,7 @@
         }
 
         // -----------------------------------------------------------------------
-        // GATE 78: High-Volume Performance & Windowing Gate (v1.12.7)
+        // GATE 78: High-Volume Performance & Windowing Gate (v1.12.8)
         // -----------------------------------------------------------------------
         log('--- Starting Gate 78: High-Volume Performance & Windowing ---', true, 'INFO');
         try {
@@ -13112,7 +13112,7 @@
         }
 
         // -----------------------------------------------------------------------
-        // GATE 79: LocalStorage Quota Safety & QuotaExceededError Gate (v1.12.7)
+        // GATE 79: LocalStorage Quota Safety & QuotaExceededError Gate (v1.12.8)
         // -----------------------------------------------------------------------
         log('--- Starting Gate 79: Storage Quota Safety & QuotaExceededError ---', true, 'INFO');
         try {

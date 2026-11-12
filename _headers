@@ -20,6 +20,13 @@
 /manifest.json
   Cache-Control: public, max-age=0, must-revalidate
 
+# Search Engine Crawl Files
+/robots.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600, must-revalidate
+
 # Immutable static assets (version-stamped CSS, JS, fonts, images)
 # Files under /assets/ are immutable for 1 year: when replacing an asset, ALWAYS give it a new filename or add ?v=; never reuse a name.
 /assets/*
