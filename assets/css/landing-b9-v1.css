@@ -358,6 +358,7 @@ body.lp .hes-val { color: var(--text); }
 
   /* Multi-option groups swipe sideways instead of stacking */
   body.lp .why-cards-grid,
+  body.lp .section-features .feature-pair,
   body.lp .section-features .feature-grid-two {
     display: flex;
     grid-template-columns: none;
@@ -367,23 +368,32 @@ body.lp .hes-val { color: var(--text); }
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin-inline: -16px;
-    padding: 2px 16px 8px;
-    scroll-padding-inline: 16px;
+    padding: 2px 0 8px;
   }
   /* landing-b5 forces this grid with !important, so the slider needs it too */
   body.lp .section-features .feature-grid-two {
     display: flex !important;
     grid-template-columns: none !important;
     gap: 12px !important;
+    align-items: flex-start !important;
   }
+  body.lp .section-features .feature-pair { align-items: flex-start; }
   body.lp .why-cards-grid::-webkit-scrollbar,
+  body.lp .section-features .feature-pair::-webkit-scrollbar,
   body.lp .section-features .feature-grid-two::-webkit-scrollbar { display: none; }
   body.lp .why-cards-grid > .why-card,
+  body.lp .section-features .feature-pair > *,
   body.lp .section-features .feature-grid-two > .half-frame {
     flex: 0 0 86%;
     min-width: 0;
-    scroll-snap-align: center;
+    margin-top: 0 !important;
+    scroll-snap-align: start;
+  }
+
+  /* Menu: GitHub icon and "Star" sit together instead of at opposite edges */
+  body.lp .mobile-nav-links .mob-github-link {
+    justify-content: flex-start;
+    gap: 10px;
   }
 
   /* Category chips: one swipeable row */
@@ -410,3 +420,6 @@ body.lp .hes-val { color: var(--text); }
   body.lp .donut-center-amt { font-size: 0.85rem; }
   body.lp .donut-center-lbl { font-size: 0.6rem; }
 }
+
+/* Wrapper for the two quick-entry demo frames: invisible on desktop, a swipeable slider on phones */
+body.lp .feature-pair { display: contents; }
