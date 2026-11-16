@@ -345,3 +345,68 @@ body.lp .hes-val { color: var(--text); }
     animation: none !important;
   }
 }
+
+/* ---------- Mobile polish (phones) ---------- */
+@media (max-width: 767px) {
+  /* Nav: content scrolling underneath must not show through the pill */
+  body.lp .nav-pill-wrap,
+  body.lp .nav-pill-wrap.is-scrolled {
+    background: rgba(7, 12, 14, 0.94) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.3) !important;
+    backdrop-filter: blur(14px) saturate(1.3) !important;
+  }
+
+  /* Multi-option groups swipe sideways instead of stacking */
+  body.lp .why-cards-grid,
+  body.lp .section-features .feature-grid-two {
+    display: flex;
+    grid-template-columns: none;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-inline: -16px;
+    padding: 2px 16px 8px;
+    scroll-padding-inline: 16px;
+  }
+  /* landing-b5 forces this grid with !important, so the slider needs it too */
+  body.lp .section-features .feature-grid-two {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 12px !important;
+  }
+  body.lp .why-cards-grid::-webkit-scrollbar,
+  body.lp .section-features .feature-grid-two::-webkit-scrollbar { display: none; }
+  body.lp .why-cards-grid > .why-card,
+  body.lp .section-features .feature-grid-two > .half-frame {
+    flex: 0 0 86%;
+    min-width: 0;
+    scroll-snap-align: center;
+  }
+
+  /* Category chips: one swipeable row */
+  body.lp .section-features .paper-cat-chip-deck {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  body.lp .section-features .paper-cat-chip-deck::-webkit-scrollbar { display: none; }
+  body.lp .section-features .cat-chip-btn { flex: 0 0 auto; scroll-snap-align: start; }
+
+  /* Category demo: size to content so the list no longer spills onto the caption */
+  body.lp .section-features .cat-demo-body { flex: 0 0 auto; height: auto; }
+  body.lp .section-features .paper-card.col-cat,
+  body.lp .section-features .cat-demo-body .paper-card-crop { height: auto; min-height: 0; }
+
+  /* Install mockup: centred and sized to its card */
+  body.lp .section-features .pwa-card-crop { justify-content: center; }
+  body.lp .section-features .pwa-phone-mock { margin-inline: auto; }
+
+  /* Donut centre label must fit inside the ring */
+  body.lp .donut-center-amt { font-size: 0.85rem; }
+  body.lp .donut-center-lbl { font-size: 0.6rem; }
+}
