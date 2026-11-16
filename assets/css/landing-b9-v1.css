@@ -348,6 +348,12 @@ body.lp .hes-val { color: var(--text); }
 
 /* ---------- Mobile polish (phones) ---------- */
 @media (max-width: 767px) {
+  /* Feature sections added another 20px per side on top of the page gutter; match the rest of the page */
+  body.lp .section-features .feature-section { padding-inline: 0; }
+
+  /* Month toggle stays on one row */
+  body.lp .section-features .donut-month-switch { flex-wrap: nowrap; justify-content: center; gap: 8px; }
+
   /* Nav: content scrolling underneath must not show through the pill */
   body.lp .nav-pill-wrap,
   body.lp .nav-pill-wrap.is-scrolled {
@@ -368,16 +374,23 @@ body.lp .hes-val { color: var(--text); }
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 2px 0 8px;
+    /* bleed to the screen edge: section padding (16px) + container gutter */
+    margin-inline: calc(-1 * (16px + var(--lp-gutter, 20px)));
+    padding: 2px calc(16px + var(--lp-gutter, 20px)) 8px;
+    scroll-padding-inline: calc(16px + var(--lp-gutter, 20px));
   }
   /* landing-b5 forces this grid with !important, so the slider needs it too */
   body.lp .section-features .feature-grid-two {
     display: flex !important;
     grid-template-columns: none !important;
     gap: 12px !important;
-    align-items: flex-start !important;
+    align-items: stretch !important;
   }
-  body.lp .section-features .feature-pair { align-items: flex-start; }
+  body.lp .section-features .feature-pair { align-items: stretch; }
+  /* Equal-height slides: the quick-entry pair's second frame sits inside a plain wrapper div */
+  body.lp .section-features .feature-pair > div { display: flex; }
+  body.lp .section-features .feature-pair > div > .feature-demo-frame { flex: 1 1 auto; }
+  body.lp .section-features :is(.feature-pair, .feature-grid-two) .feature-card-body { justify-content: center; }
   body.lp .why-cards-grid::-webkit-scrollbar,
   body.lp .section-features .feature-pair::-webkit-scrollbar,
   body.lp .section-features .feature-grid-two::-webkit-scrollbar { display: none; }
@@ -423,3 +436,21 @@ body.lp .hes-val { color: var(--text); }
 
 /* Wrapper for the two quick-entry demo frames: invisible on desktop, a swipeable slider on phones */
 body.lp .feature-pair { display: contents; }
+
+/* Donut segments are rings; landing-b5 `.slice-*` rules were filling them solid */
+body.lp .mini-donut-slice { fill: none; }
+
+/* Installed PWA: the installer hides the card's install button, so show the installed badge instead */
+html.is-standalone body.lp .pwa-installed-pill { display: inline-flex !important; }
+
+@media (max-width: 767px) {
+  /* The desktop script that fills this hint does not run on phones, so give it a generic line */
+  body.lp .pwa-platform-hint::after { content: "Or open your browser menu and tap Install app / Add to Home screen."; }
+  html.is-standalone body.lp .pwa-platform-hint::after { content: none; }
+  body.lp .section-features .pwa-card-action-box { align-items: center; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  /* Hero dashboard header: drop the decorative icon buttons so the title is not clipped */
+  body.lp .mob-rep-right .mob-rep-icon { display: none; }
+}
