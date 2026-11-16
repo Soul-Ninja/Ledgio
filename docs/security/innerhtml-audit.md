@@ -232,12 +232,12 @@ Total verified lines: **217** across all non-minified application source files.
 | 201 | `assets/js/loans.js:1095` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 202 | `assets/js/loans.js:1098` | `listEl` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 203 | `assets/js/pwa-installer.js:42` | `pill` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 204 | `assets/js/pwa-installer.js:401` | `modal` | `${guideContent}` | Static button markup | Static markup (inherently safe) | No |
-| 205 | `assets/js/pwa-installer.js:474` | `element` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 206 | `assets/js/pwa-installer.js:476` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 207 | `assets/js/pwa-installer.js:496` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 208 | `assets/js/pwa-installer.js:561` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
-| 209 | `assets/js/pwa-installer.js:565` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 204 | `assets/js/pwa-installer.js:411` | `modal` | `${guideContent}` | Static button markup | Static markup (inherently safe) | No |
+| 205 | `assets/js/pwa-installer.js:505` | `element` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 206 | `assets/js/pwa-installer.js:507` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 207 | `assets/js/pwa-installer.js:527` | `clickedBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 208 | `assets/js/pwa-installer.js:592` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
+| 209 | `assets/js/pwa-installer.js:596` | `offlineIndicator` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 210 | `assets/js/vault.js:358` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 211 | `assets/js/vault.js:363` | `badge` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |
 | 212 | `assets/js/vault.js:395` | `stealthBtn` | (None - static string) | Hardcoded markup string | Static markup (inherently safe) | Yes |

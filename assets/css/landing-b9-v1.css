@@ -429,9 +429,12 @@ body.lp .hes-val { color: var(--text); }
   body.lp .section-features .pwa-card-crop { justify-content: center; }
   body.lp .section-features .pwa-phone-mock { margin-inline: auto; }
 
-  /* Donut centre label must fit inside the ring */
-  body.lp .donut-center-amt { font-size: 0.85rem; }
-  body.lp .donut-center-lbl { font-size: 0.6rem; }
+  /* Donut: one fixed size so the ring and its centre label share a centre (the <=400px rule shrank the ring but not its box) */
+  body.lp .section-features .donut-svg-container { width: 148px; height: 148px; margin-inline: auto; }
+  body.lp .section-features .donut-svg-container svg { display: block; width: 100%; height: 100%; max-width: none; }
+  body.lp .section-features .donut-center-amt { font-size: 1.05rem; line-height: 1.2; }
+  body.lp .section-features .donut-center-lbl { font-size: 0.68rem; line-height: 1.2; }
+  body.lp .section-features .paper-donut-crop { height: auto; min-height: 0; padding-bottom: 20px; }
 }
 
 /* Wrapper for the two quick-entry demo frames: invisible on desktop, a swipeable slider on phones */

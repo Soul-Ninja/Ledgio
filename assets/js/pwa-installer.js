@@ -242,8 +242,18 @@
       document.documentElement.classList.add('is-standalone');
       const installBtns = document.querySelectorAll('.pwa-install-btn, #pwa-install-btn, #landing-install-btn, .installable-pill, a[href="#install"], [data-pwa-install]');
       installBtns.forEach(btn => {
+        if (btn.id === 'pwa-card-install-btn') return; // repurposed below: share the install link
         btn.style.setProperty('display', 'none', 'important');
       });
+      const cardBtn = document.getElementById('pwa-card-install-btn');
+      const cardLabel = cardBtn && cardBtn.querySelector('span');
+      if (cardLabel) cardLabel.textContent = 'Install on another device';
+      const cardIcon = cardBtn && cardBtn.querySelector('i');
+      if (cardIcon) cardIcon.className = 'fas fa-share-nodes';
+      if (cardBtn && !cardBtn.dataset.pwaBound) {
+        cardBtn.dataset.pwaBound = 'true';
+        cardBtn.addEventListener('click', (e) => { e.preventDefault(); shareInstallLink(); });
+      }
       console.log('[Ledgio PWA] Standalone mode active — install triggers hidden.');
     } else {
       document.documentElement.classList.remove('is-standalone');
@@ -432,6 +442,27 @@
   }
 
   // 6. Trigger Install Flow (Rock-Solid Multi-Tap Fix & Immediate Feedback)
+  // Already installed: the landing card's button shares the site link so it can be installed elsewhere
+  async function shareInstallLink() {
+    const url = location.origin + '/';
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'Ledgio', text: 'Install Ledgio on your device', url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      const label = document.querySelector('#pwa-card-install-btn span');
+      if (window.showToast) window.showToast('Link copied. Open it on another device to install Ledgio.', 'success');
+      else if (label) {
+        const prev = label.textContent;
+        label.textContent = 'Link copied';
+        setTimeout(() => { label.textContent = prev; }, 2000);
+      }
+    } catch (err) {
+      if (err && err.name !== 'AbortError') console.warn('[Ledgio PWA] Share failed:', err);
+    }
+  }
+
   async function triggerInstallFlow(clickedBtn) {
     if (isStandaloneApp()) {
       console.log('[Ledgio PWA] Already running in standalone mode.');
