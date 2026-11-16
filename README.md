@@ -19,7 +19,7 @@ Free forever. No ads. No paywalls. Open source.
 
 <br>
 
-[![Version](https://img.shields.io/badge/Version-1.12.12-emerald.svg?style=flat-square)](https://github.com/Soul-Ninja/Ledgio/commits/main)
+[![Version](https://img.shields.io/badge/Version-1.12.13-emerald.svg?style=flat-square)](https://github.com/Soul-Ninja/Ledgio/commits/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3b82f6?style=flat-square)](LICENSE)
 [![Runtime gates](https://img.shields.io/github/actions/workflow/status/Soul-Ninja/Ledgio/runtime-gate.yml?style=flat-square&label=runtime%20gates)](https://github.com/Soul-Ninja/Ledgio/actions/workflows/runtime-gate.yml)
 [![Last commit](https://img.shields.io/github/last-commit/Soul-Ninja/Ledgio?style=flat-square&color=8b5cf6)](https://github.com/Soul-Ninja/Ledgio/commits/main)
@@ -159,7 +159,7 @@ The app is plain JavaScript split into domain modules. Each module exposes a sma
 | `supabase-config.js` | `SUPABASE_CONFIG` | Project URL/anon key, admin ids, the single Supabase client factory, app version |
 | `sync-engine.js` | `LedgioSyncEngine` | Offline FIFO mutation queue, per-record ordering, backoff, auth refresh, dead-letter queue |
 | `income.js` | `LedgioIncome` | Dated income ledger, opening balances, pay-cycle ranges, deterministic ids |
-| `expenses.js` | `LedgioExpenses` | Expenses, category limits, 80% / 100% warnings |
+| `expenses-p3a-v1.js` | `LedgioExpenses` | Expenses, category limits, 80% / 100% warnings |
 | `categories.js` | `LedgioCategories` | Built-in + custom categories (max 15), cloud roaming, safe reassignment |
 | `goals.js` | `LedgioGoals` | Savings goals and their deposit ledger |
 | `loans.js` | `LedgioLoans` | Lent / borrowed ledger, cash vs paid-on-your-behalf, settlements |

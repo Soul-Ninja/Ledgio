@@ -46,6 +46,11 @@ jobs:
         run: |
           powershell -ExecutionPolicy Bypass -File scripts/check_migrations.ps1
 
+      - name: Verify Service Worker Precache and HTML Assets Integrity
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/check_precache.ps1
+
       - name: Execute Runtime Regression Gate Test Suite
         shell: powershell
         run: |
