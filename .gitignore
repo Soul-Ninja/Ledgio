@@ -19,8 +19,10 @@ Thumbs.db
 .idea/
 .claude/
 .agents/
+.codex/
 
 # Landing Page raw screenshot captures (WebP assets in assets/img/landing/)
 docs/ui/landing-v2/raw_png/
 scratch/
 graphify-out/
+brag-output*/
